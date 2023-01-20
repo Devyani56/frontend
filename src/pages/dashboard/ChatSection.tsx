@@ -1,0 +1,294 @@
+import {css, StyleSheet} from "aphrodite";
+import MyResponsiveLine from "./MyResponsiveLine";
+
+const data = [
+    {
+        "id": "japan",
+        "color": "hsl(260, 70%, 50%)",
+        "data": [
+            {
+                "x": "plane",
+                "y": 116
+            },
+            {
+                "x": "helicopter",
+                "y": 118
+            },
+            {
+                "x": "boat",
+                "y": 158
+            },
+            {
+                "x": "train",
+                "y": 22
+            },
+            {
+                "x": "subway",
+                "y": 100
+            },
+            {
+                "x": "bus",
+                "y": 117
+            },
+            {
+                "x": "car",
+                "y": 243
+            },
+            {
+                "x": "moto",
+                "y": 71
+            },
+            {
+                "x": "bicycle",
+                "y": 275
+            },
+            {
+                "x": "horse",
+                "y": 209
+            },
+            {
+                "x": "skateboard",
+                "y": 271
+            },
+            {
+                "x": "others",
+                "y": 86
+            }
+        ]
+    },
+    {
+        "id": "france",
+        "color": "hsl(227, 70%, 50%)",
+        "data": [
+            {
+                "x": "plane",
+                "y": 270
+            },
+            {
+                "x": "helicopter",
+                "y": 255
+            },
+            {
+                "x": "boat",
+                "y": 76
+            },
+            {
+                "x": "train",
+                "y": 117
+            },
+            {
+                "x": "subway",
+                "y": 184
+            },
+            {
+                "x": "bus",
+                "y": 54
+            },
+            {
+                "x": "car",
+                "y": 171
+            },
+            {
+                "x": "moto",
+                "y": 15
+            },
+            {
+                "x": "bicycle",
+                "y": 137
+            },
+            {
+                "x": "horse",
+                "y": 238
+            },
+            {
+                "x": "skateboard",
+                "y": 201
+            },
+            {
+                "x": "others",
+                "y": 119
+            }
+        ]
+    },
+    {
+        "id": "us",
+        "color": "hsl(312, 70%, 50%)",
+        "data": [
+            {
+                "x": "plane",
+                "y": 175
+            },
+            {
+                "x": "helicopter",
+                "y": 190
+            },
+            {
+                "x": "boat",
+                "y": 47
+            },
+            {
+                "x": "train",
+                "y": 196
+            },
+            {
+                "x": "subway",
+                "y": 132
+            },
+            {
+                "x": "bus",
+                "y": 182
+            },
+            {
+                "x": "car",
+                "y": 232
+            },
+            {
+                "x": "moto",
+                "y": 16
+            },
+            {
+                "x": "bicycle",
+                "y": 60
+            },
+            {
+                "x": "horse",
+                "y": 80
+            },
+            {
+                "x": "skateboard",
+                "y": 217
+            },
+            {
+                "x": "others",
+                "y": 50
+            }
+        ]
+    },
+    {
+        "id": "germany",
+        "color": "hsl(319, 70%, 50%)",
+        "data": [
+            {
+                "x": "plane",
+                "y": 154
+            },
+            {
+                "x": "helicopter",
+                "y": 199
+            },
+            {
+                "x": "boat",
+                "y": 60
+            },
+            {
+                "x": "train",
+                "y": 36
+            },
+            {
+                "x": "subway",
+                "y": 90
+            },
+            {
+                "x": "bus",
+                "y": 100
+            },
+            {
+                "x": "car",
+                "y": 30
+            },
+            {
+                "x": "moto",
+                "y": 216
+            },
+            {
+                "x": "bicycle",
+                "y": 199
+            },
+            {
+                "x": "horse",
+                "y": 147
+            },
+            {
+                "x": "skateboard",
+                "y": 94
+            },
+            {
+                "x": "others",
+                "y": 115
+            }
+        ]
+    },
+    {
+        "id": "norway",
+        "color": "hsl(63, 70%, 50%)",
+        "data": [
+            {
+                "x": "plane",
+                "y": 257
+            },
+            {
+                "x": "helicopter",
+                "y": 25
+            },
+            {
+                "x": "boat",
+                "y": 114
+            },
+            {
+                "x": "train",
+                "y": 143
+            },
+            {
+                "x": "subway",
+                "y": 97
+            },
+            {
+                "x": "bus",
+                "y": 284
+            },
+            {
+                "x": "car",
+                "y": 169
+            },
+            {
+                "x": "moto",
+                "y": 116
+            },
+            {
+                "x": "bicycle",
+                "y": 103
+            },
+            {
+                "x": "horse",
+                "y": 80
+            },
+            {
+                "x": "skateboard",
+                "y": 36
+            },
+            {
+                "x": "others",
+                "y": 14
+            }
+        ]
+    }
+]
+const ChartSection = () => {
+    return (
+        <div className={css(styles.chartSectionDefault)}>
+            <MyResponsiveLine data={data}/>
+        </div>
+    );
+};
+
+export default ChartSection;
+
+const styles = StyleSheet.create(
+    {
+        chartSectionDefault: {
+            // backgroundColor: "transparent",
+            height: "30rem",
+            width: "90%"
+        }
+    }
+)
