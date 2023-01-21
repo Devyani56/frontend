@@ -6,14 +6,16 @@ interface ICardProps {
     width?: string;
     height?: string;
     children?: any;
+    padding?: string;
 }
-const Card = ({type, width, height, children} : ICardProps) => {
+const Card = ({type, width, height, children, padding} : ICardProps) => {
     // create a style with width and height if they are passed in
     const style = StyleSheet.create(
         {
             cardCustom: {
                 width: width? width : "100%",
                 height: height? height: "auto",
+                padding: padding? padding: "1rem 2rem",
             }
         });
 
@@ -41,7 +43,6 @@ const styles = StyleSheet.create(
 
         },
         cardDefault: {
-            padding: "1rem 2rem",
             boxSizing: "border-box",
             display: "flex",
             flexDirection: "row",

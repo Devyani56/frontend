@@ -11,13 +11,19 @@ import GasesTiles from "./GasesTiles";
 import ThermoTile from "./ThermoTile";
 import WindTile from "./WindTile";
 import LowestHighestTile from "./LowestHighestTile";
-
-
+import Map from "../common/Map";
+import Modal from "../../components/Modals/Modal";
+import SigninSignup from "../auth/SigninSignup";
 const Board = () => {
     return (
       <div className={css(styles.boardDefault)}>
+          <Modal isOpen={true} onClose={() => {}}>
+              <SigninSignup/>
+          </Modal>
+
           <ChartSection/>
           <InfoContainer>
+
               <InfoSection>
                   <Card type={"cardDark"}  height={"12rem"}>
                       <TilesContainer gap={"5%"}>
@@ -34,6 +40,7 @@ const Board = () => {
                       <Card type={"cardDark"} width={"50%"} height={"12rem"}/>
                   </InfoSubSection>
               </InfoSection>
+
               <InfoSection>
                   <Card type={"cardDark"}  height={"9.2rem"}>
                       <TilesContainer gap={"2%"}>
@@ -43,12 +50,16 @@ const Board = () => {
                           <GasesTiles value={999} label={"CO"} type={"dark"}/>
                       </TilesContainer>
                   </Card>
-                  <Card type={"cardDark"}  height={"42rem"}/>
+
+                  <Card type={"cardDark"}  height={"42rem"} padding={"0"}>
+                          <Map/>
+                  </Card>
                   <InfoSubSection>
                       <Card type={"cardDark"} width={"60%"} height={"10rem"}/>
                       <Card type={"cardDark"} width={"40%"} height={"10rem"}/>
                   </InfoSubSection>
               </InfoSection>
+
               <InfoSection>
                   <InfoSubSection>
                       <Card type={"cardDark"} width={"50%"} height={"9.2rem"}>
@@ -58,7 +69,9 @@ const Board = () => {
                           <WindTile value={30}/>
                       </Card>
                   </InfoSubSection>
-                  <Card type={"cardDark"} height={"33rem"}/>
+                  <Card type={"cardDark"} height={"33rem"} padding={"0"}>
+                      <Map/>
+                  </Card>
                   <Card type={"cardLight"} height={"16rem"}/>
               </InfoSection>
           </InfoContainer>
@@ -81,6 +94,5 @@ const styles = StyleSheet.create(
             justifyContent: 'center',
             alignItems: 'center',
         }
-
     }
 )
