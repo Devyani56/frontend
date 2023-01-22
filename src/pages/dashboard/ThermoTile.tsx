@@ -82,7 +82,7 @@ const styles = StyleSheet.create(
             color: themeVars.colors.text.accentGrey,
             position: 'absolute',
             top: '2rem',
-            left: '0.7rem',
+            left: '0.3rem',
         },
         degreeSign: {
             position: 'absolute',

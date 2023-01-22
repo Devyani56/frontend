@@ -1,6 +1,8 @@
 import {createPortal} from "react-dom";
 import {useEffect, useState} from "react";
 import {StyleSheet, css} from "aphrodite";
+import {X} from "phosphor-react";
+import themeVars from "../../util/themeVars";
 interface IModalProps {
     children?: any;
     isOpen: boolean;
@@ -22,7 +24,7 @@ const Modal = ({ children, isOpen, onClose } : IModalProps) => {
                 <div className={css(styles.modal)}>
                     <div className={css(styles.modalHeader)}>
                         <button type="button" className={css(styles.modalCloseButton)} data-dismiss="modal" aria-label="Close" onClick={handleClose}>
-                            <span aria-hidden="true">&times;</span>
+                            <X size={32} />
                         </button>
                     </div>
                     {children}
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
         modalCloseButton: {
             position: "absolute",
             top: "1rem",
-            right: "1rem",
+            right: "3rem",
             width: "1.5rem",
             height: "1.5rem",
             padding: "0",
@@ -102,6 +104,7 @@ const styles = StyleSheet.create({
             border: "0",
             cursor: "pointer",
             zIndex: 100,
+            color: themeVars.colors.mainBackground.light,
         },
     }
 );

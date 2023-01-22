@@ -2,12 +2,13 @@ import {useState} from "react";
 import {StyleSheet, css} from "aphrodite";
 import signinSignupImage from "../../assets/images/signin-signup-background.png";
 import SigninForm from "./SigninForm";
+import SignupForm from "./SignupForm";
 const SigninSignup = () => {
-    const [, setIsSignup] = useState(false);
+    const [isSignUp, setIsSignup] = useState(false);
 
-    // const handleSwitchMode = () => {
-    //     setIsSignup((prevIsSignup : boolean) => !prevIsSignup);
-    // };
+    const changeMode = () => {
+        setIsSignup(!isSignUp);
+    }
 
     return (
          <div className={css(styles.signinSignupDefault)}>
@@ -15,7 +16,8 @@ const SigninSignup = () => {
                  <img src={signinSignupImage} alt="signinSignupImg" className={css(styles.signinSignupImg)}/>
              </div>
              <div className={css(styles.signinSignupFormCont)}>
-                 <SigninForm/>
+                 {!isSignUp && <SigninForm changeMode={changeMode}/>}
+                 {isSignUp && <SignupForm changeMode={changeMode}/>}
              </div>
 
          </div>

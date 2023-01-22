@@ -7,8 +7,9 @@ interface ICardProps {
     height?: string;
     children?: any;
     padding?: string;
+    minWidth?: string
 }
-const Card = ({type, width, height, children, padding} : ICardProps) => {
+const Card = ({type, width, height, children, padding, minWidth} : ICardProps) => {
     // create a style with width and height if they are passed in
     const style = StyleSheet.create(
         {
@@ -16,6 +17,7 @@ const Card = ({type, width, height, children, padding} : ICardProps) => {
                 width: width? width : "100%",
                 height: height? height: "auto",
                 padding: padding? padding: "1rem 2rem",
+                minWidth: minWidth? minWidth: "auto",
             }
         });
 

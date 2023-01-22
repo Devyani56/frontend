@@ -12,18 +12,18 @@ import ThermoTile from "./ThermoTile";
 import WindTile from "./WindTile";
 import LowestHighestTile from "./LowestHighestTile";
 import Map from "../common/Map";
-import Modal from "../../components/Modals/Modal";
+import Modal from "../../components/modals/Modal";
 import SigninSignup from "../auth/SigninSignup";
+import AgrigateRadial from "./AgrigateRadial";
+import ForTomorrowList from "./ForTomorrowList";
 const Board = () => {
     return (
       <div className={css(styles.boardDefault)}>
-          <Modal isOpen={true} onClose={() => {}}>
+          <Modal isOpen={false} onClose={() => {}}>
               <SigninSignup/>
           </Modal>
-
           <ChartSection/>
           <InfoContainer>
-
               <InfoSection>
                   <Card type={"cardDark"}  height={"12rem"}>
                       <TilesContainer gap={"5%"}>
@@ -34,7 +34,9 @@ const Board = () => {
                   <Card type={"cardDark"}  height={"23rem"}>
                       <LowestHighestTile/>
                   </Card>
-                  <Card type={"cardDark"}  height={"15rem"}/>
+                  <Card type={"cardDark"}  height={"15rem"}>
+                      <ForTomorrowList columnSize={4}/>
+                  </Card>
                   <InfoSubSection>
                       <Card type={"cardDark"} width={"50%"} height={"12rem"}/>
                       <Card type={"cardDark"} width={"50%"} height={"12rem"}/>

@@ -29,13 +29,15 @@ const styles = StyleSheet.create(
         aside: {
             minHeight: '100%',
             width: '50%',
-            maxWidth: '36rem',
+            maxWidth: '42rem',
+            flexShrink: 2,
 
         },
 
         section: {
             width: "100%",
             minHeight: '100vh',
+            flexShrink: 1,
         }
 
     }

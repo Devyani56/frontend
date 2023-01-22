@@ -11,7 +11,6 @@ const LowestHighestTile = () => {
     const selectedItem = "PM10";
     const minStyle = buildStyles(
         {
-            backgroundColor: 'red',
             trailColor: themeVars.colors.text.accentGrey,
             pathColor: minVal < 100 ? themeVars.colors.alerts.green : minVal < 200 ? themeVars.colors.alerts.yellow : themeVars.colors.alerts.red,
         }
@@ -19,7 +18,6 @@ const LowestHighestTile = () => {
 
     const maxStyle = buildStyles(
         {
-            backgroundColor: 'red',
             trailColor: themeVars.colors.text.accentGrey,
             pathColor: maxVal < 100 ? themeVars.colors.alerts.green : maxVal < 200 ? themeVars.colors.alerts.yellow : themeVars.colors.alerts.red,
         }

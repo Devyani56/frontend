@@ -80,7 +80,7 @@ const styles = StyleSheet.create(
             color: themeVars.colors.text.accentGrey,
             position: 'absolute',
             top: '2rem',
-            left: '-0.6rem',
+            left: '-1rem',
         },
     }
 )

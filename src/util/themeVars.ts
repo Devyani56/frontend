@@ -12,10 +12,15 @@ const themeVars  = {
             light: "rgba(242, 249, 250, 1)",
             dark: "rgba(31, 43, 53, 0.9)",
             black: "#1F232E",
+            green: 'rgba(127, 200, 182, 1)',
+            darkGreen : 'rgb(64,189,163)',
+            dark2: 'rgba(38, 50, 56, 1)'
+
 
         },
         text : {
-            accentGrey: "rgba(167, 175, 175, 1)"
+            accentGrey: "rgba(167, 175, 175, 1)",
+            accentYellow: "rgba(253, 233, 188, 1)"
 
         },
         alerts : {
@@ -25,7 +30,11 @@ const themeVars  = {
         },
         textField : {
            borderColor : 'rgba(218, 222, 231, 1)',
-            background : 'rgba(127, 200, 182, 0.05)',
+            background : 'rgba(104,146,150,0.13)',
+        },
+
+        others : {
+           borderGrey : 'rgba(167, 175, 175, 0.17)',
         }
 
 

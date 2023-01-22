@@ -57,7 +57,7 @@ const styles = StyleSheet.create(
             alignItems: 'center',
             width: '100%',
             height: '100%',
-            padding: '1.2rem 0.6rem',
+            padding: '1.2rem 0.6rem 0.6rem 0.6rem',
         },
         TilesValue: {
             fontWeight: 500,
