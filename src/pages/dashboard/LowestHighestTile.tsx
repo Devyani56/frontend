@@ -9,6 +9,7 @@ const LowestHighestTile = () => {
     const maxPercent = (maxVal / 500) * 100 > 100 ? 100 : (maxVal / 400) * 100;
     const items = ["PM2.5", "PM10", "O3", "CO", "SO2" ]
     const selectedItem = "PM10";
+
     const minStyle = buildStyles(
         {
             trailColor: themeVars.colors.text.accentGrey,

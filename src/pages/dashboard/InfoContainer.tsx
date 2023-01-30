@@ -23,9 +23,13 @@ const styles = StyleSheet.create(
             gridTemplateColumns: '1.1fr 1.2fr 1fr',
             gap: '2rem',
             maxWidth: "1080",
-            '@media (max-width: 1200px)': {
+            '@media (max-width: 1400px)': {
                 gridTemplateColumns: '1fr',
                 minWidth: "50rem",
+            },
+
+            '@media (max-width: 800px)': {
+                gridTemplateColumns: '1fr',
             }
 
         }

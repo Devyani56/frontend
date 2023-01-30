@@ -65,6 +65,50 @@ export const styles = StyleSheet.create(
             cursor: 'pointer',
             outline: 'none',
             textDecoration: 'underline',
+        },
+
+        verifyEmailBox: {
+            width: "100%",
+            height: "auto",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+
+        },
+
+        iconCont: {
+            width: "8rem",
+            height: "8rem",
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: '50%',
+            color: "white",
+            backgroundColor: themeVars.colors.accent.green,
+        },
+
+        verifyEmailText: {
+            fontSize: '2rem',
+            lineHeight: '3.6rem',
+            fontColor: themeVars.colors.accent.black,
+            fontWeight: 800,
+        },
+
+        verifyEmailSubText: {
+            width: "100%",
+            display: 'flex',
+            fontSize: '1.4rem',
+            lineHeight: '1.6rem',
+            fontColor: themeVars.colors.accent.black,
+            whiteSpace: 'pre-wrap',
+            textAlign: 'center',
+        },
+
+        verifyEmailPS: {
+            fontSize: '1.2rem',
+            lineHeight: '3rem',
         }
     }
 )

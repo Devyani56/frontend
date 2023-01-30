@@ -8,7 +8,7 @@ interface IThermoTileProps {
 const ThermoTile = ({value}:IThermoTileProps) => {
     return (
         <div className={css(styles.TilesDefault)}>
-            <ThermometerSimple className={css(styles.TilesIcon)} size={42}/>
+            <ThermometerSimple className={css(styles.TilesIcon)} size={38}/>
             <div className={css(styles.valueAndUnit)}>
                 <div className={css(styles.TilesValue)}>
                     {value}

@@ -8,13 +8,19 @@ import {
 import './App.css';
 import MainPage from "./pages/dashboard/MainPage";
 import ErrorPage from "./pages/ErrorPage";
+import ProMainPage from "./pages/pro/ProMain";
 
 
 
 const routes = createBrowserRouter(
     createRoutesFromElements(
-        <Route path="/" element={<MainPage />} errorElement={<ErrorPage/>} >
-            <Route path="*" element={<ErrorPage />} />
+        <Route>
+            <Route path="/" element={<MainPage />} errorElement={<ErrorPage/>} >
+                <Route path="*" element={<ErrorPage />} />
+            </Route>
+            <Route path="/pro" element={<ProMainPage />} errorElement={<ErrorPage/>} >
+                <Route path="*" element={<ErrorPage />} />
+            </Route>
         </Route>
     )
 );

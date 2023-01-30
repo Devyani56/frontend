@@ -6,8 +6,35 @@ import VerticalGap from "../../components/VerticalGap";
 import {styles} from "./SigninSignupStyle"
 interface ISignupFormProps {
     changeMode: () => void;
+    userDetails: {
+        email: string;
+        password: string;
+        name: string;
+    },
+
+    errors: {
+        email: {
+            error: boolean,
+            message: string
+        },
+        password: {
+            error: boolean,
+            message: string
+        },
+        name: {
+            error: boolean,
+            message: string
+        }
+    },
+
+    handleChange: (e: any) => void;
+
+    validateField: (field: string, value: string) => void;
+
+    onSubmit: (e: any) => void;
 }
-const SignupForm = ({changeMode}:ISignupFormProps) => {
+const SignupForm = ({changeMode, userDetails, errors, handleChange, validateField, onSubmit}:ISignupFormProps) => {
+
     return(
         <div className={css(styles.SigninFormDefault)}>
             <div className={css(styles.SigninFormHeaderCont)}>
@@ -18,19 +45,46 @@ const SignupForm = ({changeMode}:ISignupFormProps) => {
                     Already with us <button onClick={changeMode} className={css(styles.Link)} >Sign in</button>
                 </div>
             </div>
-            <div className={css(styles.SigninFormBody)}>
-                <Input label={"Name"} name={"name"} type={"text"} value={""} placeHolder={"Enter your name"} onChange={()=>{}}/>
-                <Input label={"Email"} name={"name"} type={"text"} value={"Hello"} placeHolder={"Enter your email address"} onChange={()=>{}}/>
-                <Input label={"Password"} name={"name"} type={"text"} value={""} placeHolder={"Enter your password"} onChange={()=>{}}/>
+            <form className={css(styles.SigninFormBody)}>
+                <Input
+                    label={"Name"}
+                    name={"name"}
+                    type={"text"}
+                    value={userDetails.name}
+                    placeHolder={"Enter your name"}
+                    onChange={(e)=>{handleChange(e)}}
+                    onBlur={validateField}
+                    error={errors.name}
+                />
+                <Input
+                    label={"Email"}
+                    name={"email"}
+                    type={"email"}
+                    value={userDetails.email}
+                    placeHolder={"Enter your email address"}
+                    onChange={(e)=>{handleChange(e)}}
+                    onBlur={validateField}
+                    error={errors.email}
+                />
+                <Input
+                    label={"Password"}
+                    name={"password"}
+                    type={"password"}
+                    value={userDetails.password}
+                    placeHolder={"Enter your password"}
+                    onChange={(e)=>{handleChange(e)}}
+                    onBlur={validateField}
+                    error={errors.password}
+                />
 
                 <VerticalGap gap={"0.8rem"}/>
-                <Button  onClick={()=>{}} type={"long"}
+                <Button  onClick={onSubmit} type={"long"}
                          color={themeVars.colors.accent.green}
                          hoverColor={themeVars.colors.accent.darkGreen}>
                     Sign up
                 </Button>
 
-            </div>
+            </form>
         </div>
     )
 }

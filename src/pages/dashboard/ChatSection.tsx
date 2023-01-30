@@ -1,6 +1,8 @@
 import {css, StyleSheet} from "aphrodite";
 import MyResponsiveLine from "./MyResponsiveLine";
-
+import themeVars from "../../util/themeVars";
+import Button from "../../components/buttons/Button";
+import {CaretDown} from "phosphor-react";
 const data = [
     {
         "id": "japan",
@@ -276,7 +278,30 @@ const data = [
 const ChartSection = () => {
     return (
         <div className={css(styles.chartSectionDefault)}>
-            <MyResponsiveLine data={data}/>
+            {/*<div className={css(styles.chartFiltersLocationCont)}>*/}
+            {/*    <div className={css(styles.statsForCont)}>*/}
+            {/*        Showing Stats for <br/>*/}
+            {/*        Farmagudi, Goa, India*/}
+            {/*    </div>*/}
+            {/*    <div className={css(styles.FilterCont)}>*/}
+            {/*        <div className={css(styles.Filter)}>*/}
+            {/*            <button className={css(styles.generalButton)}>Filter <CaretDown size={20} /></button>*/}
+            {/*        </div>*/}
+            {/*        <div className={css(styles.Interval)}>*/}
+            {/*            <button className={css(styles.generalButton)}>Daily</button>*/}
+            {/*            <button className={css(styles.generalButton)}>Weekly</button>*/}
+            {/*            <button className={css(styles.generalButton)}>Monthly</button>*/}
+
+            {/*        </div>*/}
+            {/*        <div className={css(styles.DateRange)}>*/}
+            {/*            <input className={css(styles.generalButton)} type="date" name="start-date"/>*/}
+            {/*            <input className={css(styles.generalButton)} type="date" name={"end-date"}/>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+            {/*<div className={css(styles.chartContainer)}>*/}
+                <MyResponsiveLine data={data}/>
+            {/*</div>*/}
         </div>
     );
 };
@@ -289,6 +314,49 @@ const styles = StyleSheet.create(
             // backgroundColor: "transparent",
             height: "30rem",
             width: "90%"
+        },
+
+        chartContainer: {
+            width: "100%",
+            height: "30rem",
+
+        },
+
+        chartFiltersLocationCont: {
+            width: "100%",
+            height: "5rem",
+            display: 'flex',
+            justifyContent: 'space-between'
+
+        },
+
+        statsForCont: {
+            fontStyle: "normal",
+            fontWeight: 500,
+            fontSize: "1.6rem",
+            lineHeight: "2rem",
+            color: themeVars.colors.text.accentGrey
+        },
+
+        FilterCont: {
+            backgroundColor: 'green',
+            display: 'grid',
+            gridTemplateColumns: '1fr 2fr 2fr'
+        },
+
+        Filter: {
+
+        },
+
+        Interval: {
+
+        },
+
+        DateRange: {
+
+        },
+        generalButton: {
+
         }
     }
 )

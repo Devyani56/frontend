@@ -14,12 +14,27 @@ import LowestHighestTile from "./LowestHighestTile";
 import Map from "../common/Map";
 import Modal from "../../components/modals/Modal";
 import SigninSignup from "../auth/SigninSignup";
-import AgrigateRadial from "./AgrigateRadial";
+// import AgrigateRadial from "./AgrigateRadial";
 import ForTomorrowList from "./ForTomorrowList";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 const Board = () => {
+    const url = useLocation().pathname;
+    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(url === "/signin" || url === "/signup");
+
+    useEffect(() => {
+        setShowModal(url === "/signin" || url === "/signup");
+    }
+    , [url]);
+
+    const onCloseModal = () => {
+        setShowModal(false);
+        navigate("/");
+    }
     return (
       <div className={css(styles.boardDefault)}>
-          <Modal isOpen={false} onClose={() => {}}>
+          <Modal isOpen={showModal} onClose={onCloseModal}>
               <SigninSignup/>
           </Modal>
           <ChartSection/>
@@ -95,6 +110,8 @@ const styles = StyleSheet.create(
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
+            paddingBottom: '2rem',
+            boxSizing: 'border-box',
         }
     }
 )

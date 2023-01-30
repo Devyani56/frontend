@@ -1,7 +1,6 @@
 import { StyleSheet, css } from 'aphrodite';
 const SideBarInfoSection = ({children}:any) => {
     return <div className={css(styles.sideBarInfoSectionDefault)}>
-        <h3></h3>
         <div className={css(styles.sideBarChildrenSectionDefault)}>
             {children}
         </div>
@@ -21,7 +20,8 @@ const styles = StyleSheet.create(
         },
 
         sideBarChildrenSectionDefault: {
-            width: '100%',
+            width: '95%',
+            maxWidth: '32rem',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',

@@ -12,8 +12,10 @@ const themeVars  = {
             light: "rgba(242, 249, 250, 1)",
             dark: "rgba(31, 43, 53, 0.9)",
             black: "#1F232E",
+            transparentGreen: 'rgba(127,200,182,0.35)',
             green: 'rgba(127, 200, 182, 1)',
             darkGreen : 'rgb(64,189,163)',
+            darGreen2 : 'rgb(0, 153, 153)',
             dark2: 'rgba(38, 50, 56, 1)'
 
 
@@ -26,7 +28,8 @@ const themeVars  = {
         alerts : {
             green : 'rgba(170, 234, 216, 1)',
             red : 'rgba(239, 144, 132, 1)',
-            yellow : 'rgba(238, 227, 188, 1)',
+            yellow : 'rgba(255, 200, 140, 1)',
+            orange : 'rgba(255, 200, 140, 1)',
         },
         textField : {
            borderColor : 'rgba(218, 222, 231, 1)',

@@ -1,7 +1,7 @@
 import { StyleSheet, css } from 'aphrodite';
 interface IButtonProps {
     children: any;
-    onClick?: () => void;
+    onClick?: (e:any) => void;
     type: "long" | "short";
     color: string;
     hoverColor?: string;
@@ -49,6 +49,11 @@ const styles = StyleSheet.create(
             fontWeight: 700,
             color: 'white',
             cursor: 'pointer',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.8rem',
 
         },
 

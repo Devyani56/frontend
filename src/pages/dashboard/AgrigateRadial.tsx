@@ -3,10 +3,10 @@ import { StyleSheet, css } from 'aphrodite';
 import {buildStyles, CircularProgressbarWithChildren} from "react-circular-progressbar";
 import themeVars from "../../util/themeVars";
 const AgrigateRadial = () => {
-    const value = 66;
+    const value = 330;
     const colorStyle = buildStyles(
         {
-            trailColor: themeVars.colors.text.accentGrey,
+            trailColor: themeVars.colors.text.accentYellow,
             pathColor: value < 100 ? themeVars.colors.alerts.green : value < 200 ? themeVars.colors.alerts.yellow : themeVars.colors.alerts.red,
         }
     );

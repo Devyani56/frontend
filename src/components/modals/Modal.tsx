@@ -18,6 +18,9 @@ const Modal = ({ children, isOpen, onClose } : IModalProps) => {
         onClose();
     };
 
+
+
+
     const modalContent = isOpen ? (
         <div className={css(styles.modalOverlay)}>
             <div className={css(styles.modalWrapper)} aria-modal aria-hidden tabIndex={-1} role="dialog">
@@ -48,7 +51,7 @@ const styles = StyleSheet.create({
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
+            backgroundColor: "rgba(0,0,0,0.53)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -56,9 +59,9 @@ const styles = StyleSheet.create({
         },
         modalWrapper: {
             position: "relative",
-            width: "100%",
+            width: "100vw",
             maxWidth: "120rem",
-            maxHeight: "100%",
+            maxHeight: "100vh",
             // margin: "0 auto",
             borderRadius: "2rem",
             boxShadow: "0 5px 16px rgba(0, 0, 0, 0.2)",
@@ -106,5 +109,8 @@ const styles = StyleSheet.create({
             zIndex: 100,
             color: themeVars.colors.mainBackground.light,
         },
+
+
+
     }
 );

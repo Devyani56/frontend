@@ -8,7 +8,7 @@ interface IWindTileProps {
 const WindTile = ({value}:IWindTileProps) => {
     return (
         <div className={css(styles.TilesDefault)}>
-            <Wind className={css(styles.TilesIcon)} size={42}/>
+            <Wind className={css(styles.TilesIcon)} size={38}/>
             <div className={css(styles.valueAndUnit)}>
                 <div className={css(styles.TilesValue)}>
                     {value}

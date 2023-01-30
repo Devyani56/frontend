@@ -7,23 +7,29 @@ interface IInputProps {
     value: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     placeHolder?: string;
+    error?: {error : boolean, message: string};
+    onBlur?: (field: string, value: string) => void;
 }
 
 const Input = (props: IInputProps) => {
-    const { label, name, type, value,placeHolder, onChange } = props;
+    const { label, name, type, value,placeHolder, error, onChange, onBlur } = props;
     return (
         <div className={css(styles.InputContainer)}>
         <label htmlFor={name} className={css(styles.InputLabel)}>
             {label}
         </label>
+
         <input
             type={type}
             name={name}
             value={value}
             onChange={onChange}
-            className={css(styles.Input)}
+            className={css(styles.Input, error?.error && styles.InputError)}
             placeholder={placeHolder}
+            onBlur={onBlur && ((e) => onBlur(name, e.target.value))}
         />
+
+        {error && <div className={css(styles.Error)}>{error.message}</div>}
         </div>
     );
 };
@@ -67,6 +73,14 @@ const styles = StyleSheet.create(
 
         InputActive: {
             border: '1px solid rgba(127, 200, 182, 1)',
+        },
+
+        Error: {
+            color: themeVars.colors.alerts.red
+        },
+
+        InputError: {
+            border: '1px solid ' + themeVars.colors.alerts.red,
         }
 
     }
