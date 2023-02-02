@@ -26,7 +26,7 @@ const styles = StyleSheet.create(
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            gap: '2.4rem',
+            gap: '1.3rem',
         }
     }
 );

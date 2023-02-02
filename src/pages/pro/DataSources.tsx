@@ -155,11 +155,7 @@ const emptyDataSource : IDataSourceData = {
 }
 const DataSources = () => {
     const [dataSourceData, setDataSourceData] = useState<IDataSourceData[]>([]);
-    getDataSourceAPi().then((res) => {
-        if (res.type === "success") {
-            setDataSourceData(res.data);
-        }
-    });
+
     const [dataSourceFormData, setDataSourceFormData] = useState<IDataSourceData >(
         emptyDataSource
     );

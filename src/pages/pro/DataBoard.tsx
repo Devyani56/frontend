@@ -40,7 +40,7 @@ const DataBoard = () => {
     const [columns, setColumns] = useState([
         {
             name: 'Time Stamp',
-            selector: row => row.timestamp,
+            selector: row => row.recordedAt,
             sortable: true,
         },
 
@@ -69,17 +69,21 @@ const DataBoard = () => {
         }
         setLoading(false);
 
+
     }
 
     const fetchTotalRows = async () => {
+        setLoading(true);
         const totalRows = await getNumRowsForASourceApi(id);
         console.log("Line 50: ",totalRows)
         if (totalRows.type === "success") {
             setTotalRows(totalRows.data.numRows);
         }
+        setLoading(false);
     }
     const fetchColumns = async () => {
         // get the data source
+        setLoading(true);
         const dataSource = await getDataSourceAPi(id);
         console.log("Line 65: ",dataSource)
         const metrics = []
@@ -88,11 +92,12 @@ const DataBoard = () => {
             dataSource.data.metrics.forEach(metric => {
                     metrics.push(metric)
             });
+            console.log("Line 91: ",metrics)
         }
         const c = [
             {
-                name: 'Time Stamp',
-                selector: row => row.timestamp,
+                name: 'Time Recorded',
+                selector: row => row.recordedAt,
                 sortable: true,
             },
 
@@ -112,12 +117,13 @@ const DataBoard = () => {
         metrics.forEach(metric => {
             c.push({
                 name: metric,
-                selector: row => row.data[metric] ? row.data[metric] : '',
+                selector: row => row.data[metric] ? row.data[metric] : 'N/A',
                 sortable: true,
             })
         })
 
         setColumns(c);
+        setLoading(false);
     }
 
 

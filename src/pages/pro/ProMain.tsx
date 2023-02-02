@@ -7,7 +7,6 @@ import DataSources from "./DataSources";
 import DataBoard from "./DataBoard";
 import UploadDataBoard from "./UploadDataBoard";
 
-
 const ProMainPage = () => {
     const location = useLocation();
     return (
