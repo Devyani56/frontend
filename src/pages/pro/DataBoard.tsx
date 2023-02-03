@@ -35,7 +35,7 @@ const DataBoard = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [totalRows, setTotalRows] = useState<number>(10000);
-    const [perPage, setPerPage] = useState(10);
+    const [perPage, setPerPage] = useState(25);
     const [currentPage, setCurrentPage] = useState(1);
     const [columns, setColumns] = useState([
         {
@@ -151,6 +151,9 @@ const DataBoard = () => {
     return (
         <div className={css(styles.boardDefault)}>
             <div className={css(styles.dsHeader)}>
+                <div className={styles.titleHeader}>
+                    Recorded Data
+                </div>
                 <Button
                     type={"short"}
                     color={themeVars.colors.accent.darkGreen}
@@ -162,7 +165,6 @@ const DataBoard = () => {
             </div>
             <div className={css(styles.dataCont)}>
                 <DataTable
-                    title="Recorded Data"
                     columns={columns}
                     data={data}
                     progressPending={loading}
@@ -174,9 +176,7 @@ const DataBoard = () => {
                     onChangePage={handlePageChange}
                     responsive={true}
                 />
-
             </div>
-            Data Board
         </div>
     )
 }
@@ -192,29 +192,6 @@ const styles = StyleSheet.create(
             boxSizing: 'border-box',
         },
 
-        dataSourceCont: {
-            width: '100%',
-            minHeight: '100%',
-            boxSizing: 'border-box',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr 1fr',
-            gridGap: '1rem',
-            padding: '0 3rem',
-
-            gridAutoRows: 'minmax(32rem, 32rem)',
-
-            '@media (max-width: 1600px)': {
-                gridTemplateColumns: '1fr 1fr 1fr',
-            },
-
-            '@media (max-width: 1300px)': {
-                gridTemplateColumns: '1fr 1fr',
-            },
-
-            '@media (max-width: 980px)': {
-                gridTemplateColumns: '1fr',
-            }
-        },
 
         dsHeader: {
             width: '100%',
@@ -226,6 +203,9 @@ const styles = StyleSheet.create(
         },
 
         dataCont: {
+            width: '100%',
+            padding: '2rem 6%',
+            boxSizing: 'border-box',
 
         }
     }
