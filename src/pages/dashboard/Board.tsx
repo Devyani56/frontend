@@ -22,7 +22,11 @@ import FilterSection from "./FilterSection";
 import MainNavBar from "./MainNavBar";
 import VerticalGap from "../../components/VerticalGap";
 import useStore from "../../store/Store";
-const Board = () => {
+
+interface IBoardProps {
+    openSideDrawer: () => void;
+}
+const Board = ({openSideDrawer} : IBoardProps) => {
     const url = useLocation().pathname;
     const navigate = useNavigate();
     const [showModal, setShowModal] = useState(url === "/signin" || url === "/signup");
@@ -42,7 +46,7 @@ const Board = () => {
               <SigninSignup/>
           </Modal>
           <div className={css(styles.contentCont)}>
-              <MainNavBar/>
+              <MainNavBar openSideDrawer={openSideDrawer}/>
               <VerticalGap gap={"2rem"}/>
               <FilterSection/>
               <ChartSection/>

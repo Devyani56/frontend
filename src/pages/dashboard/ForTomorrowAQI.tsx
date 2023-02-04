@@ -2,8 +2,9 @@ import { StyleSheet, css } from 'aphrodite';
 import themeVars from "../../util/themeVars";
 import {buildStyles, CircularProgressbarWithChildren} from "react-circular-progressbar";
 
+// ["PM10", "PM2.5", "NO2", "CO", "SO2", "O3", "NH3", "AQI"]
 interface IdataItem {
-    label: "PM2.5" | "PM10" | "O3" | "SO2" | "NO2" | "CO",
+    label: string
     value: number
 }
 

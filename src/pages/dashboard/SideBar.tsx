@@ -10,13 +10,14 @@ import PMTiles from "./PMTiles";
 import AQILastWeek from "./AQILastWeek";
 import LogoHeader from "./LogoHeader";
 import LocationSelector from "./LocationSelector";
+import VerticalGap from "../../components/VerticalGap";
 const SideBar = () => {
     return (
         <div className={css(styles.sideBarDefault)}>
 
             <SideBarInfoSection>
-                <LocationSelector/>
                 <LogoHeader/>
+                <VerticalGap gap={"2rem"}/>
                 <Card type={"cardLight"} height={"25rem"}  width={"100%"}>
                     <AgrigateRadial/>
                 </Card>

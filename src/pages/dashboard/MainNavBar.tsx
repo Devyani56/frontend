@@ -4,7 +4,10 @@ import themeVars from "../../util/themeVars";
 import {List} from "phosphor-react";
 import useStore from "../../store/Store";
 
-const MainNavBar = () => {
+interface IMainNavBarProps {
+    openSideDrawer: () => void;
+}
+const MainNavBar = ({openSideDrawer}:IMainNavBarProps) => {
     const user = useStore((state) => state.user);
 
     return (
@@ -32,7 +35,7 @@ const MainNavBar = () => {
                        <button className={css(styles.mainNavBarLinks, styles.signupBtn)}>
                            {user.name ? user.name : "Sign Up"}
                        </button>
-                       <div className={css(styles.hamMenu)}>
+                       <div className={css(styles.hamMenu)} onClick={openSideDrawer}>
                            <List size={24} weight="bold" />
                        </div>
                    </div>
@@ -129,6 +132,11 @@ const styles = StyleSheet.create(
             justifyContent: 'center',
             alignItems: 'center',
             color: themeVars.colors.alerts.red,
+            cursor: 'pointer',
+
+            'hover': {
+                color: 'red',
+            }
 
         },
 

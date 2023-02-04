@@ -3,11 +3,13 @@ import themeVars from "../../util/themeVars";
 import {NavLink} from "react-router-dom";
 import {CirclesThree, HardDrives, House, ChartLineUp, UploadSimple} from "phosphor-react";
 import LogoHeader from "../dashboard/LogoHeader";
+import VerticalGap from "../../components/VerticalGap";
 
 const ProSideBar = () => {
     return (
         <div className={css(styles.sideBarDefault)}>
             <LogoHeader/>
+            <VerticalGap gap={'2rem'}/>
             <div className={css(styles.sideBarNavCont)}>
                 <NavLink
                     to="/"
@@ -82,6 +84,11 @@ const styles = StyleSheet.create(
             padding: '1rem',
             width: '100%',
             boxSizing: 'border-box',
+
+            ':hover': {
+                backgroundColor: themeVars.colors.accent.transparentGreen,
+                borderRadius: '1rem',
+            }
 
         },
 

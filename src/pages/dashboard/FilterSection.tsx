@@ -1,8 +1,9 @@
 import {StyleSheet, css} from "aphrodite";
 import themeVars from "../../util/themeVars";
+import {pollutantNames} from "../../util/pollutants-info";
 
 const FilterSection = () => {
-    const metrics = ["All", "CO", "SO2", "NO2", "O3", "PM2.5", "PM10", "AQI", "NH3"]
+    const metrics = ["All", ...pollutantNames]
     return (
         <div className={css(styles.defaultFilterSection)}>
             <div className={css(styles.locationCont)}>

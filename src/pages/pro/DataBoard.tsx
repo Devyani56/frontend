@@ -10,7 +10,7 @@ import axios from "axios";
 import {getPollutionDataApi} from "../../util/api/get-data-api";
 import {getDataSourceAPi} from "../../util/api/get-datasources-api";
 import {getNumRowsForASourceApi} from "../../util/api/get-num-rows-for-a-source";
-
+import sensorBoxImg from "../../assets/images/station-box.png";
 const DataBoard = () => {
 
     // get id from last part of url
@@ -151,7 +151,7 @@ const DataBoard = () => {
     return (
         <div className={css(styles.boardDefault)}>
             <div className={css(styles.dsHeader)}>
-                <div className={styles.titleHeader}>
+                <div className={css(styles.titleHeader)}>
                     Recorded Data
                 </div>
                 <Button
@@ -164,7 +164,7 @@ const DataBoard = () => {
                 </Button>
             </div>
             <div className={css(styles.dataCont)}>
-                <DataTable
+                {(loading || data.length !== 0) && <DataTable
                     columns={columns}
                     data={data}
                     progressPending={loading}
@@ -175,7 +175,13 @@ const DataBoard = () => {
                     onChangeRowsPerPage={handlePerRowsChange}
                     onChangePage={handlePageChange}
                     responsive={true}
-                />
+                    highlightOnHover={true}
+                />}
+                { (data.length === 0 && !loading) &&
+                    <div className={css(styles.noDataCont)}>
+                        <img src={sensorBoxImg} alt="no data" className={css(styles.noDataImg)} />
+                    </div>
+                }
             </div>
         </div>
     )
@@ -188,17 +194,18 @@ const styles = StyleSheet.create(
     {
         boardDefault: {
             width: '100%',
-            minHight: '100%',
+            minHeight: '100%',
             boxSizing: 'border-box',
         },
 
 
         dsHeader: {
             width: '100%',
-            padding: '2rem 6%',
+            padding: '2rem 4%',
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             boxSizing: 'border-box',
+            alignItems: 'center',
 
         },
 
@@ -206,6 +213,28 @@ const styles = StyleSheet.create(
             width: '100%',
             padding: '2rem 6%',
             boxSizing: 'border-box',
+
+        },
+
+        titleHeader: {
+            fontSize: '2.8rem',
+            fontWeight: 'normal',
+            color: themeVars.colors.accent.dark
+        },
+
+        noDataCont: {
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+
+        noDataImg: {
+            width: '40%',
+            marginRight: '15rem',
+            opacity: '0.5',
+            marginTop: '10rem',
 
         }
     }
