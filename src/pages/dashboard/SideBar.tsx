@@ -9,11 +9,15 @@ import ForTomorrowAQI from "./ForTomorrowAQI";
 import PMTiles from "./PMTiles";
 import AQILastWeek from "./AQILastWeek";
 import LogoHeader from "./LogoHeader";
+import LocationSelector from "./LocationSelector";
+import VerticalGap from "../../components/VerticalGap";
 const SideBar = () => {
     return (
         <div className={css(styles.sideBarDefault)}>
+
             <SideBarInfoSection>
                 <LogoHeader/>
+                <VerticalGap gap={"2rem"}/>
                 <Card type={"cardLight"} height={"25rem"}  width={"100%"}>
                     <AgrigateRadial/>
                 </Card>
@@ -52,6 +56,8 @@ const styles = StyleSheet.create(
             backgroundColor: themeVars.colors.backgrounds.lightest,
             width: '100%',
             height: '100%',
+            paddingTop: '1rem',
+            boxSizing: 'border-box',
         },
         header: {
             width: '100%',

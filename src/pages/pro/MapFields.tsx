@@ -1,5 +1,5 @@
 const MapFields = ({dataFieldMapping, setDataFieldMapping, headers, setDateFormat} : any) => {
-    const fields = ["none", "dataSourceId", "timestamp", "metrics"]
+    const fields = ["none", "dataSourceId", "recordedAt", "metrics"]
 
     const handleSelect = (event:any, header:string) => {
         const value = event.target.value;
@@ -7,8 +7,8 @@ const MapFields = ({dataFieldMapping, setDataFieldMapping, headers, setDateForma
             setDataFieldMapping({...dataFieldMapping, dataSourceId: header});
         }
 
-        if (value === "timestamp") {
-            setDataFieldMapping({...dataFieldMapping, timestamp: header});
+        if (value === "recordedAt") {
+            setDataFieldMapping({...dataFieldMapping, recordedAt: header});
         }
 
         if (value === "metrics") {

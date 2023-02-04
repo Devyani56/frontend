@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {
   RouterProvider,
   createBrowserRouter,
@@ -9,6 +9,7 @@ import './App.css';
 import MainPage from "./pages/dashboard/MainPage";
 import ErrorPage from "./pages/ErrorPage";
 import ProMainPage from "./pages/pro/ProMain";
+import useStore from "./store/Store";
 
 
 
@@ -25,9 +26,20 @@ const routes = createBrowserRouter(
     )
 );
 function App() {
-  return (
-    <RouterProvider router={routes}/>
+
+    const getUser = useCallback(
+        useStore((store) => store.getUser),
+        []
     );
-}
+
+    const user = useStore((store) => store.user);
+
+    useEffect(() => {
+        getUser();
+    }, []);
+
+  return (
+        <RouterProvider router={routes}/>
+  )}
 
 export default App;

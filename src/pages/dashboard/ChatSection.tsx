@@ -312,8 +312,7 @@ const styles = StyleSheet.create(
     {
         chartSectionDefault: {
             // backgroundColor: "transparent",
-            height: "30rem",
-            width: "90%"
+            height: "28rem",
         },
 
         chartContainer: {

@@ -10,7 +10,7 @@ import axios from "axios";
 import {getPollutionDataApi} from "../../util/api/get-data-api";
 import {getDataSourceAPi} from "../../util/api/get-datasources-api";
 import {getNumRowsForASourceApi} from "../../util/api/get-num-rows-for-a-source";
-
+import sensorBoxImg from "../../assets/images/station-box.png";
 const DataBoard = () => {
 
     // get id from last part of url
@@ -35,12 +35,12 @@ const DataBoard = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [totalRows, setTotalRows] = useState<number>(10000);
-    const [perPage, setPerPage] = useState(10);
+    const [perPage, setPerPage] = useState(25);
     const [currentPage, setCurrentPage] = useState(1);
     const [columns, setColumns] = useState([
         {
             name: 'Time Stamp',
-            selector: row => row.timestamp,
+            selector: row => row.recordedAt,
             sortable: true,
         },
 
@@ -69,17 +69,21 @@ const DataBoard = () => {
         }
         setLoading(false);
 
+
     }
 
     const fetchTotalRows = async () => {
+        setLoading(true);
         const totalRows = await getNumRowsForASourceApi(id);
         console.log("Line 50: ",totalRows)
         if (totalRows.type === "success") {
             setTotalRows(totalRows.data.numRows);
         }
+        setLoading(false);
     }
     const fetchColumns = async () => {
         // get the data source
+        setLoading(true);
         const dataSource = await getDataSourceAPi(id);
         console.log("Line 65: ",dataSource)
         const metrics = []
@@ -88,11 +92,12 @@ const DataBoard = () => {
             dataSource.data.metrics.forEach(metric => {
                     metrics.push(metric)
             });
+            console.log("Line 91: ",metrics)
         }
         const c = [
             {
-                name: 'Time Stamp',
-                selector: row => row.timestamp,
+                name: 'Time Recorded',
+                selector: row => row.recordedAt,
                 sortable: true,
             },
 
@@ -112,12 +117,13 @@ const DataBoard = () => {
         metrics.forEach(metric => {
             c.push({
                 name: metric,
-                selector: row => row.data[metric] ? row.data[metric] : '',
+                selector: row => row.data[metric] ? row.data[metric] : 'N/A',
                 sortable: true,
             })
         })
 
         setColumns(c);
+        setLoading(false);
     }
 
 
@@ -145,6 +151,9 @@ const DataBoard = () => {
     return (
         <div className={css(styles.boardDefault)}>
             <div className={css(styles.dsHeader)}>
+                <div className={css(styles.titleHeader)}>
+                    Recorded Data
+                </div>
                 <Button
                     type={"short"}
                     color={themeVars.colors.accent.darkGreen}
@@ -155,8 +164,7 @@ const DataBoard = () => {
                 </Button>
             </div>
             <div className={css(styles.dataCont)}>
-                <DataTable
-                    title="Recorded Data"
+                {(loading || data.length !== 0) && <DataTable
                     columns={columns}
                     data={data}
                     progressPending={loading}
@@ -167,10 +175,14 @@ const DataBoard = () => {
                     onChangeRowsPerPage={handlePerRowsChange}
                     onChangePage={handlePageChange}
                     responsive={true}
-                />
-
+                    highlightOnHover={true}
+                />}
+                { (data.length === 0 && !loading) &&
+                    <div className={css(styles.noDataCont)}>
+                        <img src={sensorBoxImg} alt="no data" className={css(styles.noDataImg)} />
+                    </div>
+                }
             </div>
-            Data Board
         </div>
     )
 }
@@ -182,44 +194,47 @@ const styles = StyleSheet.create(
     {
         boardDefault: {
             width: '100%',
-            minHight: '100%',
-            boxSizing: 'border-box',
-        },
-
-        dataSourceCont: {
-            width: '100%',
             minHeight: '100%',
             boxSizing: 'border-box',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr 1fr',
-            gridGap: '1rem',
-            padding: '0 3rem',
-
-            gridAutoRows: 'minmax(32rem, 32rem)',
-
-            '@media (max-width: 1600px)': {
-                gridTemplateColumns: '1fr 1fr 1fr',
-            },
-
-            '@media (max-width: 1300px)': {
-                gridTemplateColumns: '1fr 1fr',
-            },
-
-            '@media (max-width: 980px)': {
-                gridTemplateColumns: '1fr',
-            }
         },
+
 
         dsHeader: {
             width: '100%',
-            padding: '2rem 6%',
+            padding: '2rem 4%',
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             boxSizing: 'border-box',
+            alignItems: 'center',
 
         },
 
         dataCont: {
+            width: '100%',
+            padding: '2rem 6%',
+            boxSizing: 'border-box',
+
+        },
+
+        titleHeader: {
+            fontSize: '2.8rem',
+            fontWeight: 'normal',
+            color: themeVars.colors.accent.dark
+        },
+
+        noDataCont: {
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+
+        noDataImg: {
+            width: '40%',
+            marginRight: '15rem',
+            opacity: '0.5',
+            marginTop: '10rem',
 
         }
     }

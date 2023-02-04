@@ -3,6 +3,7 @@ import { uploadDataSourceApi } from "../../util/api/upload-data";
 import Papa from "papaparse";
 import {useState} from "react";
 import MapFields from "./MapFields";
+import {addPollutionDataApi} from "../../util/api/add-pollution-data";
 import moment from "moment";
 const UploadFromCsv = () => {
 
@@ -10,7 +11,7 @@ const UploadFromCsv = () => {
     const [headers, setHeaders] = useState<any>(null);
     const [dataFileMapping, setDataFileMapping] = useState<any>({
         dataSourceId: null,
-        timestamp: null,
+        recordedAt: null,
         metrics: [],
     });
     const [dateFormat, setDateFormat] = useState<string>("YYYY-MM-DDTHH:mm:ss");
@@ -40,10 +41,10 @@ const UploadFromCsv = () => {
     const modifyDateFormatToISO = (date: string, oldFormatString: string) => {
         const newDate = moment(date, oldFormatString);
         // convert it into ISO 8601 format with time and timezone
-        const formatteDate = newDate.format(
+        const formattedDate = newDate.format(
             "YYYY-MM-DDTHH:mm:ssZ"
         );
-        return formatteDate.toString();
+        return formattedDate.toString();
 
     }
 
@@ -64,40 +65,34 @@ const UploadFromCsv = () => {
         // loop through the data and convert it into the required format
         // also convert tie stamp from given format to ISO8601 format
         dataFromCSV.forEach((data: any) => {
-            const newData = {
-                timestamp : modifyDateFormatToISO(data[dataFileMapping.timestamp], dateFormat),
+            const newData : any = {
+                recordedAt : modifyDateFormatToISO(data[dataFileMapping.recordedAt], dateFormat),
                 data: {
-                    // loop through the metrics and add them to the data object
-                    // also convert the values to number
-                    ...dataFileMapping.metrics.map((metric: any) => {
-                        return {
-                            [metric]: Number(data[metric])
-                        }
-                    })
                 },
                 metadata: {
                     dataSourceId: data[dataFileMapping.dataSourceId]
                 },
 
             }
+
+            dataFileMapping.metrics.forEach((metric: any) => {
+                newData.data[metric] = Number(data[metric])
+            })
+
             dataToUpload.push(newData);
 
         })
         console.log(dataToUpload);
         setDataFromCSV(dataToUpload)
 
+
     }
 
 
-    const uploadData = async () => {
-        console.log(dataFromCSV);
-        // e.preventDefault();
+    const uploadData = async (e: any) => {
+        e.preventDefault();
         // upload the data to the server
-        const result = await uploadDataSourceApi(dataFromCSV);
-        console.log(result);
-        if (result.type === "success") {
-            console.log("data uploaded");
-        }
+        await addPollutionDataApi(dataFromCSV);
     }
 
     return (

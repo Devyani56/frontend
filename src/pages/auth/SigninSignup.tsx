@@ -13,6 +13,8 @@ const SigninSignup = () => {
     const navigate = useNavigate();
     const [isSignUp, setIsSignup] = useState(location.pathname === "/signup");
     const [verifyEmailPage, setVerifyEmailPage] = useState(false);
+
+
     const changeMode = () => {
         setIsSignup(!isSignUp);
         navigate(isSignUp ? "/signin" : "/signup");
@@ -158,6 +160,7 @@ const SigninSignup = () => {
                 }
                 if (currentUser.status === 200) {
                     navigate("/");
+
                 }
                 else {
                     // set errors

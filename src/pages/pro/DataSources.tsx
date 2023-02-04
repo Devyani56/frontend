@@ -9,7 +9,7 @@ import Button from "../../components/buttons/Button";
 import {Plus} from "phosphor-react";
 import AddDataSourceModal from "./AddDataSourceModal";
 import {IDataSourceData} from "./IDataSource";
-
+import sensorBoxImg from "../../assets/images/station-box.png";
 const DUMMY_DATA : IDataSourceData[] = [
     {
         "location": {
@@ -155,11 +155,7 @@ const emptyDataSource : IDataSourceData = {
 }
 const DataSources = () => {
     const [dataSourceData, setDataSourceData] = useState<IDataSourceData[]>([]);
-    getDataSourceAPi().then((res) => {
-        if (res.type === "success") {
-            setDataSourceData(res.data);
-        }
-    });
+
     const [dataSourceFormData, setDataSourceFormData] = useState<IDataSourceData >(
         emptyDataSource
     );
@@ -192,6 +188,9 @@ const DataSources = () => {
             />
 
             <div className={css(styles.dsHeader)}>
+                <div className={css(styles.titleHeader)}>
+                   Data Sources
+                </div>
                 <Button
                     type={"short"}
                     color={themeVars.colors.accent.darkGreen}
@@ -201,11 +200,20 @@ const DataSources = () => {
                     <Plus size={20} weight="bold" />
                 </Button>
             </div>
-            <div className={css(styles.dataSourceCont)}>
-                {dataSourceData.map((dataSource) => {
-                    return <DataSourceCard data={dataSource}/>
+            {dataSourceData.length !== 0 &&
+                <div className={css(styles.dataSourceCont)}>
+                    {
+                        dataSourceData.map((dataSource) => {
+                        return <DataSourceCard data={dataSource}/>
                 })}
-            </div>
+
+            </div>}
+            {dataSourceData.length === 0 &&
+                <div className={css(styles.noDataSourceCont)}>
+
+                    <img src={sensorBoxImg} alt="sensor box" className={css(styles.sensorBoxImg)} />
+                </div>
+            }
 
         </div>
     );
@@ -248,11 +256,44 @@ const styles = StyleSheet.create(
 
         dsHeader: {
             width: '100%',
-            padding: '2rem 6%',
+            padding: '2rem 4%',
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             boxSizing: 'border-box',
+            alignItems: 'center',
 
-        }
+        },
+
+        noDataSourceCont: {
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            boxSizing: 'border-box',
+            position: 'relative',
+        },
+
+        sensorBoxImg: {
+            width: '35%',
+            marginRight: '10%',
+            marginTop: '10%',
+            opacity: 0.5,
+        },
+
+        notFoundText: {
+            fontSize: '3rem',
+            fontWeight: 'bold',
+            color: themeVars.colors.accent.darkGreen,
+            position: 'absolute',
+            marginRight: '10%',
+            bottom: '40%',
+        },
+
+        titleHeader: {
+            fontSize: '2.8rem',
+            fontWeight: 'normal',
+            color: themeVars.colors.accent.dark
+        },
     }
 );
