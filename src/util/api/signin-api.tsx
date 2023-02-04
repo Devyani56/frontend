@@ -6,7 +6,7 @@ interface SigninData {
 }
 const signinApi = async (data: SigninData) => {
     try {
-        const response = await axios.post(`${authServiceUrl}/signin`, data,config);
+        const response = await axios.post(`http://localhost:3001/api/users/signin`, data,config);
         const responseData = {
             type: "success",
             data: response.data,

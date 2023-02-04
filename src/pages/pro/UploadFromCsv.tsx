@@ -1,4 +1,5 @@
 import {StyleSheet, css} from "aphrodite";
+import { uploadDataSourceApi } from "../../util/api/upload-data";
 import Papa from "papaparse";
 import {useState} from "react";
 import MapFields from "./MapFields";
@@ -15,17 +16,25 @@ const UploadFromCsv = () => {
     const [dateFormat, setDateFormat] = useState<string>("YYYY-MM-DDTHH:mm:ss");
 
     const handleCsvInput =  (event: any) => {
-        const csvFile = event.target.files[0];
-        // parse the file using papaparse
-        Papa.parse(csvFile, {
-            header: true,
-            skipEmptyLines: true,
-            complete: function (results) {
-                console.log(results)
-                setHeaders(results.meta.fields);
-                setDataFromCSV(results.data)
-            }
-        });
+        const file_name = event.target.files[0]['name'];
+        console.log(file_name.slice(-3,), (file_name.split(".").length - 1));
+        if (file_name.slice(-3,)!=="csv" || file_name.split(".").length - 1!==1){
+            alert("Inccorect file is chosen to upload the data. Only CSV files are accepted");
+        }
+        else{
+            const csvFile = event.target.files[0];
+            // parse the file using papaparse
+            Papa.parse(csvFile, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function (results) {
+                    console.log(results)
+                    setHeaders(results.meta.fields);
+                    setDataFromCSV(results.data)
+                }
+            });
+        }
+
     }
 
     const modifyDateFormatToISO = (date: string, oldFormatString: string) => {
@@ -80,13 +89,16 @@ const UploadFromCsv = () => {
     }
 
 
-    const uploadData = (e: any) => {
-        e.preventDefault();
+    const uploadData = async () => {
+        console.log(dataFromCSV);
+        // e.preventDefault();
         // upload the data to the server
-
+        const result = await uploadDataSourceApi(dataFromCSV);
+        console.log(result);
+        if (result.type === "success") {
+            console.log("data uploaded");
+        }
     }
-
-
 
     return (
         <div className={css(styles.mainDefault)}>
@@ -100,7 +112,7 @@ const UploadFromCsv = () => {
                 />
             }
             <button onClick={(e) => modifyDataForUpload(e)}>Parse Data</button>
-            <button onClick={(e) => uploadData(e)}>Upload Data</button>
+            <button onClick={(e) => uploadData()}>Upload Data</button>
         </div>
     );
 }
