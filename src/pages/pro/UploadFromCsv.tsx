@@ -4,6 +4,10 @@ import {useState} from "react";
 import MapFields from "./MapFields";
 import {addPollutionDataApi} from "../../util/api/add-pollution-data";
 import moment from "moment";
+import Button from "../../components/buttons/Button";
+import themeVars from "../../util/themeVars";
+import {Plus} from "phosphor-react";
+import MapFieldsModal from "./MapFieldsModal";
 const UploadFromCsv = () => {
 
     const [dataFromCSV, setDataFromCSV] = useState<any>(null);
@@ -14,7 +18,7 @@ const UploadFromCsv = () => {
         metrics: [],
     });
     const [dateFormat, setDateFormat] = useState<string>("YYYY-MM-DDTHH:mm:ss");
-
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const handleCsvInput =  (event: any) => {
         const csvFile = event.target.files[0];
         // parse the file using papaparse
@@ -27,6 +31,7 @@ const UploadFromCsv = () => {
                 setDataFromCSV(results.data)
             }
         });
+        setIsModalOpen(true);
     }
 
     const modifyDateFormatToISO = (date: string, oldFormatString: string) => {
@@ -75,6 +80,7 @@ const UploadFromCsv = () => {
         })
         console.log(dataToUpload);
         setDataFromCSV(dataToUpload)
+        setIsModalOpen(false);
 
 
     }
@@ -86,20 +92,31 @@ const UploadFromCsv = () => {
         await addPollutionDataApi(dataFromCSV);
     }
 
+    const closeModal = () => {
+        setIsModalOpen(false);
+    }
 
 
     return (
         <div className={css(styles.mainDefault)}>
+            <div className={css(styles.dsHeader)}>
+                <div className={css(styles.titleHeader)}>
+                    Data Sources
+                </div>
+            </div>
            <input type="file" onChange={handleCsvInput}/>
-            {headers &&
-                <MapFields
-                    dataFieldMapping={dataFileMapping}
-                    setDataFieldMapping={setDataFileMapping}
-                    headers={headers}
-                    setDateFormat={setDateFormat}
-                />
-            }
-            <button onClick={(e) => modifyDataForUpload(e)}>Parse Data</button>
+            <MapFieldsModal isOpen={isModalOpen} onClose={closeModal} onConfirm={closeModal}>
+                {headers &&
+                    <MapFields
+                        dataFieldMapping={dataFileMapping}
+                        setDataFieldMapping={setDataFileMapping}
+                        headers={headers}
+                        setDateFormat={setDateFormat}
+                        dateFormat={dateFormat}
+                        onParseData={modifyDataForUpload}
+                    />
+                }
+            </MapFieldsModal>
             <button onClick={(e) => uploadData(e)}>Upload Data</button>
         </div>
     );
@@ -111,6 +128,22 @@ const styles = StyleSheet.create(
     {
         mainDefault: {
 
-        }
+        },
+        dsHeader: {
+            width: '100%',
+            padding: '2rem 4%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            boxSizing: 'border-box',
+            alignItems: 'center',
+
+        },
+
+        titleHeader: {
+            fontSize: '2.8rem',
+            fontWeight: 'normal',
+            color: themeVars.colors.accent.dark
+        },
+
     }
 );

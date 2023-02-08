@@ -1,10 +1,12 @@
 import {css, StyleSheet} from "aphrodite";
 import themeVars from "../../util/themeVars";
+import LogoImg from "../../assets/images/logo.png";
 
 const LogoHeader = () => {
     return ( <div className={css(styles.header)}>
-        <span className={css(styles.airlife)}>AirLife</span>
-        <span className={css(styles.goa)}>GOA</span>
+        {/*<span className={css(styles.airlife)}>AirLife</span>*/}
+        {/*<span className={css(styles.goa)}>GOA</span>*/}
+        <img src={LogoImg} alt="logo" style={{width: '100%'}} className={css(styles.logoImg)}/>
     </div>);
 }
 
@@ -17,7 +19,12 @@ const styles = StyleSheet.create(
             fontSize: '3.2rem',
             fontWeight: 300,
             color: themeVars.colors.accent.dark2,
-            padding: '1rem',
+            padding: '0rem 5rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            boxSizing: 'border-box',
+            paddingTop: '2rem',
         },
 
         airlife: {
@@ -35,6 +42,10 @@ const styles = StyleSheet.create(
             fontWeight: 600,
             borderLeft: 'none',
 
+        },
+
+        logoImg: {
+            width: '80%',
         }
 
 

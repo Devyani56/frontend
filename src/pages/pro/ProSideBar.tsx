@@ -86,7 +86,7 @@ const styles = StyleSheet.create(
             boxSizing: 'border-box',
 
             ':hover': {
-                backgroundColor: themeVars.colors.accent.transparentGreen,
+                backgroundColor: themeVars.colors.accent.transparentGreen2,
                 borderRadius: '1rem',
             }
 

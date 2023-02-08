@@ -40,15 +40,22 @@ const Board = ({openSideDrawer} : IBoardProps) => {
         setShowModal(false);
         navigate("/");
     }
+
+    const today = new Date();
+    const monthBack = new Date();
+    monthBack.setMonth(today.getMonth() - 1);
+    const [filterOptions, setFilterOptions] = useState({metric: "All", duration: "Daily", startDate: today, endDate: monthBack});
+
+    const [location, setLocation] = useState({"sourceId": "", "sourceName": "", "sourceType": "", "sourceLat": 0, "sourceLng": 0, address: ""});
     return (
       <div className={css(styles.boardDefault)}>
           <Modal isOpen={showModal} onClose={onCloseModal}>
               <SigninSignup/>
           </Modal>
           <div className={css(styles.contentCont)}>
-              <MainNavBar openSideDrawer={openSideDrawer}/>
+              <MainNavBar openSideDrawer={openSideDrawer} location={location} setLocation={setLocation}/>
               <VerticalGap gap={"2rem"}/>
-              <FilterSection/>
+              <FilterSection filterOptions={filterOptions} setFilterOptions={setFilterOptions}/>
               <ChartSection/>
               <InfoContainer>
                   <InfoSection>

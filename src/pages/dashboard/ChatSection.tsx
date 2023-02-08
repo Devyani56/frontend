@@ -278,30 +278,7 @@ const data = [
 const ChartSection = () => {
     return (
         <div className={css(styles.chartSectionDefault)}>
-            {/*<div className={css(styles.chartFiltersLocationCont)}>*/}
-            {/*    <div className={css(styles.statsForCont)}>*/}
-            {/*        Showing Stats for <br/>*/}
-            {/*        Farmagudi, Goa, India*/}
-            {/*    </div>*/}
-            {/*    <div className={css(styles.FilterCont)}>*/}
-            {/*        <div className={css(styles.Filter)}>*/}
-            {/*            <button className={css(styles.generalButton)}>Filter <CaretDown size={20} /></button>*/}
-            {/*        </div>*/}
-            {/*        <div className={css(styles.Interval)}>*/}
-            {/*            <button className={css(styles.generalButton)}>Daily</button>*/}
-            {/*            <button className={css(styles.generalButton)}>Weekly</button>*/}
-            {/*            <button className={css(styles.generalButton)}>Monthly</button>*/}
-
-            {/*        </div>*/}
-            {/*        <div className={css(styles.DateRange)}>*/}
-            {/*            <input className={css(styles.generalButton)} type="date" name="start-date"/>*/}
-            {/*            <input className={css(styles.generalButton)} type="date" name={"end-date"}/>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-            {/*<div className={css(styles.chartContainer)}>*/}
-                <MyResponsiveLine data={data}/>
-            {/*</div>*/}
+            <MyResponsiveLine data={data}/>
         </div>
     );
 };

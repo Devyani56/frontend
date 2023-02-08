@@ -1,9 +1,18 @@
 import {StyleSheet, css} from "aphrodite";
 import themeVars from "../../util/themeVars";
 import {pollutantNames} from "../../util/pollutants-info";
-
-const FilterSection = () => {
+import {useState} from "react";
+// const [filterOptions, setFilterOptions] = useState({metric: "All", duration: "Daily", startDate: today, endDate: monthBack});
+interface  IFilterSectionProps {
+    filterOptions: {metric: string, duration: string, startDate: Date, endDate: Date};
+    setFilterOptions: (filterOptions: {metric: string, duration: string, startDate: Date, endDate: Date}) => void;
+}
+const FilterSection = ({filterOptions, setFilterOptions} : IFilterSectionProps) => {
     const metrics = ["All", ...pollutantNames]
+
+    const changeDuration = (duration: string) => {
+        setFilterOptions({...filterOptions, duration});
+    }
     return (
         <div className={css(styles.defaultFilterSection)}>
             <div className={css(styles.locationCont)}>
@@ -17,7 +26,7 @@ const FilterSection = () => {
             </div>
             <div className={css(styles.filterCont)}>
                 <div className={css(styles.dataFilterCont)}>
-                    <select name={"metrics"} id={"metrics"} className={css(styles.dataFilter)}>
+                    <select name={"metrics"} id={"metrics"} className={css(styles.dataFilter)} onChange={(e) => setFilterOptions({...filterOptions, metric: e.target.value})}>
                         {metrics.map((metric) => {
                             return <option value={metric}>{metric}</option>
                         }
@@ -25,13 +34,22 @@ const FilterSection = () => {
                     </select>
                 </div>
                 <div className={css(styles.durationFilterCont)}>
-                    <button className={css(styles.durationFilter, styles.durationFilterLeft)}>
+                    <button
+                        className={css(styles.durationFilter, styles.durationFilterLeft, filterOptions.duration === "Daily" && styles.durationFilterActive)}
+                        onClick={() => changeDuration("Daily")}
+                    >
                         Daily
                     </button>
-                    <button className={css(styles.durationFilter, styles.durationFilterMiddle)}>
+                    <button
+                        className={css(styles.durationFilter, styles.durationFilterMiddle, filterOptions.duration === "Weekly" && styles.durationFilterActive)}
+                        onClick={() => changeDuration("Weekly")}
+
+                    >
                         Weekly
                     </button>
-                    <button className={css(styles.durationFilter, styles.durationFilterRight)}>
+                    <button className={css(styles.durationFilter, styles.durationFilterRight, filterOptions.duration === "Monthly" && styles.durationFilterActive)}
+                        onClick={() => changeDuration("Monthly")}
+                    >
                         Monthly
                     </button>
 
@@ -137,6 +155,10 @@ const styles = StyleSheet.create(
             borderRadius: '2rem 0 0 2rem',
             borderRight: '0.5px solid rgba(256, 256, 256, 0.08)',
 
+        },
+
+        durationFilterActive: {
+            backgroundColor: 'rgba(256, 256, 256, 0.03)',
         },
 
         durationFilterMiddle: {

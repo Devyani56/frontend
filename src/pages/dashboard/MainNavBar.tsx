@@ -3,20 +3,36 @@ import Button from "../../components/buttons/Button";
 import themeVars from "../../util/themeVars";
 import {List} from "phosphor-react";
 import useStore from "../../store/Store";
+import LocationSelector from "./LocationSelector";
 
 interface IMainNavBarProps {
     openSideDrawer: () => void;
+    location: {
+        "sourceId": string,
+        "sourceName": string,
+        "sourceType": string,
+        "sourceLat": number,
+        "sourceLng": number,
+        address: string
+    }
+
+    setLocation: (location: {
+        "sourceId": string,
+        "sourceName": string,
+        "sourceType": string,
+        "sourceLat": number,
+        "sourceLng": number,
+        address: string
+    }) => void
 }
-const MainNavBar = ({openSideDrawer}:IMainNavBarProps) => {
+const MainNavBar = ({openSideDrawer, location, setLocation}:IMainNavBarProps) => {
     const user = useStore((state) => state.user);
 
     return (
         <div className={css(styles.mainNavBar)}>
             <div className={css(styles.mainNavBarContainer)}>
                 <div className={css(styles.mainNavBarLeft)}>
-                   <button  className={css(styles.subscribeBtn)}>
-                       Subscribe
-                   </button>
+                  <LocationSelector location={location} setLocation={setLocation}/>
                 </div>
                 <div className={css(styles.mainNavBarRight)}>
                    <div className={css(styles.mainNavBarLinksCont)}>
