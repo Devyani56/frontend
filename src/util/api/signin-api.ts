@@ -1,32 +1,27 @@
 import axios from "axios";
-import {authServiceUrl} from "../../urls";
-interface SignupData {
+import {authServiceUrl, config} from "../../urls";
+interface SigninData {
     email: string;
     password: string;
-    name: string;
 }
-const signupApi = async (data: SignupData) => {
-    const modifiedData = {
-        email: data.email,
-        password: data.password,
-        firstName: data.name,
-        lastName: "",
-        appliedRole: "user"
-    }
-    // handle cors error
+export const signinApi = async (data: SigninData) => {
     try {
-        const response = await axios.post(`${authServiceUrl}/signup`, modifiedData);
-
+        const response = await axios.post(`${authServiceUrl}/signin`, data,config);
         const responseData = {
             type: "success",
             data: response.data,
             status: response.status
         }
-        console.log("In response block :",responseData);
+
+        // read the cookie and set it for all requests to localhost:3001
+        const cookie = response.headers["set-cookie"];
+        if (cookie) {
+            // use domain localhost:3001
+            document.cookie = `${cookie[0]};domain=localhost:3001;path=/`;
+        }
         return responseData;
     }
     catch (err : any) {
-
         const responseData = {
             type: "error",
             data: err.response.data.errors,
@@ -35,6 +30,6 @@ const signupApi = async (data: SignupData) => {
         console.log("In error block :",responseData);
         return responseData;
     }
-}
 
-export default signupApi;
+
+}

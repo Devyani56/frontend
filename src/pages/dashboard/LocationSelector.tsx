@@ -27,14 +27,22 @@ const LocationSelector = ({location, setLocation}:ILocationSelectorProps) => {
 
     const [allLocations, setAllLocations] = useState<any>([]);
 
+    const changeLocation = (e: any) => {
+        const selectedLocation = allLocations.find((item: any) => {
+            return item.sourceId === e.target.value
+        })
+        setLocation(selectedLocation);
+    }
+
     const getLocations = async () => {
+        console.log("getLocations called");
         const response = await getDataSourceAPi()
         let data : any = []
         if(response.type === "success") {
             data = response.data;
-            return data;
         }
         if(!data || data.length === 0 ) {
+            console.log("No data found")
             return;
         }
         const locationArray = data.map((item: any) => {
@@ -48,6 +56,8 @@ const LocationSelector = ({location, setLocation}:ILocationSelectorProps) => {
             }
         })
         setAllLocations(locationArray);
+        setLocation(locationArray[0]);
+        console.log("locationArray", locationArray)
 
     }
 
@@ -60,7 +70,7 @@ const LocationSelector = ({location, setLocation}:ILocationSelectorProps) => {
 
         <div>
             <div className={css(styles.locationSelector)}>
-                <select className={css(styles.locationSelectorButton)}>
+                <select className={css(styles.locationSelectorButton)} onChange={changeLocation}>
                     {allLocations.map((item: any) => {
                         return (
                             <option value={item.sourceId}>{item.sourceName}</option>
