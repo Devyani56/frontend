@@ -108,7 +108,7 @@ const UploadFromCsv = () => {
         const columns = [
             {
                 name: 'Time Stamp',
-                selector: row => row.recordedAt,
+                selector: row => formatTimeToLookGood(row.recordedAt),
                 sortable: true,
             },
 
@@ -143,13 +143,22 @@ const UploadFromCsv = () => {
         await addPollutionDataApi(dataFromCSV);
     }
 
+    const formatTimeToLookGood = (time: string) => {
+        const newTime = moment(time).format("DD MMM YYYY, hh:mm:ss A");
+        return newTime;
+    }
     const resetData = () => {
         setDataFromCSV(null);
         setData([]);
+        setDataFileMapping ({
+            dataSourceId: null,
+            recordedAt: null,
+            metrics: [],
+        })
         setColumns([
             {
                 name: 'Time Stamp',
-                selector: row => row.recordedAt,
+                selector: row => formatTimeToLookGood(row.recordedAt),
                 sortable: true,
             },
 
