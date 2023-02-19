@@ -4,6 +4,7 @@ import themeVars from "../../util/themeVars";
 import {List} from "phosphor-react";
 import useStore from "../../store/Store";
 import LocationSelector from "./LocationSelector";
+import {useNavigate} from "react-router-dom";
 
 interface IMainNavBarProps {
     openSideDrawer: () => void;
@@ -28,6 +29,14 @@ interface IMainNavBarProps {
 const MainNavBar = ({openSideDrawer, location, setLocation}:IMainNavBarProps) => {
     const user = useStore((state) => state.user);
 
+    const navigate = useNavigate();
+    const onSigninButton = () => {
+        if (user.name) {
+            return;
+        }
+        navigate("/signin");
+    }
+
     return (
         <div className={css(styles.mainNavBar)}>
             <div className={css(styles.mainNavBarContainer)}>
@@ -48,7 +57,7 @@ const MainNavBar = ({openSideDrawer, location, setLocation}:IMainNavBarProps) =>
                        <button className={css(styles.mainNavBarLinks)}>
                            About
                        </button>
-                       <button className={css(styles.mainNavBarLinks, styles.signupBtn)}>
+                       <button className={css(styles.mainNavBarLinks, styles.signupBtn)} onClick={onSigninButton}>
                            {user.name ? user.name : "Sign Up"}
                        </button>
                        <div className={css(styles.hamMenu)} onClick={openSideDrawer}>
@@ -139,6 +148,7 @@ const styles = StyleSheet.create(
             backgroundColor: 'transparent',
             border: 'none',
             letterSpacing: '0.085em',
+            cursor: 'pointer',
 
         },
 

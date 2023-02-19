@@ -11,6 +11,7 @@ interface IButtonProps {
     id?: string;
     title?: string;
     ariaLabel?: string;
+    textColor ?: string;
 
 }
 const Button = (props :IButtonProps) => {
@@ -18,6 +19,8 @@ const Button = (props :IButtonProps) => {
         {
             ButtonCustom: {
                 backgroundColor: props.color,
+
+                color: props.textColor ? props.textColor : 'white',
             //     change color on hover
                 ':hover': {
                     backgroundColor: props.hoverColor ? props.hoverColor : props.color,

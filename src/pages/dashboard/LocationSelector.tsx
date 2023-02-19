@@ -120,6 +120,7 @@ const styles = StyleSheet.create(
         //     make the caret icon move bit left
             // replace the default one and add a new one
             appearance: 'none',
+            outline: 'none',
         },
 
         gpsButton: {

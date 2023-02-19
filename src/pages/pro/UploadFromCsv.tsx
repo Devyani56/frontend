@@ -1,6 +1,7 @@
+// @ts-nocheck
 import {StyleSheet, css} from "aphrodite";
 import Papa from "papaparse";
-import {useState} from "react";
+import {useState, useRef} from "react";
 import MapFields from "./MapFields";
 import {addPollutionDataApi} from "../../util/api/add-pollution-data";
 import moment from "moment";
@@ -8,10 +9,13 @@ import Button from "../../components/buttons/Button";
 import themeVars from "../../util/themeVars";
 import {Plus} from "phosphor-react";
 import MapFieldsModal from "./MapFieldsModal";
+import DataTable from "react-data-table-component";
+import VerticalGap from "../../components/VerticalGap";
 const UploadFromCsv = () => {
 
     const [dataFromCSV, setDataFromCSV] = useState<any>(null);
     const [headers, setHeaders] = useState<any>(null);
+    const fileInput = useRef<any>(null);
     const [dataFileMapping, setDataFileMapping] = useState<any>({
         dataSourceId: null,
         recordedAt: null,
@@ -19,9 +23,28 @@ const UploadFromCsv = () => {
     });
     const [dateFormat, setDateFormat] = useState<string>("YYYY-MM-DDTHH:mm:ss");
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+    const [data, setData] = useState([]);
+    const [columns, setColumns] = useState([
+        {
+            name: 'Time Stamp',
+            selector: row => row.recordedAt,
+            sortable: true,
+        },
+
+    ]);
+
+    const [loading, setLoading] = useState(false);
+    const [totalRows, setTotalRows] = useState<number>(10000);
+    const [currentPage, setCurrentPage] = useState(1);
     const handleCsvInput =  (event: any) => {
         const csvFile = event.target.files[0];
         // parse the file using papaparse
+        // check if the file is valid
+        if (!csvFile) {
+            console.log("No file selected");
+            return;
+        }
         Papa.parse(csvFile, {
             header: true,
             skipEmptyLines: true,
@@ -82,7 +105,35 @@ const UploadFromCsv = () => {
         setDataFromCSV(dataToUpload)
         setIsModalOpen(false);
 
+        const columns = [
+            {
+                name: 'Time Stamp',
+                selector: row => row.recordedAt,
+                sortable: true,
+            },
 
+            {
+                name: 'Station ID',
+                selector: row => row.metadata.dataSourceId,
+                sortable: true,
+            }
+
+        ];
+
+        dataFileMapping.metrics.forEach((metric: any) => {
+            columns.push({
+                name: metric,
+                selector: row => row.data[metric],
+                sortable: true,
+            })
+        })
+
+
+
+        setColumns(columns);
+        setData(dataToUpload);
+
+        setTotalRows(dataToUpload.length);
     }
 
 
@@ -92,8 +143,47 @@ const UploadFromCsv = () => {
         await addPollutionDataApi(dataFromCSV);
     }
 
+    const resetData = () => {
+        setDataFromCSV(null);
+        setData([]);
+        setColumns([
+            {
+                name: 'Time Stamp',
+                selector: row => row.recordedAt,
+                sortable: true,
+            },
+
+        ]);
+    }
+
     const closeModal = () => {
         setIsModalOpen(false);
+    }
+
+    const UploadResetBtn = () => {
+        if (data.length === 0) {
+            return null;
+        }
+        return (
+            <div className={css(styles.uploadBtnCont)}>
+                <Button
+                    onClick={(e) => resetData(e)}
+                    type={'long'}
+                    color={themeVars.colors.accent.transparentGreen}
+                    textColor={themeVars.colors.accent.darkGreen}
+                >
+                    Reset
+                </Button>
+
+                <Button
+                    onClick={(e) => uploadData(e)}
+                    type={'long'}
+                    color={themeVars.colors.accent.darkGreen}
+                >
+                    Upload
+                </Button>
+            </div>
+        )
     }
 
 
@@ -101,10 +191,21 @@ const UploadFromCsv = () => {
         <div className={css(styles.mainDefault)}>
             <div className={css(styles.dsHeader)}>
                 <div className={css(styles.titleHeader)}>
-                    Data Sources
+                    Upload Data from CSV
                 </div>
             </div>
-           <input type="file" onChange={handleCsvInput}/>
+            {data.length === 0 &&
+                <div className={css(styles.fileInputCont)}>
+                    <button className={css(styles.fileInputBtn)} onClick={() => fileInput.current.click()}>
+                        <Plus className={css(styles.plus)} size={24}/>
+                    </button>
+                    <input
+                        type="file"
+                        style={{display: 'none'}}
+                        onChange={handleCsvInput}
+                        ref={fileInput}
+                    />
+                </div>}
             <MapFieldsModal isOpen={isModalOpen} onClose={closeModal} onConfirm={closeModal}>
                 {headers &&
                     <MapFields
@@ -117,7 +218,23 @@ const UploadFromCsv = () => {
                     />
                 }
             </MapFieldsModal>
-            <button onClick={(e) => uploadData(e)}>Upload Data</button>
+            {/*<UploadResetBtn/>*/}
+            <div className={css(styles.tableCont)}>
+                {(loading || data.length !== 0) && <DataTable
+                    columns={columns}
+                    data={data}
+                    progressPending={loading}
+                    pagination
+                    paginationTotalRows={totalRows}
+                    paginationDefaultPage={currentPage}
+                    responsive={true}
+                    highlightOnHover={true}
+                    style={{ width: '100%' }}
+                />}
+            </div>
+            <UploadResetBtn/>
+            <VerticalGap gap={'2rem'}/>
+
         </div>
     );
 }
@@ -144,6 +261,61 @@ const styles = StyleSheet.create(
             fontWeight: 'normal',
             color: themeVars.colors.accent.dark
         },
+
+        fileInput: {
+            display: 'none',
+
+        },
+
+        fileInputCont: {
+            width: '100%',
+            padding: '2rem 4%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            boxSizing: 'border-box',
+        },
+
+        fileInputBtn: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            height: '100%',
+            border: `1px solid ${themeVars.colors.accent.green}`,
+            borderRadius: '0.5rem',
+            fontSize: '1.8rem',
+            fontWeight: 'normal',
+            padding: '1rem 2rem',
+            backgroundColor: themeVars.colors.accent.transparentGreen2,
+            cursor: 'pointer',
+
+        },
+
+        plus: {
+            color: themeVars.colors.accent.darkGreen,
+            // backgroundColor: themeVars.colors.accent.darkGreen,
+            // border: `1px solid ${themeVars.colors.accent.darkGreen}`,
+            borderRadius: '50%',
+            padding: '0.5rem',
+
+        },
+
+        tableCont: {
+            width: '100%',
+            padding: '2rem 4%',
+            boxSizing: 'border-box',
+        },
+
+        uploadBtnCont: {
+            width: '100%',
+            padding: '2rem 4%',
+            boxSizing: 'border-box',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            gap: '3rem',
+        }
+
 
     }
 );
