@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {StyleSheet, css} from "aphrodite";
 import signinSignupImage from "../../assets/images/signin-signup-background.png";
 import SigninForm from "./SigninForm";
@@ -8,11 +8,18 @@ import {signinApi} from "../../util/api/signin-api";
 import {signupApi} from "../../util/api/signup-api";
 import {currentUserApi} from "../../util/api/current-user-api";
 import VerifyEmailPrompt from "./VerifyEmailPrompt";
+import useStore from "../../store/Store";
 const SigninSignup = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [isSignUp, setIsSignup] = useState(location.pathname === "/signup");
     const [verifyEmailPage, setVerifyEmailPage] = useState(false);
+
+    const getUser = useCallback(
+        useStore((store) => store.getUser),
+        []
+    );
+
 
 
     const changeMode = () => {
@@ -129,7 +136,8 @@ const SigninSignup = () => {
                 }
             }
 
-        } else {
+        }
+        else {
             const response = await signinApi(userDetails);
             if (response.type === "error") {
                 if (response.status === 200) {
@@ -162,7 +170,8 @@ const SigninSignup = () => {
                     navigate("/");
 
                 }
-                else {
+
+            else {
                     // set errors
                     setErrors((prevState) => {
                         return {
@@ -182,6 +191,7 @@ const SigninSignup = () => {
 
             }
         }
+        getUser();
     }
 
 

@@ -298,6 +298,15 @@ const ChartSection = ({data} : any) => {
     // create a data field in the chart data format
     const [chartData, setChartData] = useState<any>([])
 
+    const prettyDate = (date : string) => {
+        const dateObj = new Date(date)
+        // use short form of month
+        const month = dateObj.toLocaleString('default', { month: 'short' })
+        const day = dateObj.getDate()
+        const year = dateObj.getFullYear()
+        return `${month} ${day}`
+
+    }
     const colors  = ["hsl(312, 70%, 50%)", "hsl(319, 70%, 50%)", "hsl(63, 70%, 50%)", "hsl(63, 70%, 50%)"]
     const parseDataForChart = (data : any) => {
         const dataByFields : any = {}
@@ -321,7 +330,7 @@ const ChartSection = ({data} : any) => {
                     dataByFields[key] = []
                 }
                 dataByFields[key].push({
-                    x: recordedAt,
+                    x: prettyDate(recordedAt),
                     y: recordData[key]
                 })
             }
