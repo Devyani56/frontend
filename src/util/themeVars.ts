@@ -13,6 +13,7 @@ const themeVars  = {
             dark: "rgba(31, 43, 53, 0.9)",
             black: "#1F232E",
             transparentGreen: 'rgba(127,200,182,0.35)',
+            transparentGreen2: 'rgba(127,200,182,0.2)',
             green: 'rgba(127, 200, 182, 1)',
             darkGreen : 'rgb(64,189,163)',
             darGreen2 : 'rgb(0, 153, 153)',

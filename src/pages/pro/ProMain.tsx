@@ -5,6 +5,7 @@ import themeVars from "../../util/themeVars";
 import {Route, useLocation, Routes} from "react-router-dom";
 import DataSources from "./DataSources";
 import DataBoard from "./DataBoard";
+import VisualizeModels from './VisualizeModels';
 import UploadDataBoard from "./UploadDataBoard";
 
 const ProMainPage = () => {
@@ -19,6 +20,7 @@ const ProMainPage = () => {
                     <Route path="/datasources" element={<DataSources/>}/>
                     <Route path="/data/*" element={<DataBoard/>}/>
                     <Route path="/upload/*" element={<UploadDataBoard/>}/>
+                    <Route path="/visualize/*" element={<VisualizeModels/>}/>
                 </Routes>
             </section>
         </main>

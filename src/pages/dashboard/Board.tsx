@@ -22,6 +22,7 @@ import FilterSection from "./FilterSection";
 import MainNavBar from "./MainNavBar";
 import VerticalGap from "../../components/VerticalGap";
 import useStore from "../../store/Store";
+import {getFilteredDataApi} from "../../util/api/get-filtered-data";
 
 interface IBoardProps {
     openSideDrawer: () => void;
@@ -40,16 +41,41 @@ const Board = ({openSideDrawer} : IBoardProps) => {
         setShowModal(false);
         navigate("/");
     }
+
+    const today = new Date();
+    const monthBack = new Date();
+    monthBack.setMonth(today.getMonth() - 1);
+    const [filterOptions, setFilterOptions] = useState({metric: "All", duration: "Daily", startDate: today, endDate: monthBack});
+
+    const [location, setLocation] = useState({"sourceId": "", "sourceName": "", "sourceType": "", "sourceLat": 0, "sourceLng": 0, address: ""});
+
+    const [data, setData] = useState([]);
+
+    const getAndSetData = async () => {
+        console.log("Locatio from getAndSetData", location)
+        if (!location.sourceId) {
+            return;
+        }
+        const response = await getFilteredDataApi(location.sourceId)
+        if(response.type === "success") {
+            setData(response.data.data);
+        }
+    }
+
+    useEffect(() => {
+        getAndSetData();
+    }
+    , [filterOptions, location]);
     return (
       <div className={css(styles.boardDefault)}>
           <Modal isOpen={showModal} onClose={onCloseModal}>
               <SigninSignup/>
           </Modal>
           <div className={css(styles.contentCont)}>
-              <MainNavBar openSideDrawer={openSideDrawer}/>
+              <MainNavBar openSideDrawer={openSideDrawer} location={location} setLocation={setLocation}/>
               <VerticalGap gap={"2rem"}/>
-              <FilterSection/>
-              <ChartSection/>
+              <FilterSection filterOptions={filterOptions} setFilterOptions={setFilterOptions}/>
+              <ChartSection data={data}/>
               <InfoContainer>
                   <InfoSection>
                       <Card type={"cardDark"}  height={"12rem"}>

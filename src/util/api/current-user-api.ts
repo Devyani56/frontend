@@ -1,6 +1,6 @@
 import axios from "axios";
 import {authServiceUrl} from "../../urls";
-const currentUserApi = async () => {
+export const currentUserApi = async () => {
     try {
         const response = await axios.get(`http://localhost:3001/api/users/currentuser`);
         const responseData = {
@@ -22,4 +22,3 @@ const currentUserApi = async () => {
     }
 }
 
-export default currentUserApi;

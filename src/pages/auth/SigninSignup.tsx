@@ -4,9 +4,9 @@ import signinSignupImage from "../../assets/images/signin-signup-background.png"
 import SigninForm from "./SigninForm";
 import SignupForm from "./SignupForm";
 import {useLocation, useNavigate} from "react-router-dom";
-import signinApi from "../../util/api/signin-api";
-import signupApi from "../../util/api/signup-api";
-import currentUserApi from "../../util/api/current-user-api";
+import {signinApi} from "../../util/api/signin-api";
+import {signupApi} from "../../util/api/signup-api";
+import {currentUserApi} from "../../util/api/current-user-api";
 import VerifyEmailPrompt from "./VerifyEmailPrompt";
 const SigninSignup = () => {
     const location = useLocation();

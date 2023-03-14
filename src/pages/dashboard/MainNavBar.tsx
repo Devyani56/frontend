@@ -3,20 +3,45 @@ import Button from "../../components/buttons/Button";
 import themeVars from "../../util/themeVars";
 import {List} from "phosphor-react";
 import useStore from "../../store/Store";
+import LocationSelector from "./LocationSelector";
+import {useNavigate} from "react-router-dom";
 
 interface IMainNavBarProps {
     openSideDrawer: () => void;
+    location: {
+        "sourceId": string,
+        "sourceName": string,
+        "sourceType": string,
+        "sourceLat": number,
+        "sourceLng": number,
+        address: string
+    }
+
+    setLocation: (location: {
+        "sourceId": string,
+        "sourceName": string,
+        "sourceType": string,
+        "sourceLat": number,
+        "sourceLng": number,
+        address: string
+    }) => void
 }
-const MainNavBar = ({openSideDrawer}:IMainNavBarProps) => {
+const MainNavBar = ({openSideDrawer, location, setLocation}:IMainNavBarProps) => {
     const user = useStore((state) => state.user);
+
+    const navigate = useNavigate();
+    const onSigninButton = () => {
+        if (user.name) {
+            return;
+        }
+        navigate("/signin");
+    }
 
     return (
         <div className={css(styles.mainNavBar)}>
             <div className={css(styles.mainNavBarContainer)}>
                 <div className={css(styles.mainNavBarLeft)}>
-                   <button  className={css(styles.subscribeBtn)}>
-                       Subscribe
-                   </button>
+                  <LocationSelector location={location} setLocation={setLocation}/>
                 </div>
                 <div className={css(styles.mainNavBarRight)}>
                    <div className={css(styles.mainNavBarLinksCont)}>
@@ -32,7 +57,7 @@ const MainNavBar = ({openSideDrawer}:IMainNavBarProps) => {
                        <button className={css(styles.mainNavBarLinks)}>
                            About
                        </button>
-                       <button className={css(styles.mainNavBarLinks, styles.signupBtn)}>
+                       <button className={css(styles.mainNavBarLinks, styles.signupBtn)} onClick={onSigninButton}>
                            {user.name ? user.name : "Sign Up"}
                        </button>
                        <div className={css(styles.hamMenu)} onClick={openSideDrawer}>
@@ -123,6 +148,7 @@ const styles = StyleSheet.create(
             backgroundColor: 'transparent',
             border: 'none',
             letterSpacing: '0.085em',
+            cursor: 'pointer',
 
         },
 
