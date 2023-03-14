@@ -19,6 +19,7 @@
     "moment": "^2.29.4",
     "papaparse": "^5.3.2",
     "phosphor-react": "^1.4.1",
+    "plotly.js": "^2.18.2",
     "react": "^18.2.0",
     "react-arc-progress": "^1.0.2",
     "react-circular-progressbar": "^2.1.0",
@@ -26,6 +27,7 @@
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.0",
     "react-loader-spinner": "^5.3.4",
+    "react-plotly.js": "^2.6.0",
     "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",
@@ -60,8 +62,10 @@
   },
   "devDependencies": {
     "@types/papaparse": "^5.3.7",
+    "@types/plotly.js": "^2.12.18",
     "@types/react-css-modules": "^4.6.4",
     "@types/react-leaflet": "^2.8.2",
+    "@types/react-plotly.js": "^2.6.0",
     "simple-zustand-devtools": "^1.1.0"
   }
 }

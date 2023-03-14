@@ -15,7 +15,7 @@ export const signupApi = async (data: SignupData) => {
     }
     // handle cors error
     try {
-        const response = await axios.post(`${authServiceUrl}/signup`, modifiedData);
+        const response = await axios.post(`http://localhost:3000/api/users/signup`, modifiedData);
 
         const responseData = {
             type: "success",

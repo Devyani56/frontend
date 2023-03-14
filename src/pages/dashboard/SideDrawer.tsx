@@ -38,6 +38,9 @@ const SideDrawer = ({isOpen, onClose}:ISideDrawerProps) => {
                         <button className={css(styles.drawerBtn)} onClick={() => navigate('/pro/upload')}>
                             Upload Data
                         </button>
+                        <button className={css(styles.drawerBtn)} onClick={() => navigate('/pro/visualize')}>
+                            visualize Data
+                        </button>
                         <button className={css(styles.drawerBtn)}>
                             View Profile
                         </button>

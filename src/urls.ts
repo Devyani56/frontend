@@ -1,10 +1,10 @@
-const authServiceUrl = "/api/users";
-const pollutionServiceUrl = "/api/pollution";
+const authServiceUrl = "http://localhost:3001/api/users";
+const pollutionServiceUrl = "http://localhost:3001/api/pollution";
 const config = {
-    headers: {
-        "Content-Type": "application/json"
-    },
-    withCredentials: true
-}
+  headers: {
+    "Content-Type": "application/json",
+  },
+  withCredentials: true,
+};
 
 export { authServiceUrl, pollutionServiceUrl, config };

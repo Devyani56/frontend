@@ -6,7 +6,6 @@ import {Route, useLocation, Routes} from "react-router-dom";
 import DataSources from "./DataSources";
 import DataBoard from "./DataBoard";
 import UploadDataBoard from "./UploadDataBoard";
-import UserManagement from "./UserManagement";
 
 const ProMainPage = () => {
     const location = useLocation();
@@ -21,6 +20,7 @@ const ProMainPage = () => {
                     <Route path="/data/*" element={<DataBoard/>}/>
                     <Route path="/upload/*" element={<UploadDataBoard/>}/>
                     <Route path="/user-management/*" element={<UserManagement/>}/>
+                    <Route path="/visualize/*" element={<VisualizeModels/>}/>
                 </Routes>
             </section>
         </main>
