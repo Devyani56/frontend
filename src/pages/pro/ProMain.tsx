@@ -6,6 +6,9 @@ import {Route, useLocation, Routes} from "react-router-dom";
 import DataSources from "./DataSources";
 import DataBoard from "./DataBoard";
 import UploadDataBoard from "./UploadDataBoard";
+import VisualizeModels from "./VisualizeModels";
+import UserManagement from "./UserManagement";
+
 
 const ProMainPage = () => {
     const location = useLocation();
