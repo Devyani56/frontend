@@ -1,10 +1,10 @@
 import axios from "axios";
-import {pollutionServiceUrl} from "../../urls";
+import {pollutionServiceUrl, config} from "../../urls";
 
 
 export const getDataSourceAPi = async (id: string = "") => {
    try {
-       const response = await axios.get(`${pollutionServiceUrl}/datasource/${id}`);
+       const response = await axios.get(`${pollutionServiceUrl}/datasource/${id}`, config);
 
        const responseData = {
            type: "success",

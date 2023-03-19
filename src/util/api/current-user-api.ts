@@ -1,8 +1,8 @@
 import axios from "axios";
-import {authServiceUrl} from "../../urls";
+import {authServiceUrl, config} from "../../urls";
 export const currentUserApi = async () => {
     try {
-        const response = await axios.get(`http://localhost:3001/api/users/currentuser`);
+        const response = await axios.get(`http://localhost:3001/api/users/currentuser`, config);
         const responseData = {
             type: "success",
             data: response.data,

@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {pollutionServiceUrl} from "../../urls";
+import {pollutionServiceUrl, config} from "../../urls";
 // To-Do addd extra dropdown menu called metric. to get prediction data based on metric
 export const getPredictionDataApi = async (sourceId : string,modelName: string, startDate  = 1, endDate = 1000 ) => {
     try {
         // add filter tag to url
-        const response = await axios.post(pollutionServiceUrl + `/data/${sourceId}`, {"modelName": modelName})
+        const response = await axios.post(pollutionServiceUrl + `/data/${sourceId}`, {"modelName": modelName}, config)
         const responseData = {
             type: "success",
             data: response.data,

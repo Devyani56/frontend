@@ -1,9 +1,9 @@
-import {pollutionServiceUrl} from "../../urls";
+import {pollutionServiceUrl, config} from "../../urls";
 import axios from "axios";
 
 const createDataSourceApi = async (data : any) => {
     try {
-        const response = await axios.post(`${pollutionServiceUrl}/datasource/create`, data);
+        const response = await axios.post(`${pollutionServiceUrl}/datasource/create`, data, config);
         const responseData = {
             type: "success",
             data: response.data,

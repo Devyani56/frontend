@@ -1,5 +1,5 @@
 const authServiceUrl = "http://localhost:3001/api/users";
-const pollutionServiceUrl = "http://localhost:3001/api/pollution";
+const pollutionServiceUrl = "http://localhost:3000/api/pollution";
 const config = {
   headers: {
     "Content-Type": "application/json",
