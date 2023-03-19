@@ -1,7 +1,7 @@
 import {StyleSheet, css} from "aphrodite";
 import themeVars from "../../util/themeVars";
 import {NavLink} from "react-router-dom";
-import {CirclesThree, HardDrives, House, ChartLineUp, UploadSimple} from "phosphor-react";
+import {CirclesThree, HardDrives, House, ChartLineUp, UploadSimple, UsersThree} from "phosphor-react";
 import LogoHeader from "../dashboard/LogoHeader";
 import VerticalGap from "../../components/VerticalGap";
 
@@ -45,6 +45,13 @@ const ProSideBar = () => {
                         !isActive ? css(styles.sideBarNavLink) : css(styles.sideBarNavLinkActive)
                     }>
                     <UploadSimple size={20} weight="bold" /> Upload Data
+                </NavLink>
+                <NavLink
+                    to="user-management"
+                    className={({ isActive }) =>
+                        !isActive ? css(styles.sideBarNavLink) : css(styles.sideBarNavLinkActive)
+                    }>
+                    <UsersThree size={20} weight="bold" /> User Management
                 </NavLink>
             </div>
 

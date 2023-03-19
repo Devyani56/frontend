@@ -139,14 +139,14 @@ const VisualizeModels = () => {
     };
 
     const getPredData = async () => {
-        // const response = await getPredictionDataApi(dataSourceId, modelName);
-        // if (response.type === "success") {
-        // setPredData(response.data);
-        // processData(response.data); 
-        // }
-        setPredData(dummy_data);
-        processData(dummy_data); 
-        setLoading(true);
+        const response = await getPredictionDataApi(dataSourceId, modelName);
+        if (response.type === "success") {
+        setPredData(response.data);
+        processData(response.data);
+        }
+        // setPredData(dummy_data);
+        // processData(dummy_data);
+        // setLoading(true);
     };
 
     const data = [
@@ -163,8 +163,8 @@ const VisualizeModels = () => {
       <label>model</label>
       <select value={modelName} onChange={(e) => setModelName(e.target.value)}>
         <option value="">Select an option</option>
-        <option value="option1">lstm</option>
-        <option value="option2">prophet</option>
+        <option value="lstm">lstm</option>
+        <option value="prophet">prophet</option>
       </select>
 
       <label>DataSourceId:</label>
