@@ -1,21 +1,38 @@
 import {StyleSheet, css} from "aphrodite";
 import themeVars from "../../util/themeVars";
 import Input from "../../components/Input";
-import {GitCommit, Person, Copy, ArrowsClockwise, Info} from "phosphor-react";
+import {GitCommit, Person, Copy, ArrowsClockwise, Info, MapTrifold, MapPinLine} from "phosphor-react";
 import Button from "../../components/buttons/Button";
 import {Interface} from "readline";
 import {IDataSourceData} from "./IDataSource";
 import VerticalGap from "../../components/VerticalGap";
+import {useEffect} from "react";
 
 interface IAddDataSourceFormProps {
     onSubmit: (data: IDataSourceData) => void;
     formData: IDataSourceData;
     setFormData: (data: IDataSourceData) => void;
+    pos: { lat: number, lng: number };
+    setPos: (pos: { lat: number, lng: number }) => void;
+    openMapSelect: () => void;
 }
 
 type Imetrics = "PM10" | "PM2.5" | "NO2" | "O3" | "SO2" | "CO" | "AQI" | "NH3";
 
-const AddDataSourceForm = ({formData, onSubmit, setFormData}:IAddDataSourceFormProps) => {
+const AddDataSourceForm = ({formData, onSubmit, setFormData, pos, setPos, openMapSelect}:IAddDataSourceFormProps) => {
+
+
+    useEffect(() => {
+        console.log("pos changed");
+        setFormData({
+            ...formData,
+            location: {
+                ...formData.location,
+                lat: pos.lat,
+                lng: pos.lng
+            }
+        });
+    } , [pos]);
     const handleChange = (field : string, value : any, e? : any) => {
 
         if (e) {
@@ -38,6 +55,10 @@ const AddDataSourceForm = ({formData, onSubmit, setFormData}:IAddDataSourceFormP
                     [field]: value
                 }
             });
+            setPos({
+                ...pos,
+                [field]: value
+            })
         }
         else if (field === "type") {
             setFormData({
@@ -157,6 +178,7 @@ const AddDataSourceForm = ({formData, onSubmit, setFormData}:IAddDataSourceFormP
                             <div className={css(styles.latLongLabel)}>Longitude</div>
                             <input type={"number"} step='0.0000001' className={css(styles.latLongInput)} value={formData.location.lng} onChange={(e)=>{handleChange("lng", e.target.value)}}/>
                         </div>
+                        <button className={css(styles.onMapBtn)} onClick={(e) => {e.preventDefault(); openMapSelect()}}><MapPinLine size={32} /> </button>
                     </div>
                 </div>
                 <div className={css(styles.formGroup3)}>
@@ -547,6 +569,13 @@ const styles = StyleSheet.create(
                 outline: 'none',
             }
 
+        },
+
+        onMapBtn: {
+            cursor: 'pointer',
+            background: 'transparent',
+            border: 'none',
+            color: themeVars.colors.accent.darkGreen,
         }
 
 

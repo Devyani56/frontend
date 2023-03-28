@@ -25,6 +25,7 @@ import useStore from "../../store/Store";
 import {getFilteredDataApi} from "../../util/api/get-filtered-data";
 import {getDashboardDataApi} from "../../util/api/get-dashboard-data-api";
 import {getWindTempApi} from "../../util/api/get-wind-temp-api";
+import {FrameCorners, X} from "phosphor-react";
 
 interface IBoardProps {
     openSideDrawer: () => void;
@@ -107,8 +108,24 @@ const Board = ({openSideDrawer} : IBoardProps) => {
         getAndSetWindTemp();
     }, [location]);
 
+    const [fullMapOpen, setFullMapOpen] = useState(false);
+    const openFullMap = () => {
+        setFullMapOpen(true);
+    }
+
+    const closeFullMap = () => {
+        setFullMapOpen(false);
+    }
+
     return (
       <div className={css(styles.boardDefault)}>
+          {fullMapOpen && <div className={css(styles.mapCont)}>
+              <Map coordinate={[15.299326, 74.123993]} zoom={9}/>
+              <button className={css(styles.closeBtn)} onClick={closeFullMap}>
+                    <X size={32} weight="bold"/>
+              </button>
+
+          </div>}
           <Modal isOpen={showModal} onClose={onCloseModal}>
               <SigninSignup/>
           </Modal>
@@ -148,7 +165,10 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                       </Card>
 
                       <Card type={"cardDark"}  height={"42rem"} padding={"0"}>
-                              <Map coordinate={[15.299326, 74.123993]} zoom={9}/>
+                          <Map coordinate={[15.299326, 74.123993]} zoom={9}/>
+                          <button className={css(styles.fullMapBtn)} onClick={openFullMap}>
+                              <FrameCorners size={32} />
+                          </button>
                       </Card>
                       <InfoSubSection>
                           <Card type={"cardDark"} width={"60%"} height={"8rem"}/>
@@ -166,7 +186,10 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                           </Card>
                       </InfoSubSection>
                       <Card type={"cardDark"} height={"33rem"} padding={"0"}>
-                          <Map coordinate={[location.sourceLat, location.sourceLng]} zoom={9}/>
+                          <Map coordinate={[location.sourceLat, location.sourceLng]} zoom={11}/>
+                          <button className={css(styles.fullMapBtn)} onClick={openFullMap}>
+                              <FrameCorners size={32} />
+                          </button>
                       </Card>
                       <Card type={"cardLight"} height={"12rem"}/>
                   </InfoSection>
@@ -198,6 +221,36 @@ const styles = StyleSheet.create(
         contentCont: {
             width: '90%',
             maxWidth: '1200px',
+        },
+
+        mapCont: {
+            width: '100%',
+            height: '100%',
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            zIndex: 101,
+        },
+
+        closeBtn: {
+            position: 'fixed',
+            top: '1rem',
+            right: '1rem',
+            zIndex: 1002,
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+        },
+
+        fullMapBtn: {
+            position: 'absolute',
+            bottom: '1rem',
+            left: '1rem',
+            zIndex: 502,
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            color: themeVars.colors.accent.darkGreen,
         }
     }
 )

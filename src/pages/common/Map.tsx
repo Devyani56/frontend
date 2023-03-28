@@ -1,5 +1,5 @@
-import {MapContainer, Marker, TileLayer} from 'react-leaflet'
-import {useEffect} from "react";
+import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
+import {useEffect, useState} from "react";
 import L from 'leaflet';
 import {getDataSourceAPi} from "../../util/api/get-datasources-api";
 
@@ -34,14 +34,34 @@ interface IMapProps {
     zoom: number;
 }
 
-const Map = ({coordinate, stations, zoom} : IMapProps) => {
+const Map = ({coordinate, zoom} : IMapProps) => {
     // trigger a window resize event to force leaflet to resize the map
-    useEffect(() => {
-        console.log("stations cordinates", coordinate)
-        window.dispatchEvent(new Event('resize'));
-    }
-    , [coordinate]);
 
+
+    const [dataSources, setDataSources] = useState<any>([]);
+
+    const [loading, setLoading] = useState<boolean>(true);
+
+    const getDataSources = async () => {
+        setLoading(true)
+        const response = await getDataSourceAPi();
+        if (response.type === "success"){
+            setDataSources(response.data);
+        }
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        getDataSources();
+        console.log("dataSources--", dataSources)
+    }
+    , [])
+
+    useEffect(() => {
+            console.log("stations cordinates", coordinate)
+            window.dispatchEvent(new Event('resize'));
+        }
+        , [coordinate, loading]);
 
 
     return (
@@ -50,6 +70,20 @@ const Map = ({coordinate, stations, zoom} : IMapProps) => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+
+                {
+                    dataSources.map((station: any) => {
+                        console.log("station", station.location.lat)
+                        return (
+                            <Marker position={[station.location.lat, station.location.lng]}>
+                                <Popup>
+                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                </Popup>
+                            </Marker>
+                        )
+                    })
+                }
+
 
             </MapContainer>
     );

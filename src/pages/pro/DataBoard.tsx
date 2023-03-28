@@ -233,7 +233,7 @@ const styles = StyleSheet.create(
         noDataImg: {
             width: '40%',
             marginRight: '15rem',
-            opacity: '0.5',
+            opacity: 0.5,
             marginTop: '10rem',
 
         }
