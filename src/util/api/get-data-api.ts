@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {pollutionServiceUrl} from "../../urls";
+import {pollutionServiceUrl, config} from "../../urls";
 
 export const getPollutionDataApi = async (sourceId : string, page : number, size : number) => {
     try {
-        const response = await axios.get(pollutionServiceUrl + `/data/${sourceId}?page=${page}&perPage=${size}`);
+        const response = await axios.get(pollutionServiceUrl + `/data/${sourceId}?page=${page}&perPage=${size}`, config);
         const responseData = {
             type: "success",
             data: response.data,

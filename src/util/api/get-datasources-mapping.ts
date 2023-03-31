@@ -2,9 +2,9 @@ import axios from "axios";
 import {pollutionServiceUrl, config} from "../../urls";
 
 
-export const getDataSourceAPi = async (id: string = "") => {
+export const getDataSourceMappingAPi = async (id: string = "") => {
    try {
-       const response = await axios.get(`${pollutionServiceUrl}/datasource/${id}`, config);
+       const response = await axios.get(`${pollutionServiceUrl}/datasourcemapping`, config);
 
        const responseData = {
            type: "success",

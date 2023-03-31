@@ -16,8 +16,6 @@ import { Plus } from "phosphor-react";
 import sensorBoxImg from "../../assets/images/station-box.png";
 import { getFilteredDataApi } from "../../util/api/get-filtered-data";
 import { getDataSourceMappingAPi } from "../../util/api/get-datasources-mapping";
-import PredictionPlot from "./PredictionPlot";
-import ComparePredictionPlots from "./ComparePredictionPlots";
 
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
@@ -138,7 +136,7 @@ const dummy_data = [
   },
 ];
 
-const VisualizeModels = () => {
+const PredictionPlot = () => {
     const [modelName, setModelName] = useState("");
     const [dataSourceId, setDataSourceId] = useState("");
     const [dataSource, setDataSource] = useState("");
@@ -221,13 +219,45 @@ const VisualizeModels = () => {
 
   return (
     <div className={css(styles.boardDefault)}>
-      <PredictionPlot />
-      <ComparePredictionPlots/>
+      <label>model</label>
+      <select value={modelName} onChange={(e) => setModelName(e.target.value)}>
+        <option value="">Select an option</option>
+        <option value="lstm">lstm</option>
+        <option value="prophet">prophet</option>
+      </select>
+
+      <select value={dataSource} onChange={(e) => {setDataSource(e.target.value); setDataSourceId((e.target.selectedIndex.toString()))}}>
+        <option value="">Select an option</option>
+        {Object.keys(stationList).map((key) => {
+            return (
+            <option key={key} value={key}>
+                {stationList[key]}
+            </option>
+            );
+        })}
+      </select>
+      <div className={css(styles.timeFilterCont)}>
+            <label>Start Date</label>
+            <input type={"date"} name={"start-date"} value={startDate} onChange={(event) => handleDateChange(event, setStartDate)} className={css(styles.timeFilter)} />
+            <label>End Date</label>
+            <input type={"date"} name={"end-date"} value={endDate} onChange={(event) => handleDateChange(event, setEndDate)}  className={css(styles.timeFilter)}/>
+        </div>
+
+      <button onClick={(event) => getPredData(startDate, endDate)}>Get Predictions</button>
+
+      {loading ? (
+        <div className={css(styles.dsHeader)}>
+          <Plot data={data} layout={layout} config={{ displayModeBar: true }} />
+        </div>
+      ) : null}
+
+
+
     </div>
   );
 };
 
-export default VisualizeModels;
+export default PredictionPlot;
 
 const styles = StyleSheet.create({
   boardDefault: {

@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {pollutionServiceUrl} from "../../urls";
+import {pollutionServiceUrl, config} from "../../urls";
 
 export const getNumRowsForASourceApi = async (sourceId : string) => {
     try {
-        const response = await axios.get(pollutionServiceUrl + `/data/num-rows/${sourceId}`);
+        const response = await axios.get(pollutionServiceUrl + `/data/num-rows/${sourceId}`, config);
         const responseData = {
             type: "success",
             data: response.data,

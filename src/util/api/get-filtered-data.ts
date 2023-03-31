@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {pollutionServiceUrl} from "../../urls";
+import {pollutionServiceUrl, config} from "../../urls";
 
 export const getFilteredDataApi = async (sourceId : string, page  = 1, size = 30 ) => {
     try {
         // add filter tag to url
-        const response = await axios.get(pollutionServiceUrl + `/data/${sourceId}`)
+        const response = await axios.get(pollutionServiceUrl + `/data/${sourceId}`, config)
         const responseData = {
             type: "success",
             data: response.data,
