@@ -5,6 +5,7 @@ import {css, StyleSheet} from "aphrodite";
 import Papa from "papaparse";
 import UploadOptions from "./UploadOptions";
 import UploadFromCsv from "./UploadFromCsv";
+import UploadManual from "./UploadManual";
 const UploadDataBoard = () => {
 
     // get the data source id from the url last part
@@ -41,6 +42,7 @@ const UploadDataBoard = () => {
             <Routes>
                 <Route path="/" element={<UploadOptions/>}/>
                 <Route path="/from-csv" element={<UploadFromCsv/>}/>
+                <Route path="/manual" element={<UploadManual/>}/>
             </Routes>
 
         </div>

@@ -8,7 +8,7 @@ const UploadOptions = () => {
     return (
         <div className={css(styles.uploadOptions)}>
             <div className={css(styles.uploadOptionsCont)}>
-                <UploadOptionCard header={"Upload CSS"} onClick={() => navigate('/pro/upload/from-csv')} imgSrc={csvImg}>
+                <UploadOptionCard header={"Upload CSV"} onClick={() => navigate('/pro/upload/from-csv')} imgSrc={csvImg}>
                     Upload pollution data from a CSV file. The pollution data in the csv file need not be in a specific format.
                 </UploadOptionCard>
                 <UploadOptionCard header={"Upload Manually"} onClick={() => navigate('/pro/upload/manual')} imgSrc={manualImg}>
