@@ -1,22 +1,9 @@
-import axios from "axios";
 import {authServiceUrl} from "../../urls";
-interface SignupData {
-    email: string;
-    password: string;
-    name: string;
-}
-export const signupApi = async (data: SignupData) => {
-    const modifiedData = {
-        email: data.email,
-        password: data.password,
-        firstName: data.name,
-        lastName: "",
-        appliedRole: "user"
-    }
-    // handle cors error
-    try {
-        const response = await axios.post(`${authServiceUrl}/signup`, modifiedData);
+import axios from "axios";
 
+export const verifyEmailApi = async (token : string) => {
+    try {
+        const response = await axios.post(`${authServiceUrl}/verify-email/${token}`);
         const responseData = {
             type: "success",
             data: response.data,
@@ -26,7 +13,6 @@ export const signupApi = async (data: SignupData) => {
         return responseData;
     }
     catch (err : any) {
-
         const responseData = {
             type: "error",
             data: err.response.data.errors,
@@ -35,5 +21,5 @@ export const signupApi = async (data: SignupData) => {
         console.log("In error block :",responseData);
         return responseData;
     }
-}
 
+}

@@ -6,6 +6,7 @@
     "@nivo/core": "^0.80.0",
     "@nivo/line": "^0.80.0",
     "@nivo/radial-bar": "^0.80.0",
+    "@ramonak/react-progress-bar": "^5.0.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -23,8 +24,10 @@
     "react-arc-progress": "^1.0.2",
     "react-circular-progressbar": "^2.1.0",
     "react-data-table-component": "^7.5.3",
+    "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.0",
+    "react-loader-spinner": "^5.3.4",
     "react-plotly.js": "^2.6.0",
     "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
@@ -35,7 +38,7 @@
     "zustand": "^4.3.2"
   },
   "scripts": {
-    "start": "set PORT=3006 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -62,6 +65,7 @@
     "@types/papaparse": "^5.3.7",
     "@types/plotly.js": "^2.12.18",
     "@types/react-css-modules": "^4.6.4",
+    "@types/react-datepicker": "^4.10.0",
     "@types/react-leaflet": "^2.8.2",
     "@types/react-plotly.js": "^2.6.0",
     "simple-zustand-devtools": "^1.1.0"

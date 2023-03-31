@@ -313,6 +313,15 @@ const ChartSection = ({data} : any) => {
     var [chartData, setChartData] = useState<chartDataType[]>([]);
     var dummydata: any = [];
 
+    const prettyDate = (date : string) => {
+        const dateObj = new Date(date)
+        // use short form of month
+        const month = dateObj.toLocaleString('default', { month: 'short' })
+        const day = dateObj.getDate()
+        const year = dateObj.getFullYear()
+        return `${month} ${day}`
+
+    }
     const colors  = ["hsl(312, 70%, 50%)", "hsl(319, 70%, 50%)", "hsl(63, 70%, 50%)", "hsl(63, 70%, 50%)"]
     // const parseDataForChart = (data : any) => {
     //     const dataByFields : any = {}
@@ -452,9 +461,11 @@ export default ChartSection;
 
 const styles = StyleSheet.create(
     {
+
         chartSectionDefault: {
-            // backgroundColor: "transparent",
+            backgroundColor: "transparent",
             height: "28rem",
+            top: "-30px"
         },
 
         chartContainer: {

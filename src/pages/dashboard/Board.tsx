@@ -23,6 +23,9 @@ import MainNavBar from "./MainNavBar";
 import VerticalGap from "../../components/VerticalGap";
 import useStore from "../../store/Store";
 import {getFilteredDataApi} from "../../util/api/get-filtered-data";
+import {getDashboardDataApi} from "../../util/api/get-dashboard-data-api";
+import {getWindTempApi} from "../../util/api/get-wind-temp-api";
+import {FrameCorners, X} from "phosphor-react";
 
 interface IBoardProps {
     openSideDrawer: () => void;
@@ -47,9 +50,13 @@ const Board = ({openSideDrawer} : IBoardProps) => {
     monthBack.setMonth(today.getMonth() - 1);
     const [filterOptions, setFilterOptions] = useState({metric: "All", duration: "Daily", startDate: today, endDate: monthBack});
 
-    const [location, setLocation] = useState({"sourceId": "", "sourceName": "", "sourceType": "", "sourceLat": 0, "sourceLng": 0, address: ""});
+    const [location, setLocation] = useState({"sourceId": "", "sourceName": "", "sourceType": "", "sourceLat": 15.299326, "sourceLng": 74.123993, address: ""});
 
     const [data, setData] = useState([]);
+    const [mainData, setMainData] = useState<any>({});
+
+    const [wind, setWind] = useState(0);
+    const [temp, setTemp] = useState(0);
 
     const getAndSetData = async () => {
         console.log("Locatio from getAndSetData", location)
@@ -62,12 +69,63 @@ const Board = ({openSideDrawer} : IBoardProps) => {
         }
     }
 
+    const getAndSetWindTemp = async () => {
+        if (!location.sourceId) {
+            return;
+        }
+        const response = await getWindTempApi(location.sourceId)
+        if(response.type === "success") {
+            // trim wind and temp to before decimal
+            setWind(Math.floor(response.data.wind));
+            setTemp(Math.floor(response.data.temp));
+        }
+    }
+
+
+
+    const getAndSetMainData = async () => {
+        if (!location.sourceId) {
+            return;
+        }
+        const response = await getDashboardDataApi(location.sourceId)
+        if(response.type === "success") {
+            setMainData(response.data);
+            console.log("Main data", response.data)
+        }
+
+    }
+
     useEffect(() => {
         getAndSetData();
     }
     , [filterOptions, location]);
+
+    useEffect(() => {
+        getAndSetMainData();
+    }, [location]);
+
+    useEffect(() => {
+        getAndSetWindTemp();
+    }, [location]);
+
+    const [fullMapOpen, setFullMapOpen] = useState(false);
+    const openFullMap = () => {
+        setFullMapOpen(true);
+    }
+
+    const closeFullMap = () => {
+        setFullMapOpen(false);
+    }
+
     return (
       <div className={css(styles.boardDefault)}>
+          {fullMapOpen && <div className={css(styles.mapCont)}>
+              <Map coordinate={[15.299326, 74.123993]} zoom={9}/>
+              <button className={css(styles.closeBtn)} onClick={closeFullMap}>
+                    <X size={32} weight="bold"/>
+              </button>
+
+          </div>}
           <Modal isOpen={showModal} onClose={onCloseModal}>
               <SigninSignup/>
           </Modal>
@@ -80,12 +138,12 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                   <InfoSection>
                       <Card type={"cardDark"}  height={"12rem"}>
                           <TilesContainer gap={"5%"}>
-                              <PMTiles value={60} unit={"ug/m3"} label={"PM2.5"} type={"dark"}/>
-                              <PMTiles value={120} unit={"ug/m3"} label={"PM10"} type={"dark"}/>
+                              <PMTiles value={(mainData.metrics && mainData.metrics!['PM25'] ) || "-"} unit={"ug/m3"} label={"PM2.5"} type={"dark"}/>
+                              <PMTiles value={(mainData.metrics && mainData.metrics!['PM10'] ) || "-" } unit={"ug/m3"} label={"PM10"} type={"dark"}/>
                           </TilesContainer>
                       </Card>
                       <Card type={"cardDark"}  height={"23rem"}>
-                          <LowestHighestTile/>
+                          <LowestHighestTile high={mainData.high || {}} low={mainData.low || {}}/>
                       </Card>
                       <Card type={"cardDark"}  height={"15rem"}>
                           <ForTomorrowList columnSize={4}/>
@@ -99,15 +157,18 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                   <InfoSection>
                       <Card type={"cardDark"}  height={"9.2rem"}>
                           <TilesContainer gap={"2%"}>
-                              <GasesTiles value={8} label={"O3"} type={"dark"}/>
-                              <GasesTiles value={3} label={"SO2"} type={"dark"}/>
-                              <GasesTiles value={6} label={"NO2"} type={"dark"}/>
-                              <GasesTiles value={999} label={"CO"} type={"dark"}/>
+                              <GasesTiles value={(mainData.metrics && mainData.metrics!['O3'] ) || "-"} label={"O3"} type={"dark"}/>
+                              <GasesTiles value={(mainData.metrics && mainData.metrics!['SO2'] ) || "-"} label={"SO2"} type={"dark"}/>
+                              <GasesTiles value={(mainData.metrics && mainData.metrics!['NO2'] ) || "-"} label={"NO2"} type={"dark"}/>
+                              <GasesTiles value={(mainData.metrics && mainData.metrics!['CO'] ) || "-"} label={"CO"} type={"dark"}/>
                           </TilesContainer>
                       </Card>
 
                       <Card type={"cardDark"}  height={"42rem"} padding={"0"}>
-                              <Map/>
+                          <Map coordinate={[15.299326, 74.123993]} zoom={9}/>
+                          <button className={css(styles.fullMapBtn)} onClick={openFullMap}>
+                              <FrameCorners size={32} />
+                          </button>
                       </Card>
                       <InfoSubSection>
                           <Card type={"cardDark"} width={"60%"} height={"8rem"}/>
@@ -118,14 +179,17 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                   <InfoSection>
                       <InfoSubSection>
                           <Card type={"cardDark"} width={"50%"} height={"9.2rem"}>
-                              <ThermoTile value={23}/>
+                              <ThermoTile value={temp}/>
                           </Card>
                           <Card type={"cardDark"} width={"50%"} height={"9.2rem"}>
-                              <WindTile value={30}/>
+                              <WindTile value={wind}/>
                           </Card>
                       </InfoSubSection>
                       <Card type={"cardDark"} height={"33rem"} padding={"0"}>
-                          <Map/>
+                          <Map coordinate={[location.sourceLat, location.sourceLng]} zoom={11}/>
+                          <button className={css(styles.fullMapBtn)} onClick={openFullMap}>
+                              <FrameCorners size={32} />
+                          </button>
                       </Card>
                       <Card type={"cardLight"} height={"12rem"}/>
                   </InfoSection>
@@ -157,6 +221,36 @@ const styles = StyleSheet.create(
         contentCont: {
             width: '90%',
             maxWidth: '1200px',
+        },
+
+        mapCont: {
+            width: '100%',
+            height: '100%',
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            zIndex: 101,
+        },
+
+        closeBtn: {
+            position: 'fixed',
+            top: '1rem',
+            right: '1rem',
+            zIndex: 1002,
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+        },
+
+        fullMapBtn: {
+            position: 'absolute',
+            bottom: '1rem',
+            left: '1rem',
+            zIndex: 502,
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            color: themeVars.colors.accent.darkGreen,
         }
     }
 )

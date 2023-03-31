@@ -1,21 +1,10 @@
 import axios from "axios";
-import {authServiceUrl} from "../../urls";
-interface SignupData {
-    email: string;
-    password: string;
-    name: string;
-}
-export const signupApi = async (data: SignupData) => {
-    const modifiedData = {
-        email: data.email,
-        password: data.password,
-        firstName: data.name,
-        lastName: "",
-        appliedRole: "user"
-    }
-    // handle cors error
+import {pollutionServiceUrl} from "../../urls";
+
+
+export const getAllDataSourceAPi = async () => {
     try {
-        const response = await axios.post(`${authServiceUrl}/signup`, modifiedData);
+        const response = await axios.get(`${pollutionServiceUrl}/datasource`);
 
         const responseData = {
             type: "success",
@@ -26,7 +15,6 @@ export const signupApi = async (data: SignupData) => {
         return responseData;
     }
     catch (err : any) {
-
         const responseData = {
             type: "error",
             data: err.response.data.errors,
@@ -36,4 +24,3 @@ export const signupApi = async (data: SignupData) => {
         return responseData;
     }
 }
-

@@ -1,19 +1,18 @@
 import axios from 'axios';
-import {pollutionServiceUrl, config} from "../../urls";
+import {authServiceUrl} from "../../urls";
 
-export const getFilteredDataApi = async (sourceId : string, page  = 1, size = 30 ) => {
+export const inviteToRoleApi = async (userId : string, role: string, email: string) => {
     try {
-        // add filter tag to url
-        const response = await axios.get(pollutionServiceUrl + `/data/${sourceId}`, config)
+        const response = await axios.post( authServiceUrl+ `/invite-to-role/${userId}`, {role, email});
         const responseData = {
             type: "success",
             data: response.data,
             status: response.status
         }
-        console.log(response.data);
+        console.log(responseData);
         return responseData;
     }
-    catch (e : any) {
+    catch (e: any) {
         const responseData = {
             type: "error",
             data: e.response.data.errors,

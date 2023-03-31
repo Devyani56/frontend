@@ -2,13 +2,46 @@ import { StyleSheet, css } from 'aphrodite';
 import { CircularProgressbarWithChildren, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import themeVars from "../../util/themeVars";
-const LowestHighestTile = () => {
-    const minVal = 66;
-    const maxVal = 250;
+import {useEffect, useState} from "react";
+interface ILowestHighestTileProps {
+    low: any;
+    high: any;
+}
+const LowestHighestTile = ({low, high} : ILowestHighestTileProps) => {
+
+    const [items, setItems] = useState(['PM10']);
+    const [selectedItem, setSelectedItem] = useState('PM10');
+    const [minVal, setMinVal] = useState(0);
+    const [maxVal, setMaxVal] = useState(0);
     const minPercent = (minVal / 500) * 100 > 100 ? 100 : (minVal / 400) * 100;
     const maxPercent = (maxVal / 500) * 100 > 100 ? 100 : (maxVal / 400) * 100;
-    const items = ["PM2.5", "PM10", "O3", "CO", "SO2" ]
-    const selectedItem = "PM10";
+
+    useEffect(() => {
+        // parse items from low and high and set items
+        // read low and high and get the keys
+        console.log("low: ",low);
+        console.log("high: ",high);
+
+        // get only those keys whos values are not null
+        const lowKeys = Object.keys(low).filter((key) => low[key] !== null);
+        const highKeys = Object.keys(high).filter((key) => high[key] !== null);
+        // get the union of the keys
+        // @ts-ignore
+        const unionKeys = [...new Set([...lowKeys, ...highKeys])];
+        // set items
+        setItems(unionKeys);
+        // set selected item
+        setSelectedItem(unionKeys[0]);
+    }
+    , [low, high]);
+
+    useEffect(() => {
+        // set min and max values
+        setMinVal(low[selectedItem]);
+        setMaxVal(high[selectedItem]);
+    }
+    , [low, high, selectedItem]);
+
 
     const minStyle = buildStyles(
         {
@@ -28,11 +61,14 @@ const LowestHighestTile = () => {
             <div className={css(styles.selector)}>
                 {items.map((item, index) => {
                     return (
-                        <div className={css(styles.selectorItem, selectedItem === item && styles.activeItem )} key={index}>
+                        <button className={css(styles.selectorItem, selectedItem === item && styles.activeItem )}
+                                key={index}
+                                onClick={() => setSelectedItem(item)}
+                        >
                             <div className={css(styles.selectorItemText)}>
                                 {item}
                             </div>
-                        </div>
+                        </button>
                     )
                 })}
             </div>
@@ -190,6 +226,8 @@ const styles = StyleSheet.create(
         selectorItem: {
             padding: '0.2rem 1rem',
             borderRadius: '2rem',
+            border: 'none',
+            backgroundColor: 'transparent',
 
         },
 
@@ -201,6 +239,8 @@ const styles = StyleSheet.create(
             letterSpacing: "-0.24247px",
             textTransform: "uppercase",
             color: themeVars.colors.text.accentGrey,
+            backgroundColor: 'transparent',
+            border: 'none',
         },
 
         activeItem: {

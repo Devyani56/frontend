@@ -10,6 +10,7 @@ import MainPage from "./pages/dashboard/MainPage";
 import ErrorPage from "./pages/ErrorPage";
 import ProMainPage from "./pages/pro/ProMain";
 import useStore from "./store/Store";
+import VerifyEmail from "./pages/common/VerifyEmail";
 
 
 
@@ -20,6 +21,9 @@ const routes = createBrowserRouter(
                 <Route path="*" element={<ErrorPage />} />
             </Route>
             <Route path="/pro" element={<ProMainPage />} errorElement={<ErrorPage/>} >
+                <Route path="*" element={<ErrorPage />} />
+            </Route>
+            <Route path="/user/verify-email/:token" element={<VerifyEmail />} errorElement={<ErrorPage/>} >
                 <Route path="*" element={<ErrorPage />} />
             </Route>
         </Route>

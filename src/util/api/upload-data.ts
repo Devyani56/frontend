@@ -5,7 +5,7 @@ const uploadDataSourceApi = async (data: any) => {
     console.log("data", data);
   try {
     const response = await axios.post(
-      "http://localhost:3000/api/pollution/data",
+      `${pollutionServiceUrl}/data`,
       data,
       {
         headers: {
