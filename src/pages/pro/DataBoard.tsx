@@ -18,6 +18,8 @@ const DataBoard = () => {
     const id = location.pathname.split("/").pop();
 
 
+
+
     // const data = [
     //     {
     //         id: 1,
@@ -152,7 +154,7 @@ const DataBoard = () => {
         <div className={css(styles.boardDefault)}>
             <div className={css(styles.dsHeader)}>
                 <div className={css(styles.titleHeader)}>
-                    Recorded Data
+                    Recorded Data - {id}
                 </div>
                 <Button
                     type={"short"}
