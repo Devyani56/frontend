@@ -388,8 +388,9 @@ const ChartSection = ({data} : any) => {
       };
       
     const config = {
-    displayModeBar: false,
-    responsive: true
+        displayModeBar: false,
+        responsive: true,
+    //     label color
     };
 
     const parseDataForChart = (data: any): chartDataType[] => {
@@ -464,8 +465,9 @@ const styles = StyleSheet.create(
 
         chartSectionDefault: {
             backgroundColor: "transparent",
-            height: "28rem",
-            top: "-30px"
+            top: "-30px",
+            width: "100%",
+            boxSizing: 'border-box',
         },
 
         chartContainer: {
