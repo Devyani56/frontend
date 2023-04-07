@@ -17,259 +17,331 @@ import { Plus } from "phosphor-react";
 import sensorBoxImg from "../../assets/images/station-box.png";
 import { getFilteredDataApi } from "../../util/api/get-filtered-data";
 import { getDataSourceMappingAPi } from "../../util/api/get-datasources-mapping";
+import { getMetricDataApi } from "../../util/api/get-metric-data";
 
 import DatePicker from "react-datepicker";
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 
-type PredictionData = {
+type PredictionDataHistoric = {
   recordedAt: string;
-  data: { PM10: number };
+  metric: number;
+};
+
+type PredictionDataPreds = {
+  recordedAt: string;
+  data: any;
 };
 
 interface StationMapping {
-    [key: string]: string;
+  [key: string]: string;
 }
 
-type chartDataType ={
-    x: string[];
-    y: number[];
-    type: any,
-    name: string,
-    mode: string,
-    line: {
-      color: string,
-    },
-}
-
-
+type chartDataType = {
+  x: string[];
+  y: number[];
+  type: any;
+  name: string;
+  mode: string;
+  line: {
+    color: string;
+  };
+};
 
 const ComparePredictionPlots = () => {
-    const [modelName1, setModelName1] = useState("");
-    const [modelName2, setModelName2] = useState("");
+  const [modelName1, setModelName1] = useState("");
+  const [modelName2, setModelName2] = useState("");
 
-    const [dataSourceId1, setDataSourceId1] = useState("");
-    const [dataSource1, setDataSource1] = useState("");
+  const [dataSourceId1, setDataSourceId1] = useState("");
+  const [dataSource1, setDataSource1] = useState("");
 
-    const [dataSourceId2, setDataSourceId2] = useState("");
-    const [dataSource2, setDataSource2] = useState("");
+  const [dataSourceId2, setDataSourceId2] = useState("");
+  const [dataSource2, setDataSource2] = useState("");
 
-    const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
-    var [predData1, setPredData1] = useState<PredictionData[]>([]);
-    var [predData2, setPredData2] = useState<PredictionData[]>([]);
+  var [predData1, setPredData1] = useState<PredictionDataPreds[]>([]);
+  var [predData2, setPredData2] = useState<PredictionDataPreds[]>([]);
 
-    var [dateList1, setDates1] = useState<string[]>([]);
-    var [metricList1, setMetrics1] = useState<number[]>([]);
-    var [dateList2, setDates2] = useState<string[]>([]);
-    var [metricList2, setMetrics2] = useState<number[]>([]);
+  var [metric, setMetric] = useState("");
 
-    var [measureDateList1, setMeasureDateList1] = useState<string[]>([]);
-    var [measuredMetricList1, setMeasuredMetricList1] = useState<number[]>([]);
+  var [dateList1, setDates1] = useState<string[]>([]);
+  var [metricList1, setMetrics1] = useState<number[]>([]);
+  var [dateList2, setDates2] = useState<string[]>([]);
+  var [metricList2, setMetrics2] = useState<number[]>([]);
 
-    var [measureDateList2, setMeasureDateList2] = useState<string[]>([]);
-    var [measuredMetricList2, setMeasuredMetricList2] = useState<number[]>([]);
+  var [measureDateList1, setMeasureDateList1] = useState<string[]>([]);
+  var [measuredMetricList1, setMeasuredMetricList1] = useState<number[]>([]);
 
-    var [stationList, setStationList] = useState<StationMapping>({});
+  var [measureDateList2, setMeasureDateList2] = useState<string[]>([]);
+  var [measuredMetricList2, setMeasuredMetricList2] = useState<number[]>([]);
 
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+  var [stationList, setStationList] = useState<StationMapping>({});
 
-    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>, func: any) => {
-        func(event.target.value);
-        console.log(typeof startDate);
-    };
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
-    // const getpreds = () => {};
-    useEffect(() => {
-        async function getStaionMappings() {
-            try {
-              const datasourcemapping = await getDataSourceMappingAPi();
-              setStationList(datasourcemapping.data);    
-            } catch (error) {
-                setStationList({});
-            }
-        }     
-        getStaionMappings();
-    }, []);
+  const handleDateChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    func: any
+  ) => {
+    func(event.target.value);
+    console.log(typeof startDate);
+  };
 
-    const processData = (data: PredictionData[]) => {
-        console.log("indise preprocess =>", data);
-        const dateList = data.map((item) => item.recordedAt);
-        const metricList = data.map((item) => item.data.PM10);
-        // setDates(dateList);
-        // setMetrics(metricList);
-        return {dateList:dateList, metricList:metricList};
-    };
+  // const getpreds = () => {};
+  useEffect(() => {
+    async function getStaionMappings() {
+      try {
+        const datasourcemapping = await getDataSourceMappingAPi();
+        setStationList(datasourcemapping.data);
+        console.log(datasourcemapping);
+      } catch (error) {
+        setStationList({});
+      }
+    }
+    getStaionMappings();
+    console.log(stationList);
+  }, []);
 
-    const getPredData = async (date1: string , date2: string ) => {
-        var startDate = new Date(Date.parse(date1));
-        var endDate  = new Date(Date.parse(date2));
-        
-        const measuredData1 = await getFilteredDataApi(dataSourceId1);
+  const processDataHistoric = (data: PredictionDataHistoric[]) => {
+    console.log("indise preprocess =>", data);
+    const dateList = data.map((item) => item.recordedAt);
+    const metricList = data.map((item) => item.metric);
+    // setDates(dateList);
+    // setMetrics(metricList);
+    return { dateList: dateList, metricList: metricList };
+  };
 
-        console.log("measured data => ", measuredData1.data.data);
-        const response1 = await getPredictionDataApi(dataSourceId1, modelName1, startDate, endDate);
-        if (response1.type === "success") {
-            console.log("success")
-            setPredData1(response1.data);
+  const processDataPreds = (data: PredictionDataPreds[]) => {
+    console.log("indise preprocess =>", data);
+    const dateList = data.map((item) => item.recordedAt);
+    const metricList = data.map((item) => item.data[metric]);
+    // setDates(dateList);
+    // setMetrics(metricList);
+    return { dateList: dateList, metricList: metricList };
+  };
 
-            const result = processData(response1.data);
-            setDates1(result.dateList);
-            setMetrics1(result.metricList);
+  const getPredData = async (date1: string, date2: string, metric: string) => {
+    var startDate = new Date(Date.parse(date1));
+    var endDate = new Date(Date.parse(date2));
 
-            const result2 = processData(measuredData1.data.data);
-            setMeasureDateList1(result2.dateList);
-            setMeasuredMetricList1(result2.metricList);
-        }
+    const measuredData1 = await getMetricDataApi(dataSourceId1, metric);
 
-        const measuredData2 = await getFilteredDataApi(dataSourceId2);
+    console.log("measured data 1 => ", measuredData1.data, dataSourceId1);
+    const response1 = await getPredictionDataApi(
+      dataSourceId1,
+      modelName1,
+      startDate,
+      endDate
+    );
+    if (response1.type === "success") {
+      console.log("success");
+      setPredData1(response1.data);
 
-        console.log("measured data => ", measuredData2.data.data);
-        const response2 = await getPredictionDataApi(dataSourceId2, modelName2, startDate, endDate);
-        if (response2.type === "success") {
-            console.log("success")
-            setPredData2(response2.data);
+      const result = processDataPreds(response1.data);
+      console.log("results :", result);
+      setDates1(result.dateList);
+      setMetrics1(result.metricList);
 
-            const result = processData(response2.data);
-            setDates2(result.dateList);
-            setMetrics2(result.metricList);
+      const result2 = processDataHistoric(measuredData1.data.data);
+      setMeasureDateList1(result2.dateList);
+      setMeasuredMetricList1(result2.metricList);
+    }
 
-            const result2 = processData(measuredData2.data.data);
-            setMeasureDateList2(result2.dateList);
-            setMeasuredMetricList2(result2.metricList);
-        }
+    const measuredData2 = await getMetricDataApi(dataSourceId2, metric);
 
-        // setPredData(dummy_data);
-        // processData(dummy_data);
-        setLoading(true);
-    };
+    console.log("measured data 2 => ", measuredData2.data.data);
+    const response2 = await getPredictionDataApi(
+      dataSourceId2,
+      modelName2,
+      startDate,
+      endDate
+    );
+    if (response2.type === "success") {
+      console.log("success");
+      setPredData2(response2.data);
 
-    const data: Data[] = [
-        {
-            name: dataSource1,
-            x: dateList1,
-            y: metricList1,
-            mode: "lines+markers",
-            line: { color: "orange" },
-        },
-        {
-            name: dataSource1,
-            x: measureDateList1,
-            y: measuredMetricList1,
-            mode: "lines+markers",
-            line: { color: "orange" },
-        },
-        {
-            name: dataSource2,
-            x: dateList2,
-            y: metricList2,
-            mode: "lines+markers",
-            line: { color: "green" },
-        },
-        {
-            name: dataSource2,
-            x: measureDateList2,
-            y: measuredMetricList2,
-            mode: "lines+markers",
-            line: { color: "green" },
-        }
-    ];
+      const result = processDataPreds(response2.data);
+      setDates2(result.dateList);
+      setMetrics2(result.metricList);
 
-    const layout: Partial<Layout> = {
-        width: 1000,
-        height: 500,
-        margin: { t: 20, l: 40, r: 20, b: 40 },
-        paper_bgcolor: "#fff",
-        plot_bgcolor: "#fff",
-        xaxis: {
-          title: {
-            text: "Time",
-          },
-          showgrid: false,
-          zeroline: false
-        },
-        yaxis: {
-          title: {
-            text: "PM10",
-          },
-        },
-        legend: {
-            y: 0.5,
-            // traceorder: "reversed",
-            // yref: 'paper',
-            font: {
-                size: 16,
-                family: 'OpenSans'
-              },
-        },
-    };
+      const result2 = processDataHistoric(measuredData2.data.data);
+      setMeasureDateList2(result2.dateList);
+      setMeasuredMetricList2(result2.metricList);
+    }
 
-    const config = {
-        displayModeBar: false,
-        responsive: true
-    };
+    // setPredData(dummy_data);
+    // processData(dummy_data);
+    setLoading(true);
+  };
+
+  const data: Data[] = [
+    {
+      name: dataSource1 + " Prediction Data",
+      x: dateList1,
+      y: metricList1,
+      mode: "lines+markers",
+      line: { color: "red" },
+    },
+    {
+      name: dataSource1 + " Historical Data",
+      x: measureDateList1,
+      y: measuredMetricList1,
+      mode: "lines+markers",
+      line: { color: "orange" },
+    },
+    {
+      name: dataSource2 + " Prediction Data",
+      x: dateList2,
+      y: metricList2,
+      mode: "lines+markers",
+      line: { color: "blue" },
+    },
+    {
+      name: dataSource2 + " Historical Data",
+      x: measureDateList2,
+      y: measuredMetricList2,
+      mode: "lines+markers",
+      line: { color: "green" },
+    },
+  ];
+
+  const layout: Partial<Layout> = {
+    width: 1000,
+    height: 500,
+    margin: { t: 20, l: 40, r: 20, b: 40 },
+    paper_bgcolor: "#fff",
+    plot_bgcolor: "#fff",
+    xaxis: {
+      title: {
+        text: "Time",
+      },
+      showgrid: false,
+      zeroline: false,
+    },
+    yaxis: {
+      title: {
+        text: "PM10",
+      },
+    },
+    legend: {
+      y: 0.5,
+      // traceorder: "reversed",
+      // yref: 'paper',
+      font: {
+        size: 16,
+        family: "OpenSans",
+      },
+    },
+  };
+
+  const config = {
+    displayModeBar: false,
+    responsive: true,
+  };
 
   return (
     <div className={css(styles.boardDefault)}>
-      
       <label>model</label>
-      <select value={modelName1} onChange={(e) => setModelName1(e.target.value)}>
+      <select
+        value={modelName1}
+        onChange={(e) => setModelName1(e.target.value)}
+      >
         <option value="">Select an option</option>
         <option value="lstm">lstm</option>
         <option value="prophet">prophet</option>
       </select>
 
       <label>Station</label>
-      <select value={dataSource1} onChange={(e) => {setDataSource1(e.target.value); setDataSourceId1((e.target.selectedIndex.toString()))}}>
+      <select
+        value={dataSource1}
+        onChange={(e) => {
+          setDataSource1(e.target.value);
+          setDataSourceId1(e.target.selectedIndex.toString());
+        }}
+      >
         <option value="">Select an option</option>
         {Object.keys(stationList).map((key) => {
-            return (
+          return (
             <option key={key} value={stationList[key]}>
-                {stationList[key]}
+              {stationList[key]}
             </option>
-            );
+          );
         })}
       </select>
 
-    <label>model</label>
-      <select value={modelName2} onChange={(e) => setModelName2(e.target.value)}>
+      <label>model</label>
+      <select
+        value={modelName2}
+        onChange={(e) => setModelName2(e.target.value)}
+      >
         <option value="">Select an option</option>
         <option value="lstm">lstm</option>
         <option value="prophet">prophet</option>
       </select>
 
       <label>Station</label>
-      <select value={dataSource2} onChange={(e) => {setDataSource2(e.target.value); setDataSourceId2((e.target.selectedIndex.toString()))}}>
+      <select
+        value={dataSource2}
+        onChange={(e) => {
+          setDataSource2(e.target.value);
+          setDataSourceId2(e.target.selectedIndex.toString());
+        }}
+      >
         <option value="">Select an option</option>
         {Object.keys(stationList).map((key) => {
-            return (
+          return (
             <option key={key} value={stationList[key]}>
-                {stationList[key]}
+              {stationList[key]}
             </option>
-            );
+          );
         })}
+      </select>
+
+      <label>Metric</label>
+      <select
+        value={metric}
+        onChange={(e) => {
+          setMetric(e.target.value);
+        }}
+      >
+        <option value="">Select an option</option>
+        <option value="PM10">PM10</option>
+        <option value="NO2">NO2</option>
+        <option value="SO2">SO2</option>
+        <option value="O3">O3</option>
+        <option value="CO">CO</option>
+        <option value="Pb">Pb</option>
       </select>
 
       <div className={css(styles.timeFilterCont)}>
-            <label>Start Date</label>
-            <input type={"date"} name={"start-date"} value={startDate} onChange={(event) => handleDateChange(event, setStartDate)} className={css(styles.timeFilter)} />
-            <label>End Date</label>
-            <input type={"date"} name={"end-date"} value={endDate} onChange={(event) => handleDateChange(event, setEndDate)}  className={css(styles.timeFilter)}/>
-        </div>
+        <label>Start Date</label>
+        <input
+          type={"date"}
+          name={"start-date"}
+          value={startDate}
+          onChange={(event) => handleDateChange(event, setStartDate)}
+          className={css(styles.timeFilter)}
+        />
+        <label>End Date</label>
+        <input
+          type={"date"}
+          name={"end-date"}
+          value={endDate}
+          onChange={(event) => handleDateChange(event, setEndDate)}
+          className={css(styles.timeFilter)}
+        />
+      </div>
 
+      <button onClick={(event) => getPredData(startDate, endDate, metric)}>
+        Get Predictions
+      </button>
 
-      <button onClick={(event) => getPredData(startDate, endDate)}>Get Predictions</button>
-
-      
-      
       {loading ? (
         <div className={css(styles.dsHeader)}>
           <Plot data={data} layout={layout} config={config} />
         </div>
       ) : null}
-
-
-
     </div>
   );
 };
@@ -348,43 +420,39 @@ const styles = StyleSheet.create({
     color: themeVars.colors.accent.dark,
   },
 
-  timeFilterCont: {
-
-  },
+  timeFilterCont: {},
 
   timeFilter: {
-    width: '10rem',
-    height: '3.2rem',
-    border: 'none',
-    padding: '0 1rem',
-    borderRadius: '2rem',
+    width: "10rem",
+    height: "3.2rem",
+    border: "none",
+    padding: "0 1rem",
+    borderRadius: "2rem",
 
-    ':first-child': {
-        borderRadius: '2rem 0 0 2rem',
-        borderRight: '0.5px solid rgba(256, 256, 256, 0.08)',
+    ":first-child": {
+      borderRadius: "2rem 0 0 2rem",
+      borderRight: "0.5px solid rgba(256, 256, 256, 0.08)",
     },
 
-    ':last-child': {
-        borderRadius: '0 2rem 2rem 0',
+    ":last-child": {
+      borderRadius: "0 2rem 2rem 0",
     },
 
     color: themeVars.colors.text.accentGrey,
-    fontSize: '1rem',
+    fontSize: "1rem",
     fontWeight: 600,
-    letterSpacing: '0.065em',
+    letterSpacing: "0.065em",
 
     background: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><path fill='%23fff' d='M10 13.414l-6.707-6.707 1.414-1.414L10 10.586l5.293-5.293 1.414 1.414z'/></svg>") no-repeat right 0.75rem center/9px 9px`,
-    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+    backgroundColor: "rgba(0, 0, 0, 0.08)",
 
-    ':focus': {
-        outline: 'none',
+    ":focus": {
+      outline: "none",
     },
 
-//     remove the date picker icon
-    '::-webkit-calendar-picker-indicator': {
-        opacity: 0,
-    }
-
-},
-
+    //     remove the date picker icon
+    "::-webkit-calendar-picker-indicator": {
+      opacity: 0,
+    },
+  },
 });
