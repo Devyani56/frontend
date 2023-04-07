@@ -219,32 +219,36 @@ const PredictionPlot = () => {
 
   return (
     <div className={css(styles.boardDefault)}>
-      <label>model</label>
-      <select value={modelName} onChange={(e) => setModelName(e.target.value)}>
-        <option value="">Select an option</option>
-        <option value="lstm">lstm</option>
-        <option value="prophet">prophet</option>
-      </select>
+        <div className={css(styles.predictionSelectCont)}>
+            <div className={css(styles.modelSelector)}>
+                  <label className={css(styles.modelLabel)}>Model</label>
+                  <select className={css(styles.modeSelect)} value={modelName} onChange={(e) => setModelName(e.target.value)}>
+                    <option value="">Select an option</option>
+                    <option value="lstm">lstm model</option>
+                    <option value="prophet">facebook's prophet model</option>
+                  </select>
+            </div>
 
-      <select value={dataSource} onChange={(e) => {setDataSource(e.target.value); setDataSourceId((e.target.selectedIndex.toString()))}}>
-        <option value="">Select an option</option>
-        {Object.keys(stationList).map((key) => {
-            return (
-            <option key={key} value={key}>
-                {stationList[key]}
-            </option>
-            );
-        })}
-      </select>
-      <div className={css(styles.timeFilterCont)}>
-            <label>Start Date</label>
-            <input type={"date"} name={"start-date"} value={startDate} onChange={(event) => handleDateChange(event, setStartDate)} className={css(styles.timeFilter)} />
-            <label>End Date</label>
-            <input type={"date"} name={"end-date"} value={endDate} onChange={(event) => handleDateChange(event, setEndDate)}  className={css(styles.timeFilter)}/>
+            <div className={css(styles.stationSelector)}>
+                  <select  className={css(styles.modeSelect)} value={dataSource} onChange={(e) => {setDataSource(e.target.value); setDataSourceId((e.target.selectedIndex.toString()))}}>
+                    <option value="">Select an option</option>
+                    {Object.keys(stationList).map((key) => {
+                        return (
+                        <option key={key} value={key}>
+                            {stationList[key]}
+                        </option>
+                        );
+                    })}
+
+                  </select>
+            </div>
+                <div className={css(styles.timeFilterCont)}>
+                    <input type={"date"} name={"start-date"} value={startDate} onChange={(event) => handleDateChange(event, setStartDate)} className={css(styles.timeFilter)} />
+                    <input type={"date"} name={"end-date"} value={endDate} onChange={(event) => handleDateChange(event, setEndDate)}  className={css(styles.timeFilter)}/>
+                </div>
+
+            <button className={css(styles.getPredBtn)} onClick={(event) => getPredData(startDate, endDate)}>Get Predictions</button>
         </div>
-
-      <button onClick={(event) => getPredData(startDate, endDate)}>Get Predictions</button>
-
       {loading ? (
         <div className={css(styles.dsHeader)}>
           <Plot data={data} layout={layout} config={{ displayModeBar: true }} />
@@ -264,7 +268,73 @@ const styles = StyleSheet.create({
     width: "100%",
     minHight: "100%",
     boxSizing: "border-box",
+      borderRadius: "7.4rem",
+      border: "1px solid " + themeVars.colors.accent.green,
+      minHeight: "50rem",
   },
+
+    predictionSelectCont: {
+        width: "100%",
+        boxSizing: "border-box",
+        background: themeVars.colors.accent.green,
+        borderRadius: "10rem",
+        padding: "2rem 4%",
+        display: "flex",
+        justifyContent: "center",
+        gap: "5rem",
+        alignItems: "center",
+        borderBottomRightRadius: "0",
+        borderBottomLeftRadius: "0",
+
+    },
+
+    modelSelector: {
+
+    },
+
+    modelLabel: {
+        color: 'white',
+        fontSize: "1.5rem",
+        fontWeight: "bold",
+        marginRight: "0.4rem",
+    },
+
+    stationSelect: {
+        background: 'transparent',
+        display: "flex",
+        alignItems: "center",
+        borderRadius: "0.5rem",
+        width: "14rem",
+        outline: "none",
+
+    },
+
+    stationSelector: {
+
+    },
+
+    modeSelect: {
+        background:'transparent',
+        border: 'none',
+        color: 'white',
+        fontSize: "1.5rem",
+        fontWeight: "bold",
+        outline: "none",
+        textDecoration: "underline",
+        width: "14rem",
+
+    },
+
+    getPredBtn: {
+        background: themeVars.colors.alerts.green,
+        color: 'white',
+        fontSize: "1.5rem",
+        padding: "0.5rem 1rem",
+        borderRadius: "2rem",
+        alignSelf: 'flex-end',
+        border: "none",
+
+    },
 
   dataSourceCont: {
     width: "100%",
@@ -291,12 +361,10 @@ const styles = StyleSheet.create({
   },
 
   dsHeader: {
-    width: "100%",
-    padding: "2rem 4%",
-    display: "flex",
-    justifyContent: "space-between",
-    boxSizing: "border-box",
+   display: "flex",
+    justifyContent: "center",
     alignItems: "center",
+    padding: "1rem 3rem",
   },
 
   noDataSourceCont: {
@@ -351,7 +419,7 @@ const styles = StyleSheet.create({
         borderRadius: '0 2rem 2rem 0',
     },
 
-    color: themeVars.colors.text.accentGrey,
+    color: 'white',
     fontSize: '1rem',
     fontWeight: 600,
     letterSpacing: '0.065em',

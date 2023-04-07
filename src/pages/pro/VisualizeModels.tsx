@@ -234,7 +234,9 @@ const styles = StyleSheet.create({
     width: "100%",
     minHight: "100%",
     boxSizing: "border-box",
-  },
+
+    padding: "2rem 4%",
+    },
 
   dataSourceCont: {
     width: "100%",
