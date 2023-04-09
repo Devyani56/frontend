@@ -53,7 +53,7 @@ const UploadFromCsv = () => {
     const [data, setData] = useState([]);
     const [columns, setColumns] = useState([
         {
-            name: 'Time Stamp',
+            name: 'TimeStamp',
             selector: row => row.recordedAt,
             sortable: true,
         },
@@ -121,9 +121,13 @@ const UploadFromCsv = () => {
             }
 
             dataFileMapping.metrics.forEach((metric: any) => {
-                newData.data[metric] = Number(data[metric])
+                // remove special characters from name like . etc
+                const newMetric = metric.replace(/[^\w\s]/gi, '')
+                console.log("Im here------", metric, newMetric)
+                newData.data[newMetric] = Number(data[metric])
             })
 
+            console.log("xxx-----",newData)
             dataToUpload.push(newData);
 
         })
@@ -149,7 +153,7 @@ const UploadFromCsv = () => {
         dataFileMapping.metrics.forEach((metric: any) => {
             columns.push({
                 name: metric,
-                selector: row => row.data[metric],
+                selector: row => row.data[metric.replace(/[^\w\s]/gi, '')],
                 sortable: true,
             })
         })
@@ -161,7 +165,6 @@ const UploadFromCsv = () => {
 
         setTotalRows(dataToUpload.length);
     }
-
 
     const uploadData = async (e: any) => {
         e.preventDefault();

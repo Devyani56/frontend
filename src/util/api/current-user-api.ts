@@ -1,8 +1,9 @@
 import axios from "axios";
 import {authServiceUrl, config} from "../../urls";
+import themeVars from "../themeVars";
 export const currentUserApi = async () => {
     try {
-        const response = await axios.get(`http://localhost:3001/api/users/currentuser`, config);
+        const response = await axios.get(authServiceUrl + `/currentuser`, config);
         const responseData = {
             type: "success",
             data: response.data,

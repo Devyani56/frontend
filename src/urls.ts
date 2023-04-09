@@ -1,4 +1,4 @@
-const authServiceUrl = "http://localhost:3001/api/users";
+const authServiceUrl = "http://localhost:3002/api/users";
 const pollutionServiceUrl = "http://localhost:3002/api/pollution";
 const config = {
   headers: {

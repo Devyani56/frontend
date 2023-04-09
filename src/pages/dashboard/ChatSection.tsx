@@ -3,7 +3,7 @@ import MyResponsiveLine from "./MyResponsiveLine";
 import themeVars from "../../util/themeVars";
 import Button from "../../components/buttons/Button";
 import {CaretDown} from "phosphor-react";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Plot from "react-plotly.js";
 import  PlotParams from "react-plotly.js"
 import   AxisType  from "react-plotly.js"
@@ -17,278 +17,6 @@ type chartDataType ={
     mode: any
 }
 
-const data = [
-    {
-        "id": "japan",
-        "color": "hsl(260, 70%, 50%)",
-        "data": [
-            {
-                "x": "plane",
-                "y": 116
-            },
-            {
-                "x": "helicopter",
-                "y": 118
-            },
-            {
-                "x": "boat",
-                "y": 158
-            },
-            {
-                "x": "train",
-                "y": 22
-            },
-            {
-                "x": "subway",
-                "y": 100
-            },
-            {
-                "x": "bus",
-                "y": 117
-            },
-            {
-                "x": "car",
-                "y": 243
-            },
-            {
-                "x": "moto",
-                "y": 71
-            },
-            {
-                "x": "bicycle",
-                "y": 275
-            },
-            {
-                "x": "horse",
-                "y": 209
-            },
-            {
-                "x": "skateboard",
-                "y": 271
-            },
-            {
-                "x": "others",
-                "y": 86
-            }
-        ]
-    },
-    {
-        "id": "france",
-        "color": "hsl(227, 70%, 50%)",
-        "data": [
-            {
-                "x": "plane",
-                "y": 270
-            },
-            {
-                "x": "helicopter",
-                "y": 255
-            },
-            {
-                "x": "boat",
-                "y": 76
-            },
-            {
-                "x": "train",
-                "y": 117
-            },
-            {
-                "x": "subway",
-                "y": 184
-            },
-            {
-                "x": "bus",
-                "y": 54
-            },
-            {
-                "x": "car",
-                "y": 171
-            },
-            {
-                "x": "moto",
-                "y": 15
-            },
-            {
-                "x": "bicycle",
-                "y": 137
-            },
-            {
-                "x": "horse",
-                "y": 238
-            },
-            {
-                "x": "skateboard",
-                "y": 201
-            },
-            {
-                "x": "others",
-                "y": 119
-            }
-        ]
-    },
-    {
-        "id": "us",
-        "color": "hsl(312, 70%, 50%)",
-        "data": [
-            {
-                "x": "plane",
-                "y": 175
-            },
-            {
-                "x": "helicopter",
-                "y": 190
-            },
-            {
-                "x": "boat",
-                "y": 47
-            },
-            {
-                "x": "train",
-                "y": 196
-            },
-            {
-                "x": "subway",
-                "y": 132
-            },
-            {
-                "x": "bus",
-                "y": 182
-            },
-            {
-                "x": "car",
-                "y": 232
-            },
-            {
-                "x": "moto",
-                "y": 16
-            },
-            {
-                "x": "bicycle",
-                "y": 60
-            },
-            {
-                "x": "horse",
-                "y": 80
-            },
-            {
-                "x": "skateboard",
-                "y": 217
-            },
-            {
-                "x": "others",
-                "y": 50
-            }
-        ]
-    },
-    {
-        "id": "germany",
-        "color": "hsl(319, 70%, 50%)",
-        "data": [
-            {
-                "x": "plane",
-                "y": 154
-            },
-            {
-                "x": "helicopter",
-                "y": 199
-            },
-            {
-                "x": "boat",
-                "y": 60
-            },
-            {
-                "x": "train",
-                "y": 36
-            },
-            {
-                "x": "subway",
-                "y": 90
-            },
-            {
-                "x": "bus",
-                "y": 100
-            },
-            {
-                "x": "car",
-                "y": 30
-            },
-            {
-                "x": "moto",
-                "y": 216
-            },
-            {
-                "x": "bicycle",
-                "y": 199
-            },
-            {
-                "x": "horse",
-                "y": 147
-            },
-            {
-                "x": "skateboard",
-                "y": 94
-            },
-            {
-                "x": "others",
-                "y": 115
-            }
-        ]
-    },
-    {
-        "id": "norway",
-        "color": "hsl(63, 70%, 50%)",
-        "data": [
-            {
-                "x": "plane",
-                "y": 257
-            },
-            {
-                "x": "helicopter",
-                "y": 25
-            },
-            {
-                "x": "boat",
-                "y": 114
-            },
-            {
-                "x": "train",
-                "y": 143
-            },
-            {
-                "x": "subway",
-                "y": 97
-            },
-            {
-                "x": "bus",
-                "y": 284
-            },
-            {
-                "x": "car",
-                "y": 169
-            },
-            {
-                "x": "moto",
-                "y": 116
-            },
-            {
-                "x": "bicycle",
-                "y": 103
-            },
-            {
-                "x": "horse",
-                "y": 80
-            },
-            {
-                "x": "skateboard",
-                "y": 36
-            },
-            {
-                "x": "others",
-                "y": 14
-            }
-        ]
-    }
-]
 const ChartSection = ({data} : any) => {
     console.log("From chart section - data :", data)
 
@@ -312,6 +40,14 @@ const ChartSection = ({data} : any) => {
     // const [chartData, setChartData] = useState<any>([])
     var [chartData, setChartData] = useState<chartDataType[]>([]);
     var dummydata: any = [];
+    const [mywidth, setWidth] = useState<number>(0);
+    const chartContainerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (chartContainerRef.current) {
+            setWidth(chartContainerRef.current.offsetWidth * 0.95);
+        }
+    }, [chartContainerRef]);
 
     const prettyDate = (date : string) => {
         const dateObj = new Date(date)
@@ -367,14 +103,15 @@ const ChartSection = ({data} : any) => {
     //     setChartData(convertedData)
     // }
     const layout = {
-        width: 1000,
-        height: 350,
+        // give width based on parent container
+        width: 900,
+        height: 300,
         legend: {
             y: 0.5,
             // traceorder: "reversed",
             yref: 'paper',
             font: {
-                color: '#e6fa84',
+                color: 'white',
                 size: 16,
                 family: 'Arial'
               },
@@ -382,9 +119,35 @@ const ChartSection = ({data} : any) => {
         xaxis:{
             showgrid: false,
             zeroline: false
+
+        },
+
+        yaxis:{
+            showgrid: true,
+            zeroline: false,
+            color: themeVars.colors.accent.green,
+        //     grid line colors
+            gridcolor: 'rgba(255, 255, 255, 0.2)',
         },
         plot_bgcolor: 'transparent', // Set background color to transparent
         paper_bgcolor: 'transparent' // Set paper color to transparent
+
+        ,
+      //   axis font color
+        font: {
+            color: 'rgba(255, 255, 255, 0.6)',
+            size: 12,
+        },
+      //   no padding
+        margin: {
+            l: 35,
+            r: 20,
+            b: 35,
+            t: 30,
+        }
+      //   thickness of the line in graph
+
+
       };
       
     const config = {
@@ -449,9 +212,14 @@ const ChartSection = ({data} : any) => {
     }
     , [data])
 
+    // use a ref on the chart container to get the width
+
+
+
+
 
     return (
-        <div className={css(styles.chartSectionDefault)}>
+        <div className={css(styles.chartSectionDefault)} ref={chartContainerRef}>
             {/* <MyResponsiveLine data={chartData}/> */}
             <Plot data={chartData} layout={layout} config={config} />
         </div>
@@ -468,6 +236,10 @@ const styles = StyleSheet.create(
             top: "-30px",
             width: "100%",
             boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
         },
 
         chartContainer: {
