@@ -27,7 +27,7 @@ const UploadingModal = ({uploadStatus, isUploading} : UploadingModalProps) => {
                 <div className={css(styles.modalHeader)}>
                     <h2>Uploading Data</h2>
                     <div>
-                        <ProgressBar completed={uploadStatus.count / uploadStatus.total * 100} height="100px" bgColor={themeVars.colors.accent.green} height="10px" labelColor={themeVars.colors.accent.dark} labelAlignment="outside" />
+                        <ProgressBar completed={(uploadStatus.count / uploadStatus.total * 100).toFixed(1)} height="100px" bgColor={themeVars.colors.accent.green} height="10px" labelColor={themeVars.colors.accent.dark} labelAlignment="outside" />
                     </div>
                 </div>
             </div>
@@ -173,17 +173,21 @@ const UploadFromCsv = () => {
         // show the progress of the upload
 
         setIsUploading(true);
+        let atATime = 200;
         setUploadStatus({count: 0, total: dataFromCSV.length})
-        for (let i = 0; i < data.length; i += 1000) {
+        for (let i = 0; i < data.length; i += atATime) {
             // get 1000 data or rest of the data
-            const end = Math.max(i + 1000, data.length);
+            const end = Math.min(i + atATime, data.length);
             console.log("uploading:: ",i, end);
             const dataToUpload = dataFromCSV.slice(i, end);
             // upload the data
-            const res = await addPollutionDataApi(dataToUpload);
-            if (res.type === "error") {
+            let res = await addPollutionDataApi(dataToUpload);
+            let tryCount = 0;
+            while (res.type === "error" || tryCount < 5) {
                 // wait for 10000 seconds and then try again
                 await new Promise(resolve => setTimeout(resolve, 10000));
+                res = await addPollutionDataApi(dataToUpload);
+                tryCount++;
             }
             console.log(i,"::", end, "::", res);
             // update the progress
