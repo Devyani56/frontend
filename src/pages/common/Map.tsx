@@ -2,6 +2,7 @@ import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
 import {useEffect, useState} from "react";
 import L from 'leaflet';
 import {getDataSourceAPi} from "../../util/api/get-datasources-api";
+import {getAllLatestData} from "../../util/api/get-all-latest-data";
 
 const iconGood = new L.Icon({
 //     it will be a green circle
@@ -42,11 +43,24 @@ const Map = ({coordinate, zoom} : IMapProps) => {
 
     const [loading, setLoading] = useState<boolean>(true);
 
+
+    const [allStationData, setAllStationData] = useState<any>({});
+
+
     const getDataSources = async () => {
         setLoading(true)
         const response = await getDataSourceAPi();
         if (response.type === "success"){
             setDataSources(response.data);
+        }
+        setLoading(false)
+    }
+
+    const getAllStationData = async () => {
+        setLoading(true)
+        const response = await getAllLatestData()
+        if (response.type === "success"){
+            setAllStationData(response.data);
         }
         setLoading(false)
     }
@@ -63,6 +77,13 @@ const Map = ({coordinate, zoom} : IMapProps) => {
         }
         , [coordinate, loading]);
 
+    useEffect(() => {
+        getAllStationData();
+        console.log("allStationData--", allStationData)
+    }
+    , [])
+
+
 
     return (
             <MapContainer center={[...coordinate]} zoom={zoom} scrollWheelZoom={false} style={{height: '100%', width: '100%'}}>
@@ -77,7 +98,13 @@ const Map = ({coordinate, zoom} : IMapProps) => {
                         return (
                             <Marker position={[station.location.lat, station.location.lng]}>
                                 <Popup>
-                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                    <div>
+                                        <h3>{station.name}</h3>
+                                        <p>Latitude: {station.location.lat}</p>
+                                        <p>Longitude: {station.location.lng}</p>
+                                        <p>{allStationData[station.id] && JSON.stringify(allStationData[station.id])}</p>
+                                    </div>
+
                                 </Popup>
                             </Marker>
                         )

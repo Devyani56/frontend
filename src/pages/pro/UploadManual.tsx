@@ -13,7 +13,7 @@ const emptyData =
         },
         "data" : {
             "PM10": "",
-            "PM2.5": "",
+            "PM25": "",
             "NO2": "",
             "SO2": "",
             "O3": "",
@@ -23,7 +23,7 @@ const emptyData =
     }
 
 
-const metrics = ["PM10", "PM2.5", "NO2", "O3", "SO2", "CO", "AQI"]
+const metrics = ["PM10", "PM25", "NO2", "O3", "SO2", "CO", "AQI"]
 
 const UploadManual = () => {
 
