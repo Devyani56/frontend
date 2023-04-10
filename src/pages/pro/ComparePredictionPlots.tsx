@@ -260,86 +260,108 @@ const ComparePredictionPlots = () => {
           setDataSourceId1(e.target.selectedIndex.toString());
         }}
       > */}
-        <div className={css(styles.predictionSelectCont)}>
+      <div className={css(styles.predictionSelectCont)}>
         <div className={css(styles.leftStation)}>
-        <div className={css(styles.modelSelector)}>
-          <select  className={css(styles.modeSelect)} value={modelName1} onChange={(e) => setModelName1(e.target.value)}>
+          <div className={css(styles.modelSelector)}>
+            <select
+              className={css(styles.modeSelect)}
+              value={modelName1}
+              onChange={(e) => setModelName1(e.target.value)}
+            >
+              <option value="">Select an option</option>
+              <option value="lstm">lstm</option>
+              <option value="prophet">prophet</option>
+            </select>
+          </div>
+
+          <select
+            className={css(styles.modeSelect)}
+            value={dataSource1}
+            onChange={(e) => {
+              setDataSource1(e.target.value);
+              setDataSourceId1(e.target.selectedIndex.toString());
+            }}
+          >
+            <option value="">Select an option</option>
+            {Object.keys(stationList).map((key) => {
+              return (
+                <option key={key} value={stationList[key]}>
+                  {stationList[key]}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className={css(styles.rightStation)}>
+          <select
+            className={css(styles.modeSelect)}
+            value={modelName2}
+            onChange={(e) => setModelName2(e.target.value)}
+          >
             <option value="">Select an option</option>
             <option value="lstm">lstm</option>
             <option value="prophet">prophet</option>
           </select>
+
+          <select
+            className={css(styles.modeSelect)}
+            value={dataSource2}
+            onChange={(e) => {
+              setDataSource2(e.target.value);
+              setDataSourceId2(e.target.selectedIndex.toString());
+            }}
+          >
+            <option value="">Select an option</option>
+            {Object.keys(stationList).map((key) => {
+              return (
+                <option key={key} value={stationList[key]}>
+                  {stationList[key]}
+                </option>
+              );
+            })}
+          </select>
         </div>
 
+        <select
+          value={metric}
+          onChange={(e) => {
+            setMetric(e.target.value);
+          }}
+        >
+          <option value="">Select an option</option>
+          <option value="PM10">PM10</option>
+          <option value="NO2">NO2</option>
+          <option value="SO2">SO2</option>
+          <option value="O3">O3</option>
+          <option value="CO">CO</option>
+          <option value="Pb">Pb</option>
+        </select>
 
-      <select  className={css(styles.modeSelect)}  value={dataSource1} onChange={(e) => {setDataSource1(e.target.value); setDataSourceId1((e.target.selectedIndex.toString()))}}>
-        <option value="">Select an option</option>
-        {Object.keys(stationList).map((key) => {
-          return (
-            <option key={key} value={stationList[key]}>
-              {stationList[key]}
-            </option>
-          );
-        })}
-      </select>
-
+        <div className={css(styles.timeFilterCont)}>
+          <input
+            type={"date"}
+            name={"start-date"}
+            value={startDate}
+            onChange={(event) => handleDateChange(event, setStartDate)}
+            className={css(styles.timeFilter)}
+          />
+          <input
+            type={"date"}
+            name={"end-date"}
+            value={endDate}
+            onChange={(event) => handleDateChange(event, setEndDate)}
+            className={css(styles.timeFilter)}
+          />
         </div>
-            <div className={css(styles.rightStation)}>
-      <select  className={css(styles.modeSelect)}  value={modelName2} onChange={(e) => setModelName2(e.target.value)}>
-        <option value="">Select an option</option>
-        <option value="lstm">lstm</option>
-        <option value="prophet">prophet</option>
-      </select>
 
-      <select   className={css(styles.modeSelect)} value={dataSource2} onChange={(e) => {setDataSource2(e.target.value); setDataSourceId2((e.target.selectedIndex.toString()))}}>
-        <option value="">Select an option</option>
-        {Object.keys(stationList).map((key) => {
-          return (
-            <option key={key} value={stationList[key]}>
-              {stationList[key]}
-            </option>
-          );
-        })}
-      </select>
-        </div>
-
-
-      <select
-        value={metric}
-        onChange={(e) => {
-          setMetric(e.target.value);
-        }}
-      >
-        <option value="">Select an option</option>
-        <option value="PM10">PM10</option>
-        <option value="NO2">NO2</option>
-        <option value="SO2">SO2</option>
-        <option value="O3">O3</option>
-        <option value="CO">CO</option>
-        <option value="Pb">Pb</option>
-      </select>
-
-      <div className={css(styles.timeFilterCont)}>
-        <input
-          type={"date"}
-          name={"start-date"}
-          value={startDate}
-          onChange={(event) => handleDateChange(event, setStartDate)}
-          className={css(styles.timeFilter)}
-        />
-        <input
-          type={"date"}
-          name={"end-date"}
-          value={endDate}
-          onChange={(event) => handleDateChange(event, setEndDate)}
-          className={css(styles.timeFilter)}
-        />
+        <button
+          className={css(styles.getPredBtn)}
+          onClick={(event) => getPredData(startDate, endDate, metric)}
+        >
+          Get Predictions
+        </button>
       </div>
 
-      <button className={css(styles.getPredBtn)}
-              onClick={(event) => getPredData(startDate, endDate, metric)}>Get Predictions</button>
-        </div>
-     
-      
       {loading ? (
         <div className={css(styles.dsHeader)}>
           <Plot data={data} layout={layout} config={config} />
@@ -353,59 +375,52 @@ export default ComparePredictionPlots;
 
 const styles = StyleSheet.create({
   boardDefault: {
-      width: "100%",
-      minHight: "100%",
-      boxSizing: "border-box",
-      borderRadius: "7.4rem",
-      border: "1px solid " + themeVars.colors.accent.green,
-      minHeight: "50rem",
-      marginTop: "3rem",
+    width: "100%",
+    minHight: "100%",
+    boxSizing: "border-box",
+    borderRadius: "7.4rem",
+    border: "1px solid " + themeVars.colors.accent.green,
+    minHeight: "50rem",
+    marginTop: "3rem",
   },
 
-    leftStation: {
-      display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        gap: "1rem",
+  leftStation: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    gap: "1rem",
+  },
 
-    },
+  modeSelect: {
+    background: "transparent",
+    border: "none",
+    color: "white",
+    fontSize: "1.5rem",
+    fontWeight: "bold",
+    outline: "none",
+    textDecoration: "underline",
+    width: "14rem",
+  },
 
-    modeSelect: {
-        background:'transparent',
-        border: 'none',
-        color: 'white',
-        fontSize: "1.5rem",
-        fontWeight: "bold",
-        outline: "none",
-        textDecoration: "underline",
-        width: "14rem",
+  rightStation: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    gap: "1rem",
+  },
 
-    },
+  modelSelector: {},
 
-
-    rightStation: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        gap: "1rem",
-    },
-
-    modelSelector: {
-
-    },
-
-
-    getPredBtn: {
-        background: themeVars.colors.alerts.green,
-        color: 'white',
-        fontSize: "1.5rem",
-        padding: "0.5rem 1rem",
-        borderRadius: "2rem",
-        border: "none",
-
-    },
+  getPredBtn: {
+    background: themeVars.colors.alerts.green,
+    color: "white",
+    fontSize: "1.5rem",
+    padding: "0.5rem 1rem",
+    borderRadius: "2rem",
+    border: "none",
+  },
 
   dataSourceCont: {
     width: "100%",
@@ -450,24 +465,21 @@ const styles = StyleSheet.create({
     position: "relative",
   },
 
-    predictionSelectCont: {
-        width: "100%",
-        boxSizing: "border-box",
-        background: themeVars.colors.accent.green,
-        borderRadius: "6rem",
-        padding: "2rem 4%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "5rem",
-        borderBottomRightRadius: "0",
-        borderBottomLeftRadius: "0",
+  predictionSelectCont: {
+    width: "100%",
+    boxSizing: "border-box",
+    background: themeVars.colors.accent.green,
+    borderRadius: "6rem",
+    padding: "2rem 4%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "5rem",
+    borderBottomRightRadius: "0",
+    borderBottomLeftRadius: "0",
+  },
 
-
-    },
-
-
-    sensorBoxImg: {
+  sensorBoxImg: {
     width: "35%",
     marginRight: "10%",
     marginTop: "10%",
@@ -507,8 +519,8 @@ const styles = StyleSheet.create({
       borderRadius: "0 2rem 2rem 0",
     },
 
-    color: 'white',
-    fontSize: '1rem',
+    color: "white",
+    fontSize: "1rem",
     fontWeight: 600,
     letterSpacing: "0.065em",
 
