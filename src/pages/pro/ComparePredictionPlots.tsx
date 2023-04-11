@@ -269,8 +269,9 @@ const ComparePredictionPlots = () => {
               onChange={(e) => setModelName1(e.target.value)}
             >
               <option value="">Select an option</option>
-              <option value="lstm">lstm</option>
-              <option value="prophet">prophet</option>
+              <option value="prophet">facebook's prophet model</option>
+              <option value="lstm">lstm model</option>
+              <option value="hybridlstm">Hybrid Model - lstm + prophet</option>
             </select>
           </div>
 
@@ -299,8 +300,9 @@ const ComparePredictionPlots = () => {
             onChange={(e) => setModelName2(e.target.value)}
           >
             <option value="">Select an option</option>
-            <option value="lstm">lstm</option>
-            <option value="prophet">prophet</option>
+            <option value="prophet">facebook's prophet model</option>
+            <option value="lstm">lstm model</option>
+            <option value="hybridlstm">Hybrid Model - lstm + prophet</option>
           </select>
 
           <select
@@ -330,6 +332,7 @@ const ComparePredictionPlots = () => {
         >
           <option value="">Select an option</option>
           <option value="PM10">PM10</option>
+          <option value="PM25">PM25</option>
           <option value="NO2">NO2</option>
           <option value="SO2">SO2</option>
           <option value="O3">O3</option>
