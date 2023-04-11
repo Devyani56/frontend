@@ -183,7 +183,7 @@ const UploadFromCsv = () => {
             // upload the data
             let res = await addPollutionDataApi(dataToUpload);
             let tryCount = 0;
-            while (res.type === "error" || tryCount < 5) {
+            while (res.type === "error" && tryCount < 5) {
                 // wait for 10000 seconds and then try again
                 await new Promise(resolve => setTimeout(resolve, 10000));
                 res = await addPollutionDataApi(dataToUpload);

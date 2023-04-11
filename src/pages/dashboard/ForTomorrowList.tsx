@@ -1,16 +1,28 @@
 import { StyleSheet, css } from 'aphrodite';
 import themeVars from "../../util/themeVars";
+import {useEffect, useState} from "react";
 
 interface IdataItem {
-    label: "PM2.5" | "PM10" | "O3" | "SO2" | "NO2" | "CO",
+    label: "PM25" | "PM10" | "O3" | "SO2" | "NO2" | "CO",
     value: number
 }
 
 interface IForTomorrowList {
-    columnSize: number
+    columnSize: number,
+    data : any
 }
-const ForTomorrowList = ({columnSize}: IForTomorrowList) => {
-    const data: IdataItem[]= [{label:"PM2.5", value: 20}, {label:"PM10" , value: 50}, {label:"O3" , value: 8}, {label:"SO2" , value: 3}, {label:"NO2" , value: 2}, {label:"CO" , value: 99}]
+const ForTomorrowList = ({columnSize, data}: IForTomorrowList) => {
+   // data contains key value pairs of the form "PM25": 10
+
+    const [myData, setMyData] = useState<IdataItem[]>([])
+    useEffect(() => {
+        const dataItems : IdataItem[] = []
+                for (const key in data) {
+                    dataItems.push({label: key, value: data[key].toFixed(1)} as IdataItem)
+                }
+                setMyData(dataItems)
+    }, [data])
+
     const getColor = (label: string, value: number) => {
         switch (label) {
             case "PM2.5":
@@ -61,16 +73,13 @@ const ForTomorrowList = ({columnSize}: IForTomorrowList) => {
                 Forecasts For Tomorrow
             </h3>
             <div className={css(styles.forTomorrowListBodyDefault)}>
-                <div className={css(styles.forTomorrowListBodyColumn)}>
-                    {data.slice(0, columnSize).map((item, index) => {
-                        return rowItem(item, index)
-                    })}
-                </div>
+
 
                 <div className={css(styles.forTomorrowListBodyColumn)}>
-                    {data.slice(columnSize, ).map((item, index) => {
-                        return rowItem(item, index)
-                    })}
+                    {myData.slice(0, columnSize).map((item, index) => rowItem(item, index))}
+                </div>
+                <div className={css(styles.forTomorrowListBodyColumn)}>
+                    {myData.slice(columnSize, columnSize*2).map((item, index) => rowItem(item, index))}
                 </div>
             </div>
         </div>

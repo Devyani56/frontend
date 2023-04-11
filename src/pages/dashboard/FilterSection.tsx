@@ -38,7 +38,7 @@ const FilterSection = ({filterOptions, setFilterOptions} : IFilterSectionProps) 
                         className={css(styles.durationFilter, styles.durationFilterLeft, filterOptions.duration === "Daily" && styles.durationFilterActive)}
                         onClick={() => changeDuration("Daily")}
                     >
-                        Daily
+                        All
                     </button>
                     <button
                         className={css(styles.durationFilter, styles.durationFilterMiddle, filterOptions.duration === "Weekly" && styles.durationFilterActive)}
@@ -55,8 +55,8 @@ const FilterSection = ({filterOptions, setFilterOptions} : IFilterSectionProps) 
 
                 </div>
                 <div className={css(styles.timeFilterCont)}>
-                    <input type={"date"} name={"start-date"} className={css(styles.timeFilter)} />
-                    <input type={"date"} name={"end-date"} className={css(styles.timeFilter)}/>
+                    <input type={"date"} name={"start-date"} className={css(styles.timeFilter)} value={filterOptions.startDate.toISOString().split('T')[0]} onChange={(e : any) => { setFilterOptions({...filterOptions, startDate: new Date(e.target.value)})}}/>
+                    <input type={"date"} name={"end-date"} className={css(styles.timeFilter)} value={filterOptions.endDate.toISOString().split('T')[0]} onChange={(e : any) => { setFilterOptions({...filterOptions, endDate: new Date(e.target.value)})}}/>
                 </div>
 
             </div>

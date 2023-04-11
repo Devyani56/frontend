@@ -44,34 +44,36 @@ const ChartSection = ({data} : any) => {
 
     }
     const layout = {
-        // give width based on parent container
-        width: 900,
-        height: 300,
-        legend: {
-            y: 0.5,
-            // traceorder: "reversed",
-            yref: 'paper',
-            font: {
-                color: 'white',
-                size: 16,
-                family: 'Arial'
-              },
-        },
-        xaxis:{
-            showgrid: false,
-            zeroline: false
+            // give width based on parent container
+            width: 900,
+            height: 300,
+            legend: {
+                y: 0.5,
+                // traceorder: "reversed",
+                yref: 'paper',
+                font: {
+                    color: 'white',
+                    size: 16,
+                    family: 'Arial'
+                },
+            },
+            xaxis: {
+                showgrid: false,
+                zeroline: false
 
-        },
+            },
 
-        yaxis:{
-            showgrid: true,
-            zeroline: false,
-            color: themeVars.colors.accent.green,
-        //     grid line colors
-            gridcolor: 'rgba(255, 255, 255, 0.2)',
-        },
-        plot_bgcolor: 'transparent', // Set background color to transparent
-        paper_bgcolor: 'transparent' // Set paper color to transparent
+            yaxis: {
+                showgrid: true,
+                zeroline: false,
+                color: themeVars.colors.accent.green,
+                //     grid line colors
+                gridcolor: 'rgba(255, 255, 255, 0.2)',
+            },
+            plot_bgcolor: 'transparent', // Set background color to transparent
+            paper_bgcolor: 'transparent' // Set paper color to transparent
+
+            // line thickness
 
         ,
       //   axis font color
@@ -136,8 +138,12 @@ const ChartSection = ({data} : any) => {
             name: key,
             mode: "lines+markers",
             line: {
-                width: 3
+                width: 2,
             },
+              marker: {
+                size: 3,
+              },
+
             x: datesData,
             y: dataByFields[key].map((obj:{y:number}) => obj.y),
           };

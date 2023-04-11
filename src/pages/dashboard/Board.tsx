@@ -55,7 +55,7 @@ const Board = ({openSideDrawer} : IBoardProps) => {
     const today = new Date();
     const tenYearsBack = new Date();
     tenYearsBack.setFullYear(today.getFullYear() - 10);
-    const [filterOptions, setFilterOptions] = useState<IFilters>({metric: "All", duration: "All", endDate: today, startDate: tenYearsBack});
+    const [filterOptions, setFilterOptions] = useState<IFilters>({metric: "All", duration: "Daily", endDate: today, startDate: tenYearsBack});
 
     const [location, setLocation] = useState({"sourceId": "", "sourceName": "", "sourceType": "", "sourceLat": 15.299326, "sourceLng": 74.123993, address: ""});
 
@@ -94,6 +94,9 @@ const Board = ({openSideDrawer} : IBoardProps) => {
             return;
         }
         const response = await getDashboardDataApi(location.sourceId)
+        // reset main data
+        setMainData({});
+
         if(response.type === "success") {
             setMainData(response.data);
             console.log("Main data", response.data)
@@ -152,7 +155,7 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                           <LowestHighestTile high={mainData.high || {}} low={mainData.low || {}}/>
                       </Card>
                       <Card type={"cardDark"}  height={"15rem"}>
-                          <ForTomorrowList columnSize={4}/>
+                          <ForTomorrowList columnSize={4} data={mainData.prediction}/>
                       </Card>
                       <InfoSubSection>
                           <Card type={"cardDark"} width={"50%"} height={"8rem"}/>
