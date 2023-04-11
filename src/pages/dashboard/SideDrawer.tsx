@@ -12,16 +12,16 @@ interface ISideDrawerProps {
 const SideDrawer = ({isOpen, onClose}:ISideDrawerProps) => {
     const user = useStore((state) => state.user);
     const navigate = useNavigate();
-    // const isLoggedIn = useStore((state) => state.user.id !== "");
-    const isLoggedIn = true;
-    // const isProRole = useStore((state) => state.user.roles.admin || state.user.roles.manager || state.user.roles['dp-manager'] || state.user.roles['data-analyst']);
-    const isProRole = true;
+    const isLoggedIn = useStore((state) => state.user.id !== "");
+    // const isLoggedIn = true;
+    const isProRole = useStore((state) => state.user.roles.admin || state.user.roles.manager || state.user.roles['dp-manager'] || state.user.roles['data-analyst']);
+    // const isProRole = true;
     return (
         <div className={css(styles.sideDrawer, isOpen && styles.drawerOpen)}>
             <button className={css(styles.closeBtn)} onClick={onClose}><X size={30}/></button>
             <div className={css(styles.sideDrawerContent)}>
                 {
-                    isLoggedIn && isProRole &&
+
                     <div className={css(styles.btnCont)}>
                         <button className={css(styles.drawerBtn)} onClick={() => navigate('/pro')}>
                             Pro Dashboard
@@ -29,48 +29,54 @@ const SideDrawer = ({isOpen, onClose}:ISideDrawerProps) => {
                         <button className={css(styles.drawerBtn)} onClick={() => navigate('/pro/datasources')}>
                             Data Sources
                         </button>
-                        <button className={css(styles.drawerBtn) } onClick={() => navigate('/pro/data')}>
-                            Data Records
-                        </button>
-                        <button className={css(styles.drawerBtn)} onClick={() => navigate('/pro/forecasts')}>
+                        {/*<button className={css(styles.drawerBtn) } onClick={() => navigate('/pro/data')}>*/}
+                        {/*    Data Records*/}
+                        {/*</button>*/}
+                        {/*<button className={css(styles.drawerBtn)} onClick={() => navigate('/pro/forecasts')}>*/}
+                        {/*    Forecasts*/}
+                        {/*</button>*/}
+                        {
+                            isLoggedIn && isProRole &&
+                            <button className={css(styles.drawerBtn)} onClick={() => navigate('/pro/upload')}>
+                                Upload Data
+                            </button>
+                        }
+                        <button className={css(styles.drawerBtn)} onClick={() => navigate('/pro/visualize')}>
                             Forecasts
                         </button>
-                        <button className={css(styles.drawerBtn)} onClick={() => navigate('/pro/upload')}>
-                            Upload Data
-                        </button>
-                        <button className={css(styles.drawerBtn)} onClick={() => navigate('/pro/visualize')}>
-                            visualize Data
-                        </button>
-                        <button className={css(styles.drawerBtn)}>
-                            View Profile
-                        </button>
+                        {
+                            isLoggedIn && isProRole &&
+                            <button className={css(styles.drawerBtn)}>
+                                View Profile
+                            </button>
+                        }
                     </div>
                 }
 
-            {!isLoggedIn &&
-                <div className={css(styles.btnCont)}>
-                    <button className={css(styles.drawerBtn)}>
-                        Sign Up
-                    </button>
-                    <button className={css(styles.drawerBtn)}>
-                        Sign In
-                    </button>
+            {/*{!isLoggedIn &&*/}
+            {/*    <div className={css(styles.btnCont)}>*/}
+            {/*        <button className={css(styles.drawerBtn)}>*/}
+            {/*            Sign Up*/}
+            {/*        </button>*/}
+            {/*        <button className={css(styles.drawerBtn)}>*/}
+            {/*            Sign In*/}
+            {/*        </button>*/}
 
-                </div>
-            }
+            {/*    </div>*/}
+            {/*}*/}
 
-            {
-                isLoggedIn && !isProRole &&
-                    <div className={css(styles.btnCont)}>
-                        <button className={css(styles.drawerBtn)}>
-                           Apply for Pro Roles
-                        </button>
-                        <button className={css(styles.drawerBtn)}>
-                            View Profile
-                        </button>
+            {/*{*/}
+            {/*    isLoggedIn && !isProRole &&*/}
+            {/*        <div className={css(styles.btnCont)}>*/}
+            {/*            <button className={css(styles.drawerBtn)}>*/}
+            {/*               Apply for Pro Roles*/}
+            {/*            </button>*/}
+            {/*            <button className={css(styles.drawerBtn)}>*/}
+            {/*                View Profile*/}
+            {/*            </button>*/}
 
-                    </div>
-            }
+            {/*        </div>*/}
+            {/*}*/}
         </div>
 
     </div>)
@@ -152,4 +158,5 @@ const styles = StyleSheet.create({
     drawerOpen: {
         transform: 'translateX(0%)',
     }
+
 })

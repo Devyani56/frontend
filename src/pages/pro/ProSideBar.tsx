@@ -25,15 +25,15 @@ const ProSideBar = () => {
                     }>
                     <CirclesThree size={20} weight="bold" /> Data Sources
                 </NavLink>
+                {/*<NavLink*/}
+                {/*    to="data"*/}
+                {/*    className={({ isActive }) =>*/}
+                {/*        !isActive ? css(styles.sideBarNavLink) : css(styles.sideBarNavLinkActive)*/}
+                {/*    }>*/}
+                {/*    <HardDrives size={20} weight="bold" /> Collected Data*/}
+                {/*</NavLink>*/}
                 <NavLink
-                    to="data"
-                    className={({ isActive }) =>
-                        !isActive ? css(styles.sideBarNavLink) : css(styles.sideBarNavLinkActive)
-                    }>
-                    <HardDrives size={20} weight="bold" /> Collected Data
-                </NavLink>
-                <NavLink
-                    to="forecast"
+                    to="visualize"
                     className={({ isActive }) =>
                         !isActive ? css(styles.sideBarNavLink) : css(styles.sideBarNavLinkActive)
                     }>

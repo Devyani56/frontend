@@ -48,12 +48,12 @@ const MainNavBar = ({openSideDrawer, location, setLocation}:IMainNavBarProps) =>
                        <Link className={css(styles.mainNavBarLinks)} to={"/pro/datasources"}>
                            Data Sources
                        </Link >
-                       <Link className={css(styles.mainNavBarLinks)} to={"/pro/data"}>
-                           Data
-                       </Link>
-                       <Link className={css(styles.mainNavBarLinks)} to={"/pro/map"}>
-                           Map
-                       </Link>
+                       {/*<Link className={css(styles.mainNavBarLinks)} to={"/pro/data"}>*/}
+                       {/*    Data*/}
+                       {/*</Link>*/}
+                       {/*<Link className={css(styles.mainNavBarLinks)} to={"/pro/map"}>*/}
+                       {/*    Map*/}
+                       {/*</Link>*/}
                        <Link className={css(styles.mainNavBarLinks)} to={"/pro/about"}>
                            About
                        </Link>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create(
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignItems: 'center',
-            minWidth: '50%',
+            minWidth: '35%',
 
         },
 
