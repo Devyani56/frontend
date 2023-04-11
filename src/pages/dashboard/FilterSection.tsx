@@ -11,28 +11,28 @@ const FilterSection = ({filterOptions, setFilterOptions} : IFilterSectionProps) 
     const metrics = ["All", ...pollutantNames]
 
     const changeDuration = (duration: string) => {
-        setFilterOptions({...filterOptions, duration});
+        setFilterOptions({...filterOptions, duration: duration});
     }
     return (
         <div className={css(styles.defaultFilterSection)}>
-            <div className={css(styles.locationCont)}>
-                <div className={css(styles.locationHead)}>
-                    Showing stats for
-                </div>
-                <div className={css(styles.locationName)}>
-                    Farmagudi, Goa, India
-                </div>
+            {/*<div className={css(styles.locationCont)}>*/}
+            {/*    <div className={css(styles.locationHead)}>*/}
+            {/*        Showing stats for*/}
+            {/*    </div>*/}
+            {/*    <div className={css(styles.locationName)}>*/}
+            {/*        Farmagudi, Goa, India*/}
+            {/*    </div>*/}
 
-            </div>
+            {/*</div>*/}
             <div className={css(styles.filterCont)}>
-                <div className={css(styles.dataFilterCont)}>
-                    <select name={"metrics"} id={"metrics"} className={css(styles.dataFilter)} onChange={(e) => setFilterOptions({...filterOptions, metric: e.target.value})}>
-                        {metrics.map((metric) => {
-                            return <option value={metric}>{metric}</option>
-                        }
-                        )}
-                    </select>
-                </div>
+                {/*<div className={css(styles.dataFilterCont)}>*/}
+                {/*    <select name={"metrics"} id={"metrics"} className={css(styles.dataFilter)} onChange={(e) => setFilterOptions({...filterOptions, metric: e.target.value})}>*/}
+                {/*        {metrics.map((metric) => {*/}
+                {/*            return <option value={metric}>{metric}</option>*/}
+                {/*        }*/}
+                {/*        )}*/}
+                {/*    </select>*/}
+                {/*</div>*/}
                 <div className={css(styles.durationFilterCont)}>
                     <button
                         className={css(styles.durationFilter, styles.durationFilterLeft, filterOptions.duration === "Daily" && styles.durationFilterActive)}
@@ -72,7 +72,7 @@ const styles = StyleSheet.create(
         defaultFilterSection: {
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
         },
 
         locationCont: {
@@ -128,6 +128,9 @@ const styles = StyleSheet.create(
         },
 
         durationFilterCont: {
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
 
         },
 

@@ -4,7 +4,7 @@ import themeVars from "../../util/themeVars";
 import {List} from "phosphor-react";
 import useStore from "../../store/Store";
 import LocationSelector from "./LocationSelector";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 interface IMainNavBarProps {
     openSideDrawer: () => void;
@@ -45,18 +45,18 @@ const MainNavBar = ({openSideDrawer, location, setLocation}:IMainNavBarProps) =>
                 </div>
                 <div className={css(styles.mainNavBarRight)}>
                    <div className={css(styles.mainNavBarLinksCont)}>
-                       <button className={css(styles.mainNavBarLinks)}>
+                       <Link className={css(styles.mainNavBarLinks)} to={"/pro/datasources"}>
                            Data Sources
-                       </button >
-                       <button className={css(styles.mainNavBarLinks)} >
+                       </Link >
+                       <Link className={css(styles.mainNavBarLinks)} to={"/pro/data"}>
                            Data
-                       </button>
-                       <button className={css(styles.mainNavBarLinks)}>
+                       </Link>
+                       <Link className={css(styles.mainNavBarLinks)} to={"/pro/map"}>
                            Map
-                       </button>
-                       <button className={css(styles.mainNavBarLinks)}>
+                       </Link>
+                       <Link className={css(styles.mainNavBarLinks)} to={"/pro/about"}>
                            About
-                       </button>
+                       </Link>
                        <button className={css(styles.mainNavBarLinks, styles.signupBtn)} onClick={onSigninButton}>
                            {user.name ? user.name : "Sign Up"}
                        </button>
@@ -149,6 +149,7 @@ const styles = StyleSheet.create(
             border: 'none',
             letterSpacing: '0.085em',
             cursor: 'pointer',
+            textDecoration: 'none',
 
         },
 

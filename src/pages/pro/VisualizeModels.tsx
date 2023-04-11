@@ -182,28 +182,28 @@ const VisualizeModels = () => {
         return {dateList:dateList, metricList:metricList};
     };
 
-    const getPredData = async (date1: string , date2: string ) => {
-        var startDate = new Date(Date.parse(date1));
-        var endDate  = new Date(Date.parse(date2));
-        
-        const measuredData = await getFilteredDataApi(dataSourceId);
-        console.log("measured data => ", measuredData.data.data);
-        const response = await getPredictionDataApi(dataSourceId, modelName, startDate, endDate);
-        if (response.type === "success") {
-            console.log("success")
-            setPredData(response.data);
-            const result = processData(response.data);
-            setDates(result.dateList);
-            setMetrics(result.metricList);
-
-            const result2 = processData(measuredData.data.data);
-            setMeasureDateList(result2.dateList);
-            setMeasuredMetricList(result2.metricList);
-        }
-        // setPredData(dummy_data);
-        // processData(dummy_data);
-        setLoading(true);
-    };
+    // const getPredData = async (date1: string , date2: string ) => {
+    //     var startDate = new Date(Date.parse(date1));
+    //     var endDate  = new Date(Date.parse(date2));
+    //
+    //     const measuredData = await getFilteredDataApi(dataSourceId);
+    //     console.log("measured data => ", measuredData.data.data);
+    //     const response = await getPredictionDataApi(dataSourceId, modelName, startDate, endDate);
+    //     if (response.type === "success") {
+    //         console.log("success")
+    //         setPredData(response.data);
+    //         const result = processData(response.data);
+    //         setDates(result.dateList);
+    //         setMetrics(result.metricList);
+    //
+    //         const result2 = processData(measuredData.data.data);
+    //         setMeasureDateList(result2.dateList);
+    //         setMeasuredMetricList(result2.metricList);
+    //     }
+    //     // setPredData(dummy_data);
+    //     // processData(dummy_data);
+    //     setLoading(true);
+    // };
 
     const data = [
         {

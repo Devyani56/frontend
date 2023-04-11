@@ -30,6 +30,13 @@ import {FrameCorners, X} from "phosphor-react";
 interface IBoardProps {
     openSideDrawer: () => void;
 }
+
+interface IFilters {
+    metric: string,
+    duration: string,
+    startDate: Date
+    endDate: Date
+}
 const Board = ({openSideDrawer} : IBoardProps) => {
     const url = useLocation().pathname;
     const navigate = useNavigate();
@@ -46,9 +53,9 @@ const Board = ({openSideDrawer} : IBoardProps) => {
     }
 
     const today = new Date();
-    const monthBack = new Date();
-    monthBack.setMonth(today.getMonth() - 1);
-    const [filterOptions, setFilterOptions] = useState({metric: "All", duration: "Daily", startDate: today, endDate: monthBack});
+    const tenYearsBack = new Date();
+    tenYearsBack.setFullYear(today.getFullYear() - 10);
+    const [filterOptions, setFilterOptions] = useState<IFilters>({metric: "All", duration: "All", endDate: today, startDate: tenYearsBack});
 
     const [location, setLocation] = useState({"sourceId": "", "sourceName": "", "sourceType": "", "sourceLat": 15.299326, "sourceLng": 74.123993, address: ""});
 
@@ -57,13 +64,12 @@ const Board = ({openSideDrawer} : IBoardProps) => {
 
     const [wind, setWind] = useState(0);
     const [temp, setTemp] = useState(0);
-
     const getAndSetData = async () => {
         console.log("Locatio from getAndSetData", location)
         if (!location.sourceId) {
             return;
         }
-        const response = await getFilteredDataApi(location.sourceId)
+        const response = await getFilteredDataApi(location.sourceId, filterOptions)
         if(response.type === "success") {
             setData(response.data.data);
         }

@@ -1,10 +1,24 @@
 import axios from 'axios';
 import {pollutionServiceUrl, config} from "../../urls";
 
-export const getFilteredDataApi = async (sourceId : string, page  = 1, size = 30 ) => {
+interface IFilters {
+    metric: string,
+    duration: string,
+    startDate: Date
+    endDate: Date
+}
+export const getFilteredDataApi = async (sourceId : string, filterOptions : IFilters,  page  = 1, size = 30 ) => {
+    const filter = {
+        metric: filterOptions.metric,
+        filter: filterOptions.duration.toLowerCase(),
+        //  converrt it to format YYYY-MM-DD
+        startDate: filterOptions.startDate.toISOString().split('T')[0],
+        endDate: filterOptions.endDate.toISOString().split('T')[0],
+        stats: 'avg',
+    }
     try {
         // add filter tag to url
-        const response = await axios.get(pollutionServiceUrl + `/data/${sourceId}`, config)
+        const response = await axios.post(pollutionServiceUrl + `/data/filter/${sourceId}`, filter, config);
         const responseData = {
             type: "success",
             data: response.data,

@@ -19,6 +19,7 @@ import { getDataSourceMappingAPi } from "../../util/api/get-datasources-mapping"
 
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
+import {getPollutionDataApi} from "../../util/api/get-data-api";
 
 type PredictionData = {
   recordedAt: string;
@@ -184,7 +185,7 @@ const PredictionPlot = () => {
         var startDate = new Date(Date.parse(date1));
         var endDate  = new Date(Date.parse(date2));
         
-        const measuredData = await getFilteredDataApi(dataSourceId);
+        const measuredData = await getPollutionDataApi(dataSourceId)
         console.log("measured data => ", measuredData.data.data);
         const response = await getPredictionDataApi(dataSourceId, modelName, startDate, endDate);
         if (response.type === "success") {

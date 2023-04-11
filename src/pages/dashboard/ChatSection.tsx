@@ -20,21 +20,6 @@ type chartDataType ={
 const ChartSection = ({data} : any) => {
     console.log("From chart section - data :", data)
 
-    //  data will be something like this
-    //  [
-    //     {
-    //         "recordedAt" : "2021-05-01",
-    //         "data" : {
-    //             "NO2" : 100,
-    //             "O3" : 200,
-    //             "SO2" : 300,
-    //             "CO" : 400,
-    //         }
-    //     },
-    //     { ... },
-    //     { ... },
-    //   ...
-    //   ]
 
     // create a data field in the chart data format
     // const [chartData, setChartData] = useState<any>([])
@@ -58,50 +43,6 @@ const ChartSection = ({data} : any) => {
         return `${month} ${day}`
 
     }
-    const colors  = ["hsl(312, 70%, 50%)", "hsl(319, 70%, 50%)", "hsl(63, 70%, 50%)", "hsl(63, 70%, 50%)"]
-    // const parseDataForChart = (data : any) => {
-    //     const dataByFields : any = {}
-
-    //     if (!data || data.length === 0) {
-    //         console.log("No data to parse")
-    //         return
-    //     }
-
-    //     for (let i = 0; i < data.length; i++) {
-    //         const record = data[i]
-    //         const recordedAt = record.recordedAt
-    //         const recordData = record.data
-
-    //         console.log("recordedAt :", recordedAt)
-    //         console.log("recordData :", recordData)
-
-    //         for (const key in recordData) {
-    //             // if key is not present in dataByFields, create it
-    //             if (!dataByFields[key]) {
-    //                 dataByFields[key] = []
-    //             }
-    //             if(recordData[key] === null){
-    //                 continue
-    //             }
-    //             dataByFields[key].push({
-    //                 x: recordedAt,
-    //                 y: recordData[key]
-    //             })
-    //         }
-    //     }
-    //     console.log("dataByFields :", dataByFields)
-
-    //     // asign value to chart data
-    //     const convertedData = Object.keys(dataByFields).map((key : any) => {
-    //         return {
-    //             id: key,
-    //             color: colors[Math.floor(Math.random() * colors.length)],
-    //             data: dataByFields[key]
-    //         }
-    //     })
-    //     console.log("convertedData :", convertedData)
-    //     setChartData(convertedData)
-    // }
     const layout = {
         // give width based on parent container
         width: 900,
