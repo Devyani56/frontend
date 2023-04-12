@@ -200,7 +200,11 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                               <FrameCorners size={32} />
                           </button>
                       </Card>
-                      <Card type={"cardLight"} height={"12rem"}/>
+                      <Card type={"cardLight"} height={"12rem"}>
+                         <div className={css(styles.aboutBox)}>
+                             This website is a part of the IIT Bombay Air Quality Monitoring Project. The project aims to provide real-time air quality data to the public. The data is collected from a network of air quality monitoring stations across the city of Mumbai.
+                         </div>
+                      </Card>
                   </InfoSection>
               </InfoContainer>
           </div>
@@ -260,6 +264,18 @@ const styles = StyleSheet.create(
             border: 'none',
             cursor: 'pointer',
             color: themeVars.colors.accent.darkGreen,
+        },
+
+        aboutBox: {
+            width: '100%',
+            height: '100%',
+            padding: '1rem 0',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            fontSize: '1.2rem',
+            color: themeVars.colors.text.accentGrey,
+
         }
     }
 )

@@ -268,7 +268,7 @@ const ComparePredictionPlots = () => {
               value={modelName1}
               onChange={(e) => setModelName1(e.target.value)}
             >
-              <option value="">Select an option</option>
+              <option value="">Select Model</option>
               <option value="prophet">facebook's prophet model</option>
               <option value="lstm">lstm model</option>
               <option value="hybridlstm">Hybrid Model - lstm + prophet</option>
@@ -283,7 +283,7 @@ const ComparePredictionPlots = () => {
               setDataSourceId1(e.target.selectedIndex.toString());
             }}
           >
-            <option value="">Select an option</option>
+            <option value="">Select Location</option>
             {Object.keys(stationList).map((key) => {
               return (
                 <option key={key} value={stationList[key]}>
@@ -299,7 +299,7 @@ const ComparePredictionPlots = () => {
             value={modelName2}
             onChange={(e) => setModelName2(e.target.value)}
           >
-            <option value="">Select an option</option>
+            <option value="">Select Model</option>
             <option value="prophet">facebook's prophet model</option>
             <option value="lstm">lstm model</option>
             <option value="hybridlstm">Hybrid Model - lstm + prophet</option>
@@ -313,7 +313,7 @@ const ComparePredictionPlots = () => {
               setDataSourceId2(e.target.selectedIndex.toString());
             }}
           >
-            <option value="">Select an option</option>
+            <option value="">Select Location</option>
             {Object.keys(stationList).map((key) => {
               return (
                 <option key={key} value={stationList[key]}>
@@ -329,8 +329,9 @@ const ComparePredictionPlots = () => {
           onChange={(e) => {
             setMetric(e.target.value);
           }}
+          className={css(styles.modeSelect)}
         >
-          <option value="">Select an option</option>
+          <option value="">Select Metric</option>
           <option value="PM10">PM10</option>
           <option value="PM25">PM25</option>
           <option value="NO2">NO2</option>
