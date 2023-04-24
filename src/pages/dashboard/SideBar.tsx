@@ -82,7 +82,7 @@ const SideBar = () => {
           <AQILastWeek columnSize={7} AQIList={AQI} />
         </Card>
         <Card type={"cardLight"} height={"auto"} width={"100%"}>
-          <ForTomorrowAQI columnSize={999} />
+          <ForTomorrowAQI columnSize={999} data={forecastForTomorrow} />
         </Card>
         <Card type={"cardLight"} height={"7.7rem"} width={"100%"}>
           <TilesContainer gap={"2%"}>
