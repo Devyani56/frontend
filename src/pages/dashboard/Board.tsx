@@ -155,7 +155,7 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                           <LowestHighestTile high={mainData.high || {}} low={mainData.low || {}}/>
                       </Card>
                       <Card type={"cardDark"}  height={"15rem"}>
-                          <ForTomorrowList columnSize={4} data={mainData.forecastsForTomorrow}/>
+                          <ForTomorrowList columnSize={4} data={mainData.prediction}/>
                       </Card>
                       <InfoSubSection>
                           <Card type={"cardDark"} width={"50%"} height={"8rem"}/>
