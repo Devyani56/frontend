@@ -13,11 +13,10 @@ export const signinApi = async (data: SigninData) => {
             status: response.status
         }
 
-        // read the cookie and set it for all requests to localhost:3001
+        // read the cookie and set it for all requests to jackfruit.iitgoa.ac.in:3002
         const cookie = response.headers["set-cookie"];
         if (cookie) {
-            // use domain localhost:3001
-            document.cookie = `${cookie[0]};domain=localhost:3001;path=/`;
+            document.cookie = `${cookie[0]};domain=jackfruit.iitgoa.ac.in;path=/`;
         }
         return responseData;
     }
