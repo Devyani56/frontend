@@ -221,7 +221,7 @@ const VisualizeModels = () => {
 
   return (
     <div className={css(styles.boardDefault)}>
-      <PredictionPlot />
+      {/* <PredictionPlot /> */}
       <ComparePredictionPlots/>
     </div>
   );

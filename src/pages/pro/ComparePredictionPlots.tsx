@@ -187,7 +187,7 @@ const ComparePredictionPlots = () => {
       name: dataSource1 + " Historical Data",
       x: measureDateList1,
       y: measuredMetricList1,
-      mode: "lines+markers",
+      mode: "markers",
       line: { color: "orange" },
     },
     {

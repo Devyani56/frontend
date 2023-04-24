@@ -1,9 +1,35 @@
-
+import { useState, useEffect } from "react";
 import { StyleSheet, css } from 'aphrodite';
 import {buildStyles, CircularProgressbarWithChildren} from "react-circular-progressbar";
 import themeVars from "../../util/themeVars";
-const AgrigateRadial = () => {
-    const value = 330;
+
+interface IForTomorrowList {
+    PM10: number;
+  }
+
+const AgrigateRadial = ({ PM10} :  IForTomorrowList) => {
+
+    const [value, setValue] = useState<any>(0);
+    // const [AQI, setAQI] = useState<any>(0);
+
+    const calculateAQI = (value: number) => {
+        if (value <= 50 && value >= 0) return value;
+        if (value <= 100 && value >= 51) return value;
+        if (value <= 250 && value >= 101) return value*(200-101)/(250-101);
+        if (value <= 350 && value >= 251) return value*(300-201)/(350-251);
+        if (value <= 430 && value >= 351) return value*(400-301)/(430-351);
+        if (value >= 430) return value*(500-401)/430;
+        return value;
+    };
+
+
+    useEffect(() => {
+        console.log("AQILIST : ", PM10);
+        setValue(calculateAQI(PM10))
+    }, [PM10]);
+
+
+    // const value = 330;
     const colorStyle = buildStyles(
         {
             trailColor: themeVars.colors.text.accentYellow,

@@ -4,7 +4,8 @@ import {pollutionServiceUrl, config} from "../../urls";
 export const getPredictionDataApi = async (sourceId : string ,modelName: string, startDate: Date, endDate: Date ) => {
     try {
         // add filter tag to url
-        const response = await axios.post(pollutionServiceUrl + `/prediction/${sourceId}`, {"modelName": modelName, startDate:startDate, endDate: endDate},config)
+        console.log("datasource Id: ", sourceId, modelName, startDate, endDate);
+        const response = await axios.post(pollutionServiceUrl + `/prediction/`+sourceId, {"modelName": modelName, startDate:startDate, endDate: endDate},config)
         const responseData = {
             type: "success",
             data: response.data.data,

@@ -60,12 +60,12 @@ const SideBar = () => {
         <LogoHeader />
         <VerticalGap gap={"2rem"} />
         <Card type={"cardLight"} height={"25rem"} width={"100%"}>
-          <AgrigateRadial />
+          <AgrigateRadial PM10={metric.PM10}/>
         </Card>
         <Card type={"cardLight"} height={"12rem"} width={"100%"}>
           <TilesContainer gap={"5%"}>
             <PMTiles
-              value={metric["PM2.5"]}
+              value={metric["PM25"]}
               unit={"ug/m3"}
               label={"PM2.5"}
               type={"light"}

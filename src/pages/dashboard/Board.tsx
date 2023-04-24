@@ -202,7 +202,7 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                       </Card>
                       <Card type={"cardLight"} height={"12rem"}>
                          <div className={css(styles.aboutBox)}>
-                             This website is a part of the IIT Bombay Air Quality Monitoring Project. The project aims to provide real-time air quality data to the public. The data is collected from a network of air quality monitoring stations across the city of Mumbai.
+                             This website is a part of the IIT GOA Air Quality Monitoring Project. The project aims to provide real-time air quality data to the public. The data is collected from a network of air quality monitoring stations across the city of Mumbai.
                          </div>
                       </Card>
                   </InfoSection>
