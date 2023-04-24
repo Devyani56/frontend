@@ -1,6 +1,7 @@
 import { StyleSheet, css } from 'aphrodite';
 import themeVars from "../../util/themeVars";
 import {buildStyles, CircularProgressbarWithChildren} from "react-circular-progressbar";
+import {useEffect, useState} from "react";
 
 // ["PM10", "PM2.5", "NO2", "CO", "SO2", "O3", "NH3", "AQI"]
 interface IdataItem {
@@ -10,9 +11,20 @@ interface IdataItem {
 
 interface IForTomorrowList {
     columnSize: number
+    data: any
 }
-const ForTomorrowList = ({columnSize}: IForTomorrowList) => {
-    const data: IdataItem[]= [{label:"PM2.5", value: 20}, {label:"PM10" , value: 50}, {label:"O3" , value: 8}, {label:"SO2" , value: 3}, {label:"NO2" , value: 2}, {label:"CO" , value: 99}]
+const ForTomorrowList = ({columnSize, data}: IForTomorrowList) => {
+
+    const [myData, setMyData] = useState<IdataItem[]>([])
+    useEffect(() => {
+        const dataItems: IdataItem[] = []
+        for (const key in data) {
+            dataItems.push({label: key, value: data[key].toFixed(1)} as IdataItem)
+        }
+        setMyData(dataItems)
+    }
+    , [data])
+
     const getColor = (label: string, value: number) => {
         switch (label) {
             case "PM2.5":
@@ -58,7 +70,7 @@ const ForTomorrowList = ({columnSize}: IForTomorrowList) => {
                 </div>
                 <div className={css(styles.forTomorrowListBodyRowValue)}
                      style={{color:getColor(item.label, item.value)}}>
-                    {item.value}
+                    {item.value ? item.value : "N/A"}
                 </div>
             </div>
         )
@@ -71,7 +83,7 @@ const ForTomorrowList = ({columnSize}: IForTomorrowList) => {
             </h3>
             <div className={css(styles.forTomorrowListBodyDefault)}>
                 <div className={css(styles.forTomorrowListBodyColumn)}>
-                    {data.slice(0, columnSize).map((item, index) => {
+                    {myData.slice(0, columnSize).map((item, index) => {
                         return rowItem(item, index)
                     })}
                 </div>
