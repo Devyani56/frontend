@@ -13,7 +13,7 @@ interface IForTomorrowList {
 }
 const ForTomorrowList = ({columnSize, data}: IForTomorrowList) => {
    // data contains key value pairs of the form "PM25": 10
-
+    console.log("preds :", data);
     const [myData, setMyData] = useState<IdataItem[]>([])
     useEffect(() => {
         const dataItems : IdataItem[] = []

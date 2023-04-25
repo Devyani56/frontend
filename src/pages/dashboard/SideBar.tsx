@@ -42,10 +42,10 @@ const SideBar = () => {
       setAQI(response.data.AQI);
       console.log("ibnbstuta--", response.data.AQI);
       setMetrics(response.data.data);
-      setForecastForTomorrow(response.data.forecastForTomorrow);
+      setForecastForTomorrow(response.data.forecastsForTomorrow);
     }
-    // console.log("capital data", response);
-    // console.log("capital data", metric, AQI, forecastForTomorrow);
+    console.log("capital data", response, response.data.forecastForTomorrow);
+    console.log("capital data", metric, AQI, forecastForTomorrow);
   };
 
   useEffect(() => {

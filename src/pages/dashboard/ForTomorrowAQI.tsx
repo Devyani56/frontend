@@ -15,15 +15,32 @@ interface IForTomorrowList {
 }
 const ForTomorrowList = ({columnSize, data}: IForTomorrowList) => {
 
-    const [myData, setMyData] = useState<IdataItem[]>([])
+    const [myData, setMyData] = useState<IdataItem[]>([]);
+    const [AQI, setAQI] = useState(0);
+    const [metric, setMetric] = useState<any>({});
+
+    console.log("my data before ", data);
     useEffect(() => {
         const dataItems: IdataItem[] = []
         for (const key in data) {
             dataItems.push({label: key, value: data[key].toFixed(1)} as IdataItem)
         }
-        setMyData(dataItems)
+        setMyData(dataItems);
+        setMetric(data);
+        console.log("my data ", myData ,metric, data);
+        setAQI(metric.PM10);
     }
-    , [data])
+    , [data]);
+
+    const calculateAQI = (value: number) => {
+        if (value <= 50 && value >= 0) return value;
+        if (value <= 100 && value >= 51) return value;
+        if (value <= 250 && value >= 101) return value*(200-101)/(250-101);
+        if (value <= 350 && value >= 251) return value*(300-201)/(350-251);
+        if (value <= 430 && value >= 351) return value*(400-301)/(430-351);
+        if (value >= 430) return value*(500-401)/430;
+        return value;
+    };
 
     const getColor = (label: string, value: number) => {
         switch (label) {
@@ -97,7 +114,7 @@ const ForTomorrowList = ({columnSize, data}: IForTomorrowList) => {
                                 AQI
                             </div>
                             <div className={css(styles.progressCircleTextValue)}>
-                                {value}
+                                {AQI}
                             </div>
 
                         </div>
