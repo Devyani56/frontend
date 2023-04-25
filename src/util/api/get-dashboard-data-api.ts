@@ -9,7 +9,7 @@ export const getDashboardDataApi = async (sourceId : string) => {
             data: response.data,
             status: response.status
         }
-        console.log(response.data);
+        console.log("DashboardDataRes:", response.data);
         return responseData;
     }
     catch (e : any) {
