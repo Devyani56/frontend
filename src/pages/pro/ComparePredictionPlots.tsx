@@ -177,37 +177,37 @@ const ComparePredictionPlots = () => {
 
   const data: Data[] = [
     {
-      name: dataSource1 + " Prediction Data",
+      name: dataSource1 + " Predicted",
       x: dateList1,
       y: metricList1,
       mode: "lines+markers",
       line: { color: "red" },
     },
     {
-      name: dataSource1 + " Historical Data",
+      name: dataSource1 + "Collected",
       x: measureDateList1,
       y: measuredMetricList1,
       mode: "markers",
       line: { color: "orange" },
     },
     {
-      name: dataSource2 + " Prediction Data",
+      name: dataSource2 + " Predicted",
       x: dateList2,
       y: metricList2,
       mode: "lines+markers",
       line: { color: "blue" },
     },
     {
-      name: dataSource2 + " Historical Data",
+      name: dataSource2 + "Collected",
       x: measureDateList2,
       y: measuredMetricList2,
-      mode: "lines+markers",
+      mode: "markers",
       line: { color: "green" },
     },
   ];
 
   const layout: Partial<Layout> = {
-    width: 1000,
+    width: 1200,
     height: 500,
     margin: { t: 20, l: 40, r: 20, b: 40 },
     paper_bgcolor: "#fff",
@@ -225,7 +225,8 @@ const ComparePredictionPlots = () => {
       },
     },
     legend: {
-      y: 0.5,
+      x: 0.8,
+      y: 1,
       // traceorder: "reversed",
       // yref: 'paper',
       font: {
@@ -334,11 +335,11 @@ const ComparePredictionPlots = () => {
           <option value="">Select Metric</option>
           <option value="PM10">PM10</option>
           <option value="PM25">PM25</option>
-          <option value="NO2">NO2</option>
+          {/* <option value="NO2">NO2</option>
           <option value="SO2">SO2</option>
           <option value="O3">O3</option>
           <option value="CO">CO</option>
-          <option value="Pb">Pb</option>
+          <option value="Pb">Pb</option> */}
         </select>
 
         <div className={css(styles.timeFilterCont)}>
@@ -362,7 +363,7 @@ const ComparePredictionPlots = () => {
           className={css(styles.getPredBtn)}
           onClick={(event) => getPredData(startDate, endDate, metric)}
         >
-          Get Predictions
+          Predict
         </button>
       </div>
 
