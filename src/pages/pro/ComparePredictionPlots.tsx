@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     outline: "none",
     textDecoration: "underline",
-    width: "14rem",
+    width: "16rem",
   },
 
   rightStation: {

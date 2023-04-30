@@ -10,6 +10,7 @@ import {Plus} from "phosphor-react";
 import AddDataSourceModal from "./AddDataSourceModal";
 import {IDataSourceData} from "./IDataSource";
 import sensorBoxImg from "../../assets/images/station-box.png";
+import useStore from "../../store/Store";
 
 const emptyDataSource : IDataSourceData = {
     "location": {
@@ -63,6 +64,10 @@ const DataSources = () => {
     , []);
 
     const [showAddDataSourceModal, setShowAddDataSourceModal] = useState(false);
+    const isLoggedIn = useStore((state) => state.user.id !== "");
+    // const isLoggedIn = true;
+    const isProRole = useStore((state) => state.user.roles.admin || state.user.roles.manager || state.user.roles['dp-manager'] || state.user.roles['data-analyst']);
+    const isAdminRole = useStore((state) => state.user.roles.admin);
 
     return (
         <div className={css(styles.boardDefault)}>
@@ -77,14 +82,14 @@ const DataSources = () => {
                 <div className={css(styles.titleHeader)}>
                    Data Sources
                 </div>
-                <Button
+                {isProRole && <Button
                     type={"short"}
                     color={themeVars.colors.accent.darkGreen}
                     onClick={() => setShowAddDataSourceModal(true)}
                 >
                     Add Data Source
-                    <Plus size={20} weight="bold" />
-                </Button>
+                    <Plus size={20} weight="bold"/>
+                </Button>}
             </div>
             {dataSourceData.length !== 0 &&
                 <div className={css(styles.dataSourceCont)}>

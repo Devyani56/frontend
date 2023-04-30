@@ -222,6 +222,15 @@ const VisualizeModels = () => {
   return (
     <div className={css(styles.boardDefault)}>
       {/* <PredictionPlot /> */}
+        <div className={css(styles.instruction)}>
+            <div className={css(styles.instructionHeader)}>
+                NOTE
+            </div>
+            <div className={css(styles.instructionBody)}>
+                You can select a Single Model and a Location to visualize the prediction results and ignore the second model and location.
+                To compare the results of two models, select two models and two locations.
+            </div>
+        </div>
       <ComparePredictionPlots/>
     </div>
   );
@@ -306,6 +315,43 @@ const styles = StyleSheet.create({
   timeFilterCont: {
 
   },
+
+    instruction: {
+        width: '100%',
+        boxSizing: 'border-box',
+        padding: '2rem 4%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: '2rem',
+        background: themeVars.colors.backgrounds.lightest,
+        borderRadius: '1rem',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+
+
+    },
+
+    instructionHeader: {
+        fontSize: '1.5rem',
+        fontWeight: 600,
+        letterSpacing: '0.065em',
+        color: themeVars.colors.text.accentGrey,
+        marginBottom: '1rem',
+
+
+    },
+
+    instructionBody: {
+        fontSize: '1.4rem',
+        fontWeight: 600,
+        letterSpacing: '0.065em',
+        color: themeVars.colors.text.accentGrey,
+        marginBottom: '1rem',
+        textAlign: 'center',
+
+
+    },
 
   timeFilter: {
     width: '10rem',

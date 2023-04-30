@@ -4,8 +4,13 @@ import {NavLink} from "react-router-dom";
 import {CirclesThree, HardDrives, House, ChartLineUp, UploadSimple, UsersThree} from "phosphor-react";
 import LogoHeader from "../dashboard/LogoHeader";
 import VerticalGap from "../../components/VerticalGap";
+import useStore from "../../store/Store";
 
 const ProSideBar = () => {
+    const isLoggedIn = useStore((state) => state.user.id !== "");
+    // const isLoggedIn = true;
+    const isProRole = useStore((state) => state.user.roles.admin || state.user.roles.manager || state.user.roles['dp-manager'] || state.user.roles['data-analyst']);
+    const isAdminRole = useStore((state) => state.user.roles.admin);
     return (
         <div className={css(styles.sideBarDefault)}>
             <LogoHeader/>
@@ -39,20 +44,20 @@ const ProSideBar = () => {
                     }>
                     <ChartLineUp size={20} weight="bold" /> Forecasts
                 </NavLink>
-                <NavLink
+                {isProRole && <NavLink
                     to="upload"
-                    className={({ isActive }) =>
+                    className={({isActive}) =>
                         !isActive ? css(styles.sideBarNavLink) : css(styles.sideBarNavLinkActive)
                     }>
-                    <UploadSimple size={20} weight="bold" /> Upload Data
-                </NavLink>
-                <NavLink
+                    <UploadSimple size={20} weight="bold"/> Upload Data
+                </NavLink>}
+                {isAdminRole && <NavLink
                     to="user-management"
-                    className={({ isActive }) =>
+                    className={({isActive}) =>
                         !isActive ? css(styles.sideBarNavLink) : css(styles.sideBarNavLinkActive)
                     }>
-                    <UsersThree size={20} weight="bold" /> User Management
-                </NavLink>
+                    <UsersThree size={20} weight="bold"/> User Management
+                </NavLink>}
             </div>
 
         </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {authServiceUrl, config} from "../../urls";
+import {authServiceUrl, config, baseUrl} from "../../urls";
 interface SigninData {
     email: string;
     password: string;
@@ -16,7 +16,7 @@ export const signinApi = async (data: SigninData) => {
         // read the cookie and set it for all requests to jackfruit.iitgoa.ac.in:3002
         const cookie = response.headers["set-cookie"];
         if (cookie) {
-            document.cookie = `${cookie[0]};domain=jackfruit.iitgoa.ac.in;path=/`;
+            document.cookie = `${cookie[0]};domain=${baseUrl};path=/`;
         }
         return responseData;
     }

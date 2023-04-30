@@ -157,10 +157,10 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                       <Card type={"cardDark"}  height={"15rem"}>
                           <ForTomorrowList columnSize={4} data={mainData.prediction}/>
                       </Card>
-                      <InfoSubSection>
-                          <Card type={"cardDark"} width={"50%"} height={"8rem"}/>
-                          <Card type={"cardDark"} width={"50%"} height={"8rem"}/>
-                      </InfoSubSection>
+                      {/*<InfoSubSection>*/}
+                      {/*    <Card type={"cardDark"} width={"50%"} height={"8rem"}/>*/}
+                      {/*    <Card type={"cardDark"} width={"50%"} height={"8rem"}/>*/}
+                      {/*</InfoSubSection>*/}
                   </InfoSection>
 
                   <InfoSection>
@@ -179,10 +179,10 @@ const Board = ({openSideDrawer} : IBoardProps) => {
                               <FrameCorners size={32} />
                           </button>
                       </Card>
-                      <InfoSubSection>
-                          <Card type={"cardDark"} width={"60%"} height={"8rem"}/>
-                          <Card type={"cardDark"} width={"40%"} height={"8rem"}/>
-                      </InfoSubSection>
+                      {/*<InfoSubSection>*/}
+                      {/*    <Card type={"cardDark"} width={"60%"} height={"8rem"}/>*/}
+                      {/*    <Card type={"cardDark"} width={"40%"} height={"8rem"}/>*/}
+                      {/*</InfoSubSection>*/}
                   </InfoSection>
 
                   <InfoSection>

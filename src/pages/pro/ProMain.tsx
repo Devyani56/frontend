@@ -10,6 +10,17 @@ import VisualizeModels from "./VisualizeModels";
 import UserManagement from "./UserManagement";
 
 
+const ProNote = () => {
+    return (
+        <div className={css(styles.note)}>
+            <h1>Pro Dashboard</h1>
+            <p>
+                This is the Pro Dashboard. Here you can manage your data sources, upload new data, and view forecasts.
+                Select an option from the sidebar to get started.
+            </p>
+        </div>
+    );
+};
 const ProMainPage = () => {
     const location = useLocation();
     return (
@@ -24,6 +35,7 @@ const ProMainPage = () => {
                     <Route path="/upload/*" element={<UploadDataBoard/>}/>
                     <Route path="/user-management/*" element={<UserManagement/>}/>
                     <Route path="/visualize/*" element={<VisualizeModels/>}/>
+                    <Route path="/" element={<ProNote/>}/>
                 </Routes>
             </section>
         </main>
@@ -58,6 +70,25 @@ const styles = StyleSheet.create(
             width: "100%",
             minHeight: '100vh',
             boxSizing: "border-box"
+        },
+
+        note: {
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+            padding: '1rem',
+            boxSizing: 'border-box',
+            gap: '1rem',
+            textAlign: 'center',
+            color: themeVars.colors.text.accentGrey,
+
+            '@media (max-width: 900px)': {
+                display: 'none',
+            },
+            fontSize: '1.5rem',
         }
 
     }

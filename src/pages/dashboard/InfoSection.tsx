@@ -23,10 +23,11 @@ const styles = StyleSheet.create(
 
         infoSectionDefault: {
             display: 'flex',
-            gap: '1rem',
+            // gap: '1rem',
             width: "100%",
             flexDirection: 'column',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
+            gap: '2rem',
 
         }
     }

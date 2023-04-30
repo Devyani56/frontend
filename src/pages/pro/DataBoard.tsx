@@ -11,6 +11,7 @@ import {getPollutionDataApi} from "../../util/api/get-data-api";
 import {getDataSourceAPi} from "../../util/api/get-datasources-api";
 import {getNumRowsForASourceApi} from "../../util/api/get-num-rows-for-a-source";
 import sensorBoxImg from "../../assets/images/station-box.png";
+import useStore from "../../store/Store";
 const DataBoard = () => {
 
     // get id from last part of url
@@ -148,6 +149,10 @@ const DataBoard = () => {
         setPerPage(newPerPage);
     };
 
+    const isLoggedIn = useStore((state) => state.user.id !== "");
+    // const isLoggedIn = true;
+    const isProRole = useStore((state) => state.user.roles.admin || state.user.roles.manager || state.user.roles['dp-manager'] || state.user.roles['data-analyst']);
+    const isAdminRole = useStore((state) => state.user.roles.admin);
 
 
     return (
@@ -156,14 +161,15 @@ const DataBoard = () => {
                 <div className={css(styles.titleHeader)}>
                     Recorded Data - {id}
                 </div>
-                <Button
+                {isProRole && <Button
                     type={"short"}
                     color={themeVars.colors.accent.darkGreen}
-                    onClick={() => {}}
+                    onClick={() => {
+                    }}
                 >
                     Add Data Manually
-                    <Plus size={20} weight="bold" />
-                </Button>
+                    <Plus size={20} weight="bold"/>
+                </Button>}
             </div>
             <div className={css(styles.dataCont)}>
                 {(loading || data.length !== 0) && <DataTable
