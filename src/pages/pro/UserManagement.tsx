@@ -1,7 +1,9 @@
 import { StyleSheet, css } from 'aphrodite';
 import themeVars from "../../util/themeVars";
-import {useState} from "react";
-
+import {useState, useEffect} from "react";
+import { getAllUserDataAPi } from '../../util/api/get-all-users';
+import { inviteToRoleApi } from '../../util/api/invite-to-role-api';
+import { roleChangeMail } from '../../util/api/role-change-mail';
 
 const DATA = [
     {
@@ -113,6 +115,25 @@ const DATA = [
 const UserManagement = () => {
 
     const [users, setUsers] = useState(DATA);
+
+    const fetchUser = async () =>{
+        const users = await getAllUserDataAPi();
+        console.log(users.data);
+        setUsers(users.data);
+    }
+    
+    const inviteUser = async (userId: string, role: string) =>{
+        const invitation = await inviteToRoleApi(userId, role);
+        if (invitation.type == "success"){
+            const sendMail = await roleChangeMail(userId, role);
+        }
+    } 
+
+
+    useEffect(() => {
+        fetchUser();
+    }
+    , [])
     return (
         <div className={css(styles.boardDefault)}>
             <div className={css(styles.dsHeader)}>
@@ -155,19 +176,19 @@ const UserManagement = () => {
                                     <div className={css(styles.inviteCont)}>
                                         {
                                             !user.roles.admin &&
-                                            <button className={css(styles.inviteBtn)}>
+                                            <button className={css(styles.inviteBtn)} onClick={() => inviteUser(user.id, "admin")}>
                                             Invite as Admin
                                         </button>
                                         }
                                         {
                                             !user.roles.manager &&
-                                            <button className={css(styles.inviteBtn)}>
+                                            <button className={css(styles.inviteBtn)} onClick={() => inviteUser(user.id, "dp-manager")}>
                                                 Invite as Manager
                                             </button>
                                         }
                                         {
                                             !user.roles["data-analyst"] &&
-                                            <button className={css(styles.inviteBtn)}>
+                                            <button className={css(styles.inviteBtn)} onClick={() => inviteUser(user.id, "data-analyst")}>
                                                 Invite as Data Analyst
                                             </button>
                                         }
