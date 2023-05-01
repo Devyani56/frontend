@@ -8,6 +8,7 @@ import DataBoard from "./DataBoard";
 import UploadDataBoard from "./UploadDataBoard";
 import VisualizeModels from "./VisualizeModels";
 import UserManagement from "./UserManagement";
+import About from "./About";
 
 
 const ProNote = () => {
@@ -35,7 +36,9 @@ const ProMainPage = () => {
                     <Route path="/upload/*" element={<UploadDataBoard/>}/>
                     <Route path="/user-management/*" element={<UserManagement/>}/>
                     <Route path="/visualize/*" element={<VisualizeModels/>}/>
+                    <Route path="/about" element={<About/>}/>
                     <Route path="/" element={<ProNote/>}/>
+
                 </Routes>
             </section>
         </main>
