@@ -361,12 +361,12 @@ const styles = StyleSheet.create({
     borderRadius: '2rem',
 
     ':first-child': {
-        borderRadius: '2rem 0 0 2rem',
+        borderRadius: '2rem 2rem 2rem 2rem',
         borderRight: '0.5px solid rgba(256, 256, 256, 0.08)',
     },
 
     ':last-child': {
-        borderRadius: '0 2rem 2rem 0',
+        borderRadius: '2rem 2rem 2rem 2rem',
     },
 
     color: themeVars.colors.text.accentGrey,

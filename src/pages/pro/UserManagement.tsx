@@ -24,6 +24,7 @@ const DATA = [
         },
         "emailVerified": true,
         "firstName": "Divyansh",
+        "middleName":"",
         "lastName": "",
         "id": "63dc22bfb904ac78c1eabf48"
     },
@@ -45,6 +46,7 @@ const DATA = [
         },
         "emailVerified": true,
         "firstName": "Pranav",
+        "middleName":"",
         "lastName": "",
         "id": "63ff184ad241040bbbd0cb4a"
     },
@@ -66,6 +68,7 @@ const DATA = [
         },
         "emailVerified": true,
         "firstName": "Divyansh",
+        "middleName":"",
         "lastName": "",
         "id": "64007f41fd26a56e7440472d"
     },
@@ -87,6 +90,7 @@ const DATA = [
         },
         "emailVerified": true,
         "firstName": "Pranav Balijapelly",
+        "middleName":"",
         "lastName": "",
         "id": "64084c0a2479e487c6ee71ed"
     },

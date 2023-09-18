@@ -10,6 +10,7 @@ export const signupApi = async (data: SignupData) => {
         email: data.email,
         password: data.password,
         firstName: data.name,
+        middleName:"",
         lastName: "",
         appliedRole: "user"
     }
